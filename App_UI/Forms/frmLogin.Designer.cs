@@ -104,19 +104,20 @@
             // 
             this.btnLogin.BackColor = System.Drawing.Color.White;
             this.btnLogin.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnLogin.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.btnLogin.FlatAppearance.BorderSize = 0;
             this.btnLogin.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
             this.btnLogin.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
             this.btnLogin.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLogin.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnLogin.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
-            this.btnLogin.Location = new System.Drawing.Point(49, 307);
+            this.btnLogin.Location = new System.Drawing.Point(52, 309);
             this.btnLogin.Margin = new System.Windows.Forms.Padding(0);
             this.btnLogin.Name = "btnLogin";
-            this.btnLogin.Size = new System.Drawing.Size(317, 49);
+            this.btnLogin.Size = new System.Drawing.Size(312, 45);
             this.btnLogin.TabIndex = 4;
             this.btnLogin.Text = "LOGIN";
-            this.btnLogin.UseVisualStyleBackColor = false;
+            this.btnLogin.UseVisualStyleBackColor = true;
             this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
             // 
             // pictureBox2
@@ -179,7 +180,7 @@
             this.lblForgotPassword.Location = new System.Drawing.Point(157, 264);
             this.lblForgotPassword.Name = "lblForgotPassword";
             this.lblForgotPassword.Size = new System.Drawing.Size(94, 13);
-            this.lblForgotPassword.TabIndex = 8;
+            this.lblForgotPassword.TabIndex = 3;
             this.lblForgotPassword.Text = "Forgot Password?";
             this.lblForgotPassword.Click += new System.EventHandler(this.lblForgotPassword_Click);
             // 
@@ -192,8 +193,9 @@
             this.txtUserName.Name = "txtUserName";
             this.txtUserName.PlaceholderText = "User Name";
             this.txtUserName.Size = new System.Drawing.Size(315, 26);
-            this.txtUserName.TabIndex = 9;
+            this.txtUserName.TabIndex = 1;
             this.txtUserName.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtUserName.TextChanged += new System.EventHandler(this.txtUserName_TextChanged);
             // 
             // txtPassword
             // 
@@ -204,7 +206,7 @@
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.PlaceholderText = "Password";
             this.txtPassword.Size = new System.Drawing.Size(315, 26);
-            this.txtPassword.TabIndex = 10;
+            this.txtPassword.TabIndex = 2;
             this.txtPassword.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.txtPassword.TextChanged += new System.EventHandler(this.txtPassword_TextChanged);
             // 
@@ -220,8 +222,8 @@
             this.Controls.Add(this.lblContactAdmin);
             this.Controls.Add(this.lblHelp);
             this.Controls.Add(this.pictureBox2);
-            this.Controls.Add(this.btnLogin);
             this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.btnLogin);
             this.Controls.Add(this.shapeContainer1);
             this.Font = new System.Drawing.Font("Segoe UI Semibold", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;

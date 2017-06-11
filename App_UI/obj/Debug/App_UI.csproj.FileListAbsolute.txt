@@ -12,3 +12,4 @@ E:\Projects\GitHub\WindowsApp\App_UI\obj\Debug\App_UI.pdb
 E:\Projects\GitHub\WindowsApp\App_UI\bin\Debug\CustomServerControls.dll
 E:\Projects\GitHub\WindowsApp\App_UI\bin\Debug\CustomServerControls.pdb
 E:\Projects\GitHub\WindowsApp\App_UI\obj\Debug\App_UI.Forms.frmForgotPassword.resources
+E:\Projects\GitHub\WindowsApp\App_UI\obj\Debug\App_UI.Forms.frmMain.resources
