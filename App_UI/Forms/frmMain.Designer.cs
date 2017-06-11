@@ -36,11 +36,14 @@
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.rdbDelivery = new System.Windows.Forms.RadioButton();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
+            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             this.pnlMenuStrip.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
+            this.tableLayoutPanel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -103,14 +106,15 @@
             // 
             // rdbOrder
             // 
-            this.rdbOrder.AutoCheck = false;
             this.rdbOrder.AutoSize = true;
+            this.rdbOrder.Checked = true;
             this.rdbOrder.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.rdbOrder.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rdbOrder.ForeColor = System.Drawing.Color.White;
             this.rdbOrder.Location = new System.Drawing.Point(20, 18);
             this.rdbOrder.Margin = new System.Windows.Forms.Padding(20, 18, 0, 0);
             this.rdbOrder.Name = "rdbOrder";
-            this.rdbOrder.Size = new System.Drawing.Size(110, 25);
+            this.rdbOrder.Size = new System.Drawing.Size(109, 25);
             this.rdbOrder.TabIndex = 1;
             this.rdbOrder.TabStop = true;
             this.rdbOrder.Text = "ORDER - IN";
@@ -129,16 +133,15 @@
             // 
             // rdbDelivery
             // 
-            this.rdbDelivery.AutoCheck = false;
             this.rdbDelivery.AutoSize = true;
             this.rdbDelivery.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.rdbDelivery.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rdbDelivery.ForeColor = System.Drawing.Color.White;
-            this.rdbDelivery.Location = new System.Drawing.Point(150, 18);
+            this.rdbDelivery.Location = new System.Drawing.Point(149, 18);
             this.rdbDelivery.Margin = new System.Windows.Forms.Padding(20, 18, 0, 0);
             this.rdbDelivery.Name = "rdbDelivery";
-            this.rdbDelivery.Size = new System.Drawing.Size(97, 25);
+            this.rdbDelivery.Size = new System.Drawing.Size(96, 25);
             this.rdbDelivery.TabIndex = 2;
-            this.rdbDelivery.TabStop = true;
             this.rdbDelivery.Text = "DELIVERY";
             this.rdbDelivery.UseVisualStyleBackColor = true;
             // 
@@ -151,11 +154,39 @@
             this.flowLayoutPanel2.Size = new System.Drawing.Size(494, 64);
             this.flowLayoutPanel2.TabIndex = 2;
             // 
+            // tableLayoutPanel3
+            // 
+            this.tableLayoutPanel3.BackColor = System.Drawing.Color.White;
+            this.tableLayoutPanel3.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Inset;
+            this.tableLayoutPanel3.ColumnCount = 2;
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 80F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel3.Controls.Add(this.flowLayoutPanel3, 0, 0);
+            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 65);
+            this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(0);
+            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
+            this.tableLayoutPanel3.RowCount = 1;
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(895, 412);
+            this.tableLayoutPanel3.TabIndex = 2;
+            // 
+            // flowLayoutPanel3
+            // 
+            this.flowLayoutPanel3.AutoScroll = true;
+            this.flowLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.flowLayoutPanel3.Location = new System.Drawing.Point(2, 363);
+            this.flowLayoutPanel3.Margin = new System.Windows.Forms.Padding(0);
+            this.flowLayoutPanel3.Name = "flowLayoutPanel3";
+            this.flowLayoutPanel3.Size = new System.Drawing.Size(711, 47);
+            this.flowLayoutPanel3.TabIndex = 0;
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(895, 477);
+            this.Controls.Add(this.tableLayoutPanel3);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -173,6 +204,7 @@
             this.tableLayoutPanel2.ResumeLayout(false);
             this.flowLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel1.PerformLayout();
+            this.tableLayoutPanel3.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -186,5 +218,7 @@
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.RadioButton rdbDelivery;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel3;
     }
 }
