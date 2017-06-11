@@ -1,0 +1,4 @@
+E:\Projects\GitHub\WindowsApp\CustomServerControls\bin\Debug\CustomServerControls.dll
+E:\Projects\GitHub\WindowsApp\CustomServerControls\bin\Debug\CustomServerControls.pdb
+E:\Projects\GitHub\WindowsApp\CustomServerControls\obj\Debug\CustomServerControls.dll
+E:\Projects\GitHub\WindowsApp\CustomServerControls\obj\Debug\CustomServerControls.pdb

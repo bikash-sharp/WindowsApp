@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace App_UI.Forms
 {
-    public partial class FrmPassword : Form
+    public partial class frmForgotPassword : CommonForm
     {
-        public FrmPassword()
+        public frmForgotPassword()
         {
             InitializeComponent();
         }

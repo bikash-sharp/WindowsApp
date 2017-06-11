@@ -10,40 +10,38 @@ using System.Windows.Forms;
 
 namespace App_UI.Forms
 {
-    public partial class frmLogin : Form
+    public partial class frmLogin : CommonForm
     {
-        public static bool IsClosed = false;
+        
         public frmLogin()
         {
             InitializeComponent();
-            this.txtUserName.Text = "User Name";
-            this.txtUserName.SelectionStart = 0;
-            this.txtPassword.Text = "Password";
-            this.txtPassword.SelectionStart = 0;
-
-            this.pictureBox1.Focus();
+            this.txtUserName.Focus();
         }
 
-        private void frmLogin_FormClosing(object sender, FormClosingEventArgs e)
+        private void btnLogin_Click(object sender, EventArgs e)
         {
-            DialogResult msgResult = MessageBox.Show("Do you want to Exit Application ?", "Warning", MessageBoxButtons.YesNo,MessageBoxIcon.Information);
-            if (msgResult == DialogResult.No)
+            
+        }
+
+        private void txtPassword_TextChanged(object sender, EventArgs e)
+        {
+            if (this.txtPassword.Text == "" && this.txtPassword.TextLength > 0)
             {
-                e.Cancel = true;
-                IsClosed = false;
+                this.txtPassword.UseSystemPasswordChar = false;
+                this.txtPassword.Text = "Password";
             }
             else
             {
-                IsClosed = true;
+                this.txtPassword.UseSystemPasswordChar = true;
             }
         }
 
-        private void frmLogin_FormClosed(object sender, FormClosedEventArgs e)
+        private void lblForgotPassword_Click(object sender, EventArgs e)
         {
-            if (IsClosed)
-            {
-                Application.ExitThread();
-            }
+            this.Hide();
+            frmForgotPassword forgotpswd = new frmForgotPassword();
+            forgotpswd.ShowDialog();
         }
     }
 }
