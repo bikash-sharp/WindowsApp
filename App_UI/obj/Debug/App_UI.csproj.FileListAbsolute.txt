@@ -13,3 +13,7 @@ E:\Projects\GitHub\WindowsApp\App_UI\bin\Debug\CustomServerControls.dll
 E:\Projects\GitHub\WindowsApp\App_UI\bin\Debug\CustomServerControls.pdb
 E:\Projects\GitHub\WindowsApp\App_UI\obj\Debug\App_UI.Forms.frmForgotPassword.resources
 E:\Projects\GitHub\WindowsApp\App_UI\obj\Debug\App_UI.Forms.frmMain.resources
+E:\Projects\GitHub\WindowsApp\App_UI\obj\Debug\App_UI.UserControls.uc_CategoryMenu.resources
+E:\Projects\GitHub\WindowsApp\App_UI\obj\Debug\App_UI.Forms.CommonForm.resources
+E:\Projects\GitHub\WindowsApp\App_UI\bin\Debug\App_BAL.dll
+E:\Projects\GitHub\WindowsApp\App_UI\bin\Debug\App_BAL.pdb
