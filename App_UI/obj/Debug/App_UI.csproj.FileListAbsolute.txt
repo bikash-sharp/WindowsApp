@@ -28,3 +28,4 @@ C:\Users\sourav\Documents\Visual Studio 2013\Projects\WindowApp_hub\Latest\App_U
 C:\Users\sourav\Documents\Visual Studio 2013\Projects\WindowApp_hub\Latest\App_UI\obj\Debug\App_UI.csproj.GenerateResource.Cache
 C:\Users\sourav\Documents\Visual Studio 2013\Projects\WindowApp_hub\Latest\App_UI\obj\Debug\App_UI.exe
 C:\Users\sourav\Documents\Visual Studio 2013\Projects\WindowApp_hub\Latest\App_UI\obj\Debug\App_UI.pdb
+C:\Users\sourav\Documents\Visual Studio 2013\Projects\WindowApp_hub\Latest\App_UI\obj\Debug\App_UI.UserControls.uc_CategoryMenu.resources
