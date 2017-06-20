@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 2013
+VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App_UI", "App_UI\App_UI.csproj", "{36D1EEE4-2310-43CE-B786-4F5F1DB2CC2A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomServerControls", "CustomServerControls\CustomServerControls.csproj", "{BDCC2D9B-B53B-4304-B4E4-B932BEF19590}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App_BAL", "App_BAL\App_BAL.csproj", "{33F53F44-A219-4CE0-A499-695A6906768B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{BDCC2D9B-B53B-4304-B4E4-B932BEF19590}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BDCC2D9B-B53B-4304-B4E4-B932BEF19590}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BDCC2D9B-B53B-4304-B4E4-B932BEF19590}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33F53F44-A219-4CE0-A499-695A6906768B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33F53F44-A219-4CE0-A499-695A6906768B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33F53F44-A219-4CE0-A499-695A6906768B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33F53F44-A219-4CE0-A499-695A6906768B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
