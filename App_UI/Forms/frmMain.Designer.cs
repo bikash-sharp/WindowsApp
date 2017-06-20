@@ -28,166 +28,213 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.pnlMenuStrip = new System.Windows.Forms.Panel();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.rdbOrder = new System.Windows.Forms.RadioButton();
-            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.tblMainLayout = new System.Windows.Forms.TableLayoutPanel();
+            this.pnlPay = new System.Windows.Forms.Panel();
+            this.shapeContainer1 = new Microsoft.VisualBasic.PowerPacks.ShapeContainer();
+            this.rectangleShape4 = new Microsoft.VisualBasic.PowerPacks.RectangleShape();
+            this.btnPay = new System.Windows.Forms.Button();
+            this.ovalShape1 = new Microsoft.VisualBasic.PowerPacks.OvalShape();
+            this.shapeContainer2 = new Microsoft.VisualBasic.PowerPacks.ShapeContainer();
             this.rdbDelivery = new System.Windows.Forms.RadioButton();
-            this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
-            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-            this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
+            this.rdbOrder = new System.Windows.Forms.RadioButton();
+            this.pbLogo = new System.Windows.Forms.PictureBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.lblOrderCount = new System.Windows.Forms.Label();
+            this.pnlTopMenu = new System.Windows.Forms.Panel();
+            this.uc_CategoryMenu1 = new App_UI.UserControls.uc_CategoryMenu();
+            this.tblMainLayout.SuspendLayout();
+            this.pnlPay.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbLogo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.tableLayoutPanel1.SuspendLayout();
-            this.pnlMenuStrip.SuspendLayout();
-            this.tableLayoutPanel2.SuspendLayout();
-            this.flowLayoutPanel1.SuspendLayout();
-            this.tableLayoutPanel3.SuspendLayout();
+            this.pnlTopMenu.SuspendLayout();
             this.SuspendLayout();
             // 
-            // pictureBox1
+            // tblMainLayout
             // 
-            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBox1.ErrorImage = null;
-            this.pictureBox1.Image = global::App_UI.Properties.Resources.logoblack;
-            this.pictureBox1.InitialImage = null;
-            this.pictureBox1.Location = new System.Drawing.Point(4, 4);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(127, 57);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
+            this.tblMainLayout.BackColor = System.Drawing.Color.White;
+            this.tblMainLayout.ColumnCount = 4;
+            this.tblMainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tblMainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tblMainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 260F));
+            this.tblMainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tblMainLayout.Controls.Add(this.pnlTopMenu, 0, 0);
+            this.tblMainLayout.Controls.Add(this.pnlPay, 2, 2);
+            this.tblMainLayout.Controls.Add(this.uc_CategoryMenu1, 1, 2);
+            this.tblMainLayout.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tblMainLayout.Location = new System.Drawing.Point(0, 0);
+            this.tblMainLayout.Margin = new System.Windows.Forms.Padding(0);
+            this.tblMainLayout.Name = "tblMainLayout";
+            this.tblMainLayout.RowCount = 3;
+            this.tblMainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 59F));
+            this.tblMainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tblMainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 52F));
+            this.tblMainLayout.Size = new System.Drawing.Size(895, 477);
+            this.tblMainLayout.TabIndex = 2;
+            this.tblMainLayout.Paint += new System.Windows.Forms.PaintEventHandler(this.tblMainLayout_Paint);
             // 
-            // tableLayoutPanel1
+            // pnlPay
             // 
-            this.tableLayoutPanel1.ColumnCount = 1;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Controls.Add(this.pnlMenuStrip, 0, 0);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 1;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(895, 65);
-            this.tableLayoutPanel1.TabIndex = 1;
+            this.pnlPay.Controls.Add(this.btnPay);
+            this.pnlPay.Controls.Add(this.shapeContainer1);
+            this.pnlPay.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlPay.Location = new System.Drawing.Point(605, 425);
+            this.pnlPay.Margin = new System.Windows.Forms.Padding(0);
+            this.pnlPay.Name = "pnlPay";
+            this.pnlPay.Size = new System.Drawing.Size(260, 52);
+            this.pnlPay.TabIndex = 2;
             // 
-            // pnlMenuStrip
+            // shapeContainer1
             // 
-            this.pnlMenuStrip.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.pnlMenuStrip.Controls.Add(this.tableLayoutPanel2);
-            this.pnlMenuStrip.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlMenuStrip.Location = new System.Drawing.Point(0, 0);
-            this.pnlMenuStrip.Margin = new System.Windows.Forms.Padding(0);
-            this.pnlMenuStrip.Name = "pnlMenuStrip";
-            this.pnlMenuStrip.Size = new System.Drawing.Size(895, 65);
-            this.pnlMenuStrip.TabIndex = 2;
+            this.shapeContainer1.Location = new System.Drawing.Point(0, 0);
+            this.shapeContainer1.Margin = new System.Windows.Forms.Padding(0);
+            this.shapeContainer1.Name = "shapeContainer1";
+            this.shapeContainer1.Shapes.AddRange(new Microsoft.VisualBasic.PowerPacks.Shape[] {
+            this.rectangleShape4});
+            this.shapeContainer1.Size = new System.Drawing.Size(260, 52);
+            this.shapeContainer1.TabIndex = 0;
+            this.shapeContainer1.TabStop = false;
             // 
-            // tableLayoutPanel2
+            // rectangleShape4
             // 
-            this.tableLayoutPanel2.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
-            this.tableLayoutPanel2.ColumnCount = 3;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 65F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel2.Controls.Add(this.pictureBox1, 0, 0);
-            this.tableLayoutPanel2.Controls.Add(this.flowLayoutPanel1, 2, 0);
-            this.tableLayoutPanel2.Controls.Add(this.flowLayoutPanel2, 1, 0);
-            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(0);
-            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 1;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(895, 65);
-            this.tableLayoutPanel2.TabIndex = 0;
+            this.rectangleShape4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.rectangleShape4.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+            this.rectangleShape4.BorderStyle = System.Drawing.Drawing2D.DashStyle.Dash;
+            this.rectangleShape4.BorderWidth = 2;
+            this.rectangleShape4.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.rectangleShape4.FillColor = System.Drawing.Color.White;
+            this.rectangleShape4.FillStyle = Microsoft.VisualBasic.PowerPacks.FillStyle.Solid;
+            this.rectangleShape4.Location = new System.Drawing.Point(60, 6);
+            this.rectangleShape4.Name = "rectangleShape4";
+            this.rectangleShape4.Size = new System.Drawing.Size(191, 40);
             // 
-            // rdbOrder
+            // btnPay
             // 
-            this.rdbOrder.AutoSize = true;
-            this.rdbOrder.Checked = true;
-            this.rdbOrder.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.rdbOrder.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rdbOrder.ForeColor = System.Drawing.Color.White;
-            this.rdbOrder.Location = new System.Drawing.Point(20, 18);
-            this.rdbOrder.Margin = new System.Windows.Forms.Padding(20, 18, 0, 0);
-            this.rdbOrder.Name = "rdbOrder";
-            this.rdbOrder.Size = new System.Drawing.Size(109, 25);
-            this.rdbOrder.TabIndex = 1;
-            this.rdbOrder.TabStop = true;
-            this.rdbOrder.Text = "ORDER - IN";
-            this.rdbOrder.UseVisualStyleBackColor = true;
+            this.btnPay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnPay.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnPay.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnPay.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
+            this.btnPay.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
+            this.btnPay.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnPay.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+            this.btnPay.Location = new System.Drawing.Point(61, 10);
+            this.btnPay.Margin = new System.Windows.Forms.Padding(0);
+            this.btnPay.Name = "btnPay";
+            this.btnPay.Size = new System.Drawing.Size(186, 32);
+            this.btnPay.TabIndex = 1;
+            this.btnPay.Text = "PAY";
+            this.btnPay.UseVisualStyleBackColor = true;
             // 
-            // flowLayoutPanel1
+            // ovalShape1
             // 
-            this.flowLayoutPanel1.Controls.Add(this.rdbOrder);
-            this.flowLayoutPanel1.Controls.Add(this.rdbDelivery);
-            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(628, 0);
-            this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
-            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(263, 64);
-            this.flowLayoutPanel1.TabIndex = 1;
+            this.ovalShape1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+            this.ovalShape1.BackStyle = Microsoft.VisualBasic.PowerPacks.BackStyle.Opaque;
+            this.ovalShape1.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+            this.ovalShape1.Location = new System.Drawing.Point(333, 11);
+            this.ovalShape1.Name = "ovalShape1";
+            this.ovalShape1.Size = new System.Drawing.Size(38, 33);
+            // 
+            // shapeContainer2
+            // 
+            this.shapeContainer2.Location = new System.Drawing.Point(0, 0);
+            this.shapeContainer2.Margin = new System.Windows.Forms.Padding(0);
+            this.shapeContainer2.Name = "shapeContainer2";
+            this.shapeContainer2.Shapes.AddRange(new Microsoft.VisualBasic.PowerPacks.Shape[] {
+            this.ovalShape1});
+            this.shapeContainer2.Size = new System.Drawing.Size(895, 59);
+            this.shapeContainer2.TabIndex = 4;
+            this.shapeContainer2.TabStop = false;
             // 
             // rdbDelivery
             // 
-            this.rdbDelivery.AutoSize = true;
+            this.rdbDelivery.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.rdbDelivery.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.rdbDelivery.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rdbDelivery.ForeColor = System.Drawing.Color.White;
-            this.rdbDelivery.Location = new System.Drawing.Point(149, 18);
-            this.rdbDelivery.Margin = new System.Windows.Forms.Padding(20, 18, 0, 0);
+            this.rdbDelivery.Location = new System.Drawing.Point(783, 19);
             this.rdbDelivery.Name = "rdbDelivery";
-            this.rdbDelivery.Size = new System.Drawing.Size(96, 25);
-            this.rdbDelivery.TabIndex = 2;
+            this.rdbDelivery.Size = new System.Drawing.Size(97, 25);
+            this.rdbDelivery.TabIndex = 0;
             this.rdbDelivery.Text = "DELIVERY";
             this.rdbDelivery.UseVisualStyleBackColor = true;
             // 
-            // flowLayoutPanel2
+            // rdbOrder
             // 
-            this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanel2.Location = new System.Drawing.Point(134, 0);
-            this.flowLayoutPanel2.Margin = new System.Windows.Forms.Padding(0);
-            this.flowLayoutPanel2.Name = "flowLayoutPanel2";
-            this.flowLayoutPanel2.Size = new System.Drawing.Size(494, 64);
-            this.flowLayoutPanel2.TabIndex = 2;
+            this.rdbOrder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.rdbOrder.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.rdbOrder.ForeColor = System.Drawing.Color.White;
+            this.rdbOrder.Location = new System.Drawing.Point(664, 19);
+            this.rdbOrder.Name = "rdbOrder";
+            this.rdbOrder.Size = new System.Drawing.Size(102, 25);
+            this.rdbOrder.TabIndex = 1;
+            this.rdbOrder.TabStop = true;
+            this.rdbOrder.Text = "ORDER-IN";
+            this.rdbOrder.UseVisualStyleBackColor = true;
             // 
-            // tableLayoutPanel3
+            // pbLogo
             // 
-            this.tableLayoutPanel3.BackColor = System.Drawing.Color.White;
-            this.tableLayoutPanel3.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Inset;
-            this.tableLayoutPanel3.ColumnCount = 2;
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 80F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel3.Controls.Add(this.flowLayoutPanel3, 0, 0);
-            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 65);
-            this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(0);
-            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
-            this.tableLayoutPanel3.RowCount = 1;
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(895, 412);
-            this.tableLayoutPanel3.TabIndex = 2;
+            this.pbLogo.Image = global::App_UI.Properties.Resources.logoblack;
+            this.pbLogo.Location = new System.Drawing.Point(7, 13);
+            this.pbLogo.Margin = new System.Windows.Forms.Padding(0);
+            this.pbLogo.Name = "pbLogo";
+            this.pbLogo.Size = new System.Drawing.Size(131, 33);
+            this.pbLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pbLogo.TabIndex = 2;
+            this.pbLogo.TabStop = false;
             // 
-            // flowLayoutPanel3
+            // pictureBox1
             // 
-            this.flowLayoutPanel3.AutoScroll = true;
-            this.flowLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.flowLayoutPanel3.Location = new System.Drawing.Point(2, 363);
-            this.flowLayoutPanel3.Margin = new System.Windows.Forms.Padding(0);
-            this.flowLayoutPanel3.Name = "flowLayoutPanel3";
-            this.flowLayoutPanel3.Size = new System.Drawing.Size(711, 47);
-            this.flowLayoutPanel3.TabIndex = 0;
+            this.pictureBox1.Image = global::App_UI.Properties.Resources.downlogo;
+            this.pictureBox1.Location = new System.Drawing.Point(149, 7);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(176, 45);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pictureBox1.TabIndex = 3;
+            this.pictureBox1.TabStop = false;
+            // 
+            // lblOrderCount
+            // 
+            this.lblOrderCount.AutoSize = true;
+            this.lblOrderCount.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+            this.lblOrderCount.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lblOrderCount.ForeColor = System.Drawing.Color.White;
+            this.lblOrderCount.Location = new System.Drawing.Point(344, 16);
+            this.lblOrderCount.Name = "lblOrderCount";
+            this.lblOrderCount.Size = new System.Drawing.Size(19, 21);
+            this.lblOrderCount.TabIndex = 5;
+            this.lblOrderCount.Text = "3";
+            // 
+            // pnlTopMenu
+            // 
+            this.pnlTopMenu.BackColor = System.Drawing.Color.Black;
+            this.tblMainLayout.SetColumnSpan(this.pnlTopMenu, 4);
+            this.pnlTopMenu.Controls.Add(this.lblOrderCount);
+            this.pnlTopMenu.Controls.Add(this.pictureBox1);
+            this.pnlTopMenu.Controls.Add(this.pbLogo);
+            this.pnlTopMenu.Controls.Add(this.rdbOrder);
+            this.pnlTopMenu.Controls.Add(this.rdbDelivery);
+            this.pnlTopMenu.Controls.Add(this.shapeContainer2);
+            this.pnlTopMenu.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlTopMenu.Location = new System.Drawing.Point(0, 0);
+            this.pnlTopMenu.Margin = new System.Windows.Forms.Padding(0);
+            this.pnlTopMenu.Name = "pnlTopMenu";
+            this.pnlTopMenu.Size = new System.Drawing.Size(895, 59);
+            this.pnlTopMenu.TabIndex = 0;
+            // 
+            // uc_CategoryMenu1
+            // 
+            this.uc_CategoryMenu1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.uc_CategoryMenu1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.uc_CategoryMenu1.Location = new System.Drawing.Point(31, 426);
+            this.uc_CategoryMenu1.Margin = new System.Windows.Forms.Padding(1);
+            this.uc_CategoryMenu1.Name = "uc_CategoryMenu1";
+            this.uc_CategoryMenu1.Size = new System.Drawing.Size(573, 50);
+            this.uc_CategoryMenu1.TabIndex = 3;
             // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(895, 477);
-            this.Controls.Add(this.tableLayoutPanel3);
-            this.Controls.Add(this.tableLayoutPanel1);
+            this.Controls.Add(this.tblMainLayout);
             this.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -198,27 +245,30 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.frmMain_Load);
+            this.tblMainLayout.ResumeLayout(false);
+            this.pnlPay.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pbLogo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            this.tableLayoutPanel1.ResumeLayout(false);
-            this.pnlMenuStrip.ResumeLayout(false);
-            this.tableLayoutPanel2.ResumeLayout(false);
-            this.flowLayoutPanel1.ResumeLayout(false);
-            this.flowLayoutPanel1.PerformLayout();
-            this.tableLayoutPanel3.ResumeLayout(false);
+            this.pnlTopMenu.ResumeLayout(false);
+            this.pnlTopMenu.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
         #endregion
+        private System.Windows.Forms.TableLayoutPanel tblMainLayout;
+        private System.Windows.Forms.Panel pnlPay;
+        private Microsoft.VisualBasic.PowerPacks.ShapeContainer shapeContainer1;
+        private Microsoft.VisualBasic.PowerPacks.RectangleShape rectangleShape4;
+        private System.Windows.Forms.Button btnPay;
+        private UserControls.uc_CategoryMenu uc_CategoryMenu1;
+        private System.Windows.Forms.Panel pnlTopMenu;
+        private System.Windows.Forms.Label lblOrderCount;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.Panel pnlMenuStrip;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+        private System.Windows.Forms.PictureBox pbLogo;
         private System.Windows.Forms.RadioButton rdbOrder;
-        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.RadioButton rdbDelivery;
-        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
-        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel3;
+        private Microsoft.VisualBasic.PowerPacks.ShapeContainer shapeContainer2;
+        private Microsoft.VisualBasic.PowerPacks.OvalShape ovalShape1;
     }
 }

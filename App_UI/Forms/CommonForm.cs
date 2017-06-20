@@ -9,6 +9,7 @@ namespace App_UI.Forms
 {
     public class CommonForm : Form
     {
+        private Button button1;
         public static bool IsClosed = false;
         protected override void OnFormClosed(FormClosedEventArgs e)
         {
@@ -34,6 +35,32 @@ namespace App_UI.Forms
             }
 
             //base.OnFormClosing(e);
+        }
+
+        private void InitializeComponent()
+        {
+            this.button1 = new System.Windows.Forms.Button();
+            this.SuspendLayout();
+            // 
+            // button1
+            // 
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.Image = global::App_UI.Properties.Resources.downlogo;
+            this.button1.Location = new System.Drawing.Point(58, 68);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(214, 79);
+            this.button1.TabIndex = 0;
+            this.button1.Text = "button1";
+            this.button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // CommonForm
+            // 
+            this.ClientSize = new System.Drawing.Size(284, 261);
+            this.Controls.Add(this.button1);
+            this.Name = "CommonForm";
+            this.ResumeLayout(false);
+
         }
     }
 }

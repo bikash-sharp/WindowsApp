@@ -7,12 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using App_BAL;
 
 namespace App_UI.Forms
 {
     public partial class frmLogin : CommonForm
     {
-        
+
         public frmLogin()
         {
             InitializeComponent();
@@ -42,6 +43,12 @@ namespace App_UI.Forms
                 try
                 {
                     this.Hide();
+                    Program.foodCategoryList.Add(new CategoryCL { categoryID = 1, categoryName = "All" });
+                    Program.foodCategoryList.Add(new CategoryCL { categoryID = 2, categoryName = "Food" });
+                    Program.foodCategoryList.Add(new CategoryCL { categoryID = 3, categoryName = "Drinks" });
+                    Program.foodCategoryList.Add(new CategoryCL { categoryID = 4, categoryName = "Packages" });
+                    Program.foodCategoryList.Add(new CategoryCL { categoryID = 5, categoryName = "Desert" });
+                    Program.foodCategoryList.Add(new CategoryCL { categoryID = 6, categoryName = "Main" });
                     frmMain _main = new frmMain();
                     _main.ShowDialog();
                 }
