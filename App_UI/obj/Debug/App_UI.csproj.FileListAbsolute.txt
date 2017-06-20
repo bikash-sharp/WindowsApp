@@ -20,7 +20,6 @@ C:\Users\sourav\Documents\Visual Studio 2013\Projects\WindowApp_hub\Latest\App_U
 C:\Users\sourav\Documents\Visual Studio 2013\Projects\WindowApp_hub\Latest\App_UI\bin\Debug\CustomServerControls.dll
 C:\Users\sourav\Documents\Visual Studio 2013\Projects\WindowApp_hub\Latest\App_UI\bin\Debug\App_BAL.pdb
 C:\Users\sourav\Documents\Visual Studio 2013\Projects\WindowApp_hub\Latest\App_UI\bin\Debug\CustomServerControls.pdb
-C:\Users\sourav\Documents\Visual Studio 2013\Projects\WindowApp_hub\Latest\App_UI\bin\Debug\Microsoft.VisualBasic.PowerPacks.xml
 C:\Users\sourav\Documents\Visual Studio 2013\Projects\WindowApp_hub\Latest\App_UI\obj\Debug\App_UI.csprojResolveAssemblyReference.cache
 C:\Users\sourav\Documents\Visual Studio 2013\Projects\WindowApp_hub\Latest\App_UI\obj\Debug\App_UI.Forms.frmForgotPassword.resources
 C:\Users\sourav\Documents\Visual Studio 2013\Projects\WindowApp_hub\Latest\App_UI\obj\Debug\App_UI.Forms.frmLogin.resources
