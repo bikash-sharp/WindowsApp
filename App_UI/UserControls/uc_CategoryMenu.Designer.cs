@@ -33,11 +33,12 @@
             // 
             // flowLayoutPanel1
             // 
+            this.flowLayoutPanel1.AutoScroll = true;
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(646, 105);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(573, 69);
             this.flowLayoutPanel1.TabIndex = 0;
             // 
             // uc_CategoryMenu
@@ -48,7 +49,7 @@
             this.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "uc_CategoryMenu";
-            this.Size = new System.Drawing.Size(646, 105);
+            this.Size = new System.Drawing.Size(573, 69);
             this.ResumeLayout(false);
 
         }

@@ -19,16 +19,51 @@ namespace App_UI.UserControls
 
         private void uc_CategoryMenu_Load(object sender, EventArgs e)
         {
-            BindData();
+            flowLayoutPanel1.VerticalScroll.Visible = false;
+            flowLayoutPanel1.VerticalScroll.Enabled = false;
         }
 
-        private void BindData()
+        public void BindData()
         {
             flowLayoutPanel1.Controls.Clear();
             foreach (var item in Program.Categories)
             {
-                CreateButton(item.CategoryID.ToString(), item.CategoryName);
+                CreateButton(item.CategoryID, item.CategoryName);
             }
+        }
+
+        public void CreateButton(int ID, string Name)
+        {
+            Button btn = new Button();
+            btn.Name = "btn_" + ID;
+            btn.Text = Name;
+            btn.Tag = ID;
+            btn.AutoSize = false;
+            btn.Height = flowLayoutPanel1.Height - 7;
+            btn.Width = 150;
+            btn.Margin = new Padding(0);
+            btn.Cursor = Cursors.Hand;
+            btn.Font = new Font("Segoe UI Semilight", 12, FontStyle.Bold);
+            btn.FlatStyle = FlatStyle.Flat;
+            btn.FlatAppearance.BorderColor = Color.FromArgb(225, 225, 225);
+            btn.FlatAppearance.BorderSize = 1;
+            btn.FlatAppearance.MouseOverBackColor = Color.White;
+            btn.FlatAppearance.MouseDownBackColor = Color.White;
+            btn.Click += Btn_Click;
+            btn.MouseHover += Btn_MouseHover;
+            btn.MouseLeave += Btn_MouseLeave;
+
+            btn.BackColor = Color.FromArgb(255, 255, 255);
+            if (Name == "All")
+            {
+                btn.ForeColor = Color.FromArgb(251, 51, 51);
+            }
+            else
+            {
+                btn.ForeColor = Color.Gray;
+            }
+
+            flowLayoutPanel1.Controls.Add(btn);
         }
 
         public void CreateButton(string name, string text)
