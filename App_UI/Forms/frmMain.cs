@@ -13,6 +13,7 @@ namespace App_UI.Forms
 {
     public partial class frmMain : Form
     {
+        public static bool IsClosed = false;
         public frmMain()
         {
             InitializeComponent();
@@ -48,14 +49,14 @@ namespace App_UI.Forms
 
         }
 
-        private void tblMainLayout_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
         private void btnExit_Click(object sender, EventArgs e)
         {
-            Application.Exit();
+            DialogResult msgResult = MessageBox.Show("Do you want to Exit Application ?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+            if (msgResult == DialogResult.Yes)
+            {
+                Application.ExitThread();
+            }
+            
         }
     }
 }

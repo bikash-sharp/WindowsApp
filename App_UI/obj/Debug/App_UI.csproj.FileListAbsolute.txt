@@ -1,18 +1,3 @@
-E:\Projects\GitHub\WindowsApp\App_UI\bin\Debug\App_UI.exe.config
-E:\Projects\GitHub\WindowsApp\App_UI\bin\Debug\App_UI.exe
-E:\Projects\GitHub\WindowsApp\App_UI\bin\Debug\App_UI.pdb
-E:\Projects\GitHub\WindowsApp\App_UI\bin\Debug\Microsoft.VisualBasic.PowerPacks.dll
-E:\Projects\GitHub\WindowsApp\App_UI\bin\Debug\Microsoft.VisualBasic.PowerPacks.xml
-E:\Projects\GitHub\WindowsApp\App_UI\obj\Debug\App_UI.csprojResolveAssemblyReference.cache
-E:\Projects\GitHub\WindowsApp\App_UI\obj\Debug\App_UI.Forms.frmLogin.resources
-E:\Projects\GitHub\WindowsApp\App_UI\obj\Debug\App_UI.Properties.Resources.resources
-E:\Projects\GitHub\WindowsApp\App_UI\obj\Debug\App_UI.csproj.GenerateResource.Cache
-E:\Projects\GitHub\WindowsApp\App_UI\obj\Debug\App_UI.exe
-E:\Projects\GitHub\WindowsApp\App_UI\obj\Debug\App_UI.pdb
-E:\Projects\GitHub\WindowsApp\App_UI\bin\Debug\CustomServerControls.dll
-E:\Projects\GitHub\WindowsApp\App_UI\bin\Debug\CustomServerControls.pdb
-E:\Projects\GitHub\WindowsApp\App_UI\obj\Debug\App_UI.Forms.frmForgotPassword.resources
-E:\Projects\GitHub\WindowsApp\App_UI\obj\Debug\App_UI.Forms.frmMain.resources
 C:\Users\sourav\Documents\Visual Studio 2013\Projects\WindowApp_hub\Latest\App_UI\bin\Debug\App_UI.exe.config
 C:\Users\sourav\Documents\Visual Studio 2013\Projects\WindowApp_hub\Latest\App_UI\bin\Debug\App_UI.exe
 C:\Users\sourav\Documents\Visual Studio 2013\Projects\WindowApp_hub\Latest\App_UI\bin\Debug\App_UI.pdb
@@ -29,3 +14,21 @@ C:\Users\sourav\Documents\Visual Studio 2013\Projects\WindowApp_hub\Latest\App_U
 C:\Users\sourav\Documents\Visual Studio 2013\Projects\WindowApp_hub\Latest\App_UI\obj\Debug\App_UI.exe
 C:\Users\sourav\Documents\Visual Studio 2013\Projects\WindowApp_hub\Latest\App_UI\obj\Debug\App_UI.pdb
 C:\Users\sourav\Documents\Visual Studio 2013\Projects\WindowApp_hub\Latest\App_UI\obj\Debug\App_UI.UserControls.uc_CategoryMenu.resources
+E:\Projects\GitHub\WindowsApp\App_UI\bin\Debug\App_UI.exe.config
+E:\Projects\GitHub\WindowsApp\App_UI\bin\Debug\App_UI.exe
+E:\Projects\GitHub\WindowsApp\App_UI\bin\Debug\App_UI.pdb
+E:\Projects\GitHub\WindowsApp\App_UI\bin\Debug\App_BAL.dll
+E:\Projects\GitHub\WindowsApp\App_UI\bin\Debug\CustomServerControls.dll
+E:\Projects\GitHub\WindowsApp\App_UI\bin\Debug\Microsoft.VisualBasic.PowerPacks.dll
+E:\Projects\GitHub\WindowsApp\App_UI\bin\Debug\App_BAL.pdb
+E:\Projects\GitHub\WindowsApp\App_UI\bin\Debug\CustomServerControls.pdb
+E:\Projects\GitHub\WindowsApp\App_UI\bin\Debug\Microsoft.VisualBasic.PowerPacks.xml
+E:\Projects\GitHub\WindowsApp\App_UI\obj\Debug\App_UI.csprojResolveAssemblyReference.cache
+E:\Projects\GitHub\WindowsApp\App_UI\obj\Debug\App_UI.Forms.frmForgotPassword.resources
+E:\Projects\GitHub\WindowsApp\App_UI\obj\Debug\App_UI.Forms.frmLogin.resources
+E:\Projects\GitHub\WindowsApp\App_UI\obj\Debug\App_UI.Forms.frmMain.resources
+E:\Projects\GitHub\WindowsApp\App_UI\obj\Debug\App_UI.Properties.Resources.resources
+E:\Projects\GitHub\WindowsApp\App_UI\obj\Debug\App_UI.UserControls.uc_CategoryMenu.resources
+E:\Projects\GitHub\WindowsApp\App_UI\obj\Debug\App_UI.csproj.GenerateResource.Cache
+E:\Projects\GitHub\WindowsApp\App_UI\obj\Debug\App_UI.exe
+E:\Projects\GitHub\WindowsApp\App_UI\obj\Debug\App_UI.pdb

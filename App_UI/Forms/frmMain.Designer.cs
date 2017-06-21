@@ -41,8 +41,9 @@
             this.btnPay = new System.Windows.Forms.Button();
             this.shapeContainer1 = new Microsoft.VisualBasic.PowerPacks.ShapeContainer();
             this.rectangleShape4 = new Microsoft.VisualBasic.PowerPacks.RectangleShape();
-            this.uc_CategoryMenu1 = new App_UI.UserControls.uc_CategoryMenu();
             this.btnExit = new System.Windows.Forms.Button();
+            this.rectangleShape1 = new Microsoft.VisualBasic.PowerPacks.RectangleShape();
+            this.uc_CategoryMenu1 = new App_UI.UserControls.uc_CategoryMenu();
             this.tblMainLayout.SuspendLayout();
             this.pnlTopMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -71,7 +72,6 @@
             this.tblMainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 52F));
             this.tblMainLayout.Size = new System.Drawing.Size(895, 477);
             this.tblMainLayout.TabIndex = 2;
-            this.tblMainLayout.Paint += new System.Windows.Forms.PaintEventHandler(this.tblMainLayout_Paint);
             // 
             // pnlTopMenu
             // 
@@ -155,6 +155,7 @@
             this.shapeContainer2.Margin = new System.Windows.Forms.Padding(0);
             this.shapeContainer2.Name = "shapeContainer2";
             this.shapeContainer2.Shapes.AddRange(new Microsoft.VisualBasic.PowerPacks.Shape[] {
+            this.rectangleShape1,
             this.ovalShape1});
             this.shapeContainer2.Size = new System.Drawing.Size(895, 59);
             this.shapeContainer2.TabIndex = 4;
@@ -221,6 +222,40 @@
             this.rectangleShape4.Name = "rectangleShape4";
             this.rectangleShape4.Size = new System.Drawing.Size(191, 40);
             // 
+            // btnExit
+            // 
+            this.btnExit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnExit.BackColor = System.Drawing.Color.Black;
+            this.btnExit.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnExit.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.btnExit.FlatAppearance.BorderSize = 0;
+            this.btnExit.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Black;
+            this.btnExit.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Black;
+            this.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnExit.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnExit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+            this.btnExit.Location = new System.Drawing.Point(817, 11);
+            this.btnExit.Name = "btnExit";
+            this.btnExit.Size = new System.Drawing.Size(70, 38);
+            this.btnExit.TabIndex = 6;
+            this.btnExit.Text = "EXIT";
+            this.btnExit.UseVisualStyleBackColor = false;
+            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
+            // 
+            // rectangleShape1
+            // 
+            this.rectangleShape1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.rectangleShape1.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+            this.rectangleShape1.BorderStyle = System.Drawing.Drawing2D.DashStyle.Dash;
+            this.rectangleShape1.BorderWidth = 2;
+            this.rectangleShape1.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.rectangleShape1.FillColor = System.Drawing.Color.Black;
+            this.rectangleShape1.FillGradientColor = System.Drawing.Color.Black;
+            this.rectangleShape1.FillStyle = Microsoft.VisualBasic.PowerPacks.FillStyle.Solid;
+            this.rectangleShape1.Location = new System.Drawing.Point(815, 8);
+            this.rectangleShape1.Name = "rectangleShape1";
+            this.rectangleShape1.Size = new System.Drawing.Size(75, 44);
+            // 
             // uc_CategoryMenu1
             // 
             this.uc_CategoryMenu1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -230,20 +265,6 @@
             this.uc_CategoryMenu1.Name = "uc_CategoryMenu1";
             this.uc_CategoryMenu1.Size = new System.Drawing.Size(573, 50);
             this.uc_CategoryMenu1.TabIndex = 3;
-            // 
-            // btnExit
-            // 
-            this.btnExit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnExit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
-            this.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnExit.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.btnExit.Location = new System.Drawing.Point(829, 5);
-            this.btnExit.Name = "btnExit";
-            this.btnExit.Size = new System.Drawing.Size(63, 53);
-            this.btnExit.TabIndex = 6;
-            this.btnExit.Text = "EXIT";
-            this.btnExit.UseVisualStyleBackColor = false;
-            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
             // frmMain
             // 
@@ -287,5 +308,6 @@
         private Microsoft.VisualBasic.PowerPacks.ShapeContainer shapeContainer2;
         private Microsoft.VisualBasic.PowerPacks.OvalShape ovalShape1;
         private System.Windows.Forms.Button btnExit;
+        private Microsoft.VisualBasic.PowerPacks.RectangleShape rectangleShape1;
     }
 }
