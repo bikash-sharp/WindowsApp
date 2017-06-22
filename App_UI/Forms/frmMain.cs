@@ -1,4 +1,5 @@
 ﻿using App_BAL;
+using CustomServerControls;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -32,6 +33,7 @@ namespace App_UI.Forms
             flyLayout.VerticalScroll.Visible = true;
             flyLayout.VerticalScroll.Enabled = true;
             BindProducts(0);
+            
         }
 
         void uc_CategoryMenu1_EventCategoryClicked(object sender, EventArgs e)
@@ -60,37 +62,47 @@ namespace App_UI.Forms
         private void CreateProdButtons(ProductListCL itm)
         {
             Panel pnl = new Panel();
+            
             pnl.Name = "pnl_" + itm.ProductID;
             pnl.Width = 200;
             pnl.Height = 200;
             pnl.Tag = itm;
             pnl.BorderStyle = BorderStyle.FixedSingle;
+            pnl.Cursor = Cursors.Hand;
+            
 
             PictureBox pic = new PictureBox();
             pic.Name = "pic_" + itm.ProductID;
             pic.Image = global::App_UI.Properties.Resources.IMG_NotFound;
             pic.Width = 200;
             pic.Height = 130;
+            pic.BorderStyle = BorderStyle.None;
+            pic.Margin = new Padding(0);
             pic.Location = new Point(0, 0);
             pic.SizeMode = PictureBoxSizeMode.StretchImage;
+            pic.Cursor = Cursors.Hand;
             pic.Click += pnl_Click;
             pic.Tag = itm;
             pnl.Controls.Add(pic);
 
             Label lblName = new Label();
             lblName.Name = "lblProductName_" + itm.ProductID;
-            lblName.Text = itm.ProductName + " (RS - " + itm.Price + ")";
-            lblName.Location = new Point(5, pic.Height + 10);
+            lblName.Text = itm.ProductName + Environment.NewLine+ "MYR - " + itm.Price;
+            lblName.Location = new Point(5,pic.Height+5);
             lblName.AutoSize = false;
             lblName.Width = pnl.Width - 10;
             lblName.Height = 50;
-            lblName.Font = new Font("Segoe UI", 12, FontStyle.Italic);
+            lblName.Cursor = Cursors.Hand;
+            lblName.Font = new Font("Segoe UI Semilight", 12, FontStyle.Regular);
             lblName.Click += pnl_Click;
             lblName.Tag = itm;
             pnl.Controls.Add(lblName);
-
+            
             pnl.Click += pnl_Click;
+            pnl.Margin = new Padding(0,0,10,20);
             flyLayout.Controls.Add(pnl);
+            
+            
         }
 
         void pnl_Click(object sender, EventArgs e)
@@ -111,7 +123,8 @@ namespace App_UI.Forms
             if (prod != null)
             {
                 ListViewItem itm = new ListViewItem(prod.ProductName.ToString());
-                itm.SubItems.Add(prod.Price.ToString("N"));
+                itm.SubItems.Add("X1");
+                itm.SubItems.Add("MYR "+ prod.Price.ToString("N"));
                 itm.Tag = prod;
                 lstCart.Items.Add(itm);
             }
@@ -132,9 +145,16 @@ namespace App_UI.Forms
             BindProducts(SelectedCategoryID, txtSearch.Text.Trim());
         }
 
-        private void txtSearch_TextChanged(object sender, EventArgs e)
+        private void txtSearch_KeyPress(object sender, KeyPressEventArgs e)
         {
-            BindProducts(SelectedCategoryID, txtSearch.Text.Trim());
+            TxtBox txtSearch = (TxtBox)sender;
+            if(txtSearch != null)
+            {
+                if (e.KeyChar == (char)Keys.Return)
+                {
+                    BindProducts(SelectedCategoryID, txtSearch.Text.Trim());
+                }
+            }
         }
     }
 }

@@ -42,9 +42,16 @@ namespace App_UI.Forms
                 this.rectangleShape3.BorderColor = Color.FromArgb(225, 225, 225);
                 try
                 {
-                    this.Hide();
-                    frmMain _main = new frmMain();
-                    _main.ShowDialog();
+                    if(txtUserName.Text == "Admin" && txtPassword.Text == "12345")
+                    {
+                        this.Hide();
+                        frmMain _main = new frmMain();
+                        _main.ShowDialog();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Login Failed For User ?", "Login Denied", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -71,9 +78,9 @@ namespace App_UI.Forms
 
         private void lblForgotPassword_Click(object sender, EventArgs e)
         {
-            this.Hide();
-            frmForgotPassword forgotpswd = new frmForgotPassword();
-            forgotpswd.ShowDialog();
+            //this.Hide();
+            //frmForgotPassword forgotpswd = new frmForgotPassword();
+            //forgotpswd.ShowDialog();
         }
         private void txtUserName_TextChanged(object sender, EventArgs e)
         {

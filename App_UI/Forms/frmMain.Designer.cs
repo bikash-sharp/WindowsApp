@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.tblMainLayout = new System.Windows.Forms.TableLayoutPanel();
             this.pnlTopMenu = new System.Windows.Forms.Panel();
             this.btnExit = new System.Windows.Forms.Button();
@@ -45,12 +46,15 @@
             this.rectangleShape4 = new Microsoft.VisualBasic.PowerPacks.RectangleShape();
             this.uc_CategoryMenu1 = new App_UI.UserControls.uc_CategoryMenu();
             this.pnlBase = new System.Windows.Forms.Panel();
+            this.txtSearch = new CustomServerControls.TxtBox();
             this.btnSearch = new System.Windows.Forms.Button();
-            this.txtSearch = new System.Windows.Forms.TextBox();
             this.flyLayout = new System.Windows.Forms.FlowLayoutPanel();
+            this.shapeContainer3 = new Microsoft.VisualBasic.PowerPacks.ShapeContainer();
+            this.rectangleShape2 = new Microsoft.VisualBasic.PowerPacks.RectangleShape();
             this.lstCart = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tblMainLayout.SuspendLayout();
             this.pnlTopMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -63,10 +67,10 @@
             // 
             this.tblMainLayout.BackColor = System.Drawing.Color.White;
             this.tblMainLayout.ColumnCount = 4;
-            this.tblMainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 13F));
+            this.tblMainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tblMainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tblMainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 278F));
-            this.tblMainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 8F));
+            this.tblMainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 290F));
+            this.tblMainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tblMainLayout.Controls.Add(this.pnlTopMenu, 0, 0);
             this.tblMainLayout.Controls.Add(this.pnlPay, 2, 2);
             this.tblMainLayout.Controls.Add(this.uc_CategoryMenu1, 1, 2);
@@ -219,10 +223,10 @@
             this.pnlPay.Controls.Add(this.btnPay);
             this.pnlPay.Controls.Add(this.shapeContainer1);
             this.pnlPay.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlPay.Location = new System.Drawing.Point(609, 373);
+            this.pnlPay.Location = new System.Drawing.Point(585, 373);
             this.pnlPay.Margin = new System.Windows.Forms.Padding(0);
             this.pnlPay.Name = "pnlPay";
-            this.pnlPay.Size = new System.Drawing.Size(278, 104);
+            this.pnlPay.Size = new System.Drawing.Size(290, 104);
             this.pnlPay.TabIndex = 2;
             // 
             // btnPay
@@ -234,10 +238,10 @@
             this.btnPay.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
             this.btnPay.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnPay.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
-            this.btnPay.Location = new System.Drawing.Point(80, 41);
+            this.btnPay.Location = new System.Drawing.Point(99, 29);
             this.btnPay.Margin = new System.Windows.Forms.Padding(0);
             this.btnPay.Name = "btnPay";
-            this.btnPay.Size = new System.Drawing.Size(186, 32);
+            this.btnPay.Size = new System.Drawing.Size(186, 52);
             this.btnPay.TabIndex = 1;
             this.btnPay.Text = "PAY";
             this.btnPay.UseVisualStyleBackColor = true;
@@ -249,7 +253,7 @@
             this.shapeContainer1.Name = "shapeContainer1";
             this.shapeContainer1.Shapes.AddRange(new Microsoft.VisualBasic.PowerPacks.Shape[] {
             this.rectangleShape4});
-            this.shapeContainer1.Size = new System.Drawing.Size(278, 104);
+            this.shapeContainer1.Size = new System.Drawing.Size(290, 104);
             this.shapeContainer1.TabIndex = 0;
             this.shapeContainer1.TabStop = false;
             // 
@@ -262,85 +266,128 @@
             this.rectangleShape4.Cursor = System.Windows.Forms.Cursors.Hand;
             this.rectangleShape4.FillColor = System.Drawing.Color.White;
             this.rectangleShape4.FillStyle = Microsoft.VisualBasic.PowerPacks.FillStyle.Solid;
-            this.rectangleShape4.Location = new System.Drawing.Point(78, 37);
+            this.rectangleShape4.Location = new System.Drawing.Point(96, 25);
             this.rectangleShape4.Name = "rectangleShape4";
-            this.rectangleShape4.Size = new System.Drawing.Size(191, 40);
+            this.rectangleShape4.Size = new System.Drawing.Size(191, 59);
             // 
             // uc_CategoryMenu1
             // 
             this.uc_CategoryMenu1.AutoScroll = true;
             this.uc_CategoryMenu1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.uc_CategoryMenu1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uc_CategoryMenu1.Location = new System.Drawing.Point(17, 378);
+            this.uc_CategoryMenu1.Location = new System.Drawing.Point(24, 378);
             this.uc_CategoryMenu1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.uc_CategoryMenu1.Name = "uc_CategoryMenu1";
-            this.uc_CategoryMenu1.Size = new System.Drawing.Size(588, 94);
+            this.uc_CategoryMenu1.Size = new System.Drawing.Size(557, 94);
             this.uc_CategoryMenu1.TabIndex = 3;
             // 
             // pnlBase
             // 
-            this.pnlBase.Controls.Add(this.btnSearch);
             this.pnlBase.Controls.Add(this.txtSearch);
+            this.pnlBase.Controls.Add(this.btnSearch);
             this.pnlBase.Controls.Add(this.flyLayout);
+            this.pnlBase.Controls.Add(this.shapeContainer3);
             this.pnlBase.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlBase.Location = new System.Drawing.Point(13, 59);
+            this.pnlBase.Location = new System.Drawing.Point(20, 59);
             this.pnlBase.Margin = new System.Windows.Forms.Padding(0);
             this.pnlBase.Name = "pnlBase";
-            this.pnlBase.Size = new System.Drawing.Size(596, 314);
+            this.pnlBase.Size = new System.Drawing.Size(565, 314);
             this.pnlBase.TabIndex = 5;
-            // 
-            // btnSearch
-            // 
-            this.btnSearch.FlatAppearance.BorderSize = 0;
-            this.btnSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSearch.Image = global::App_UI.Properties.Resources.search_24;
-            this.btnSearch.Location = new System.Drawing.Point(302, 2);
-            this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Size = new System.Drawing.Size(34, 30);
-            this.btnSearch.TabIndex = 1;
-            this.btnSearch.UseVisualStyleBackColor = true;
-            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             // 
             // txtSearch
             // 
-            this.txtSearch.Location = new System.Drawing.Point(5, 4);
+            this.txtSearch.AcceptsReturn = true;
+            this.txtSearch.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtSearch.Font = new System.Drawing.Font("Segoe UI Semilight", 13.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtSearch.ForeColor = System.Drawing.Color.Gray;
+            this.txtSearch.Location = new System.Drawing.Point(11, 14);
+            this.txtSearch.Margin = new System.Windows.Forms.Padding(0);
             this.txtSearch.Name = "txtSearch";
-            this.txtSearch.Size = new System.Drawing.Size(293, 29);
-            this.txtSearch.TabIndex = 0;
-            this.txtSearch.TextChanged += new System.EventHandler(this.txtSearch_TextChanged);
+            this.txtSearch.PlaceholderText = "Search Item";
+            this.txtSearch.Size = new System.Drawing.Size(280, 24);
+            this.txtSearch.TabIndex = 5;
+            this.txtSearch.Tag = "";
+            this.txtSearch.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtSearch_KeyPress);
+            // 
+            // btnSearch
+            // 
+            this.btnSearch.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnSearch.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnSearch.FlatAppearance.BorderSize = 0;
+            this.btnSearch.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
+            this.btnSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSearch.Image = global::App_UI.Properties.Resources.search_24;
+            this.btnSearch.Location = new System.Drawing.Point(299, 10);
+            this.btnSearch.Name = "btnSearch";
+            this.btnSearch.Size = new System.Drawing.Size(35, 33);
+            this.btnSearch.TabIndex = 1;
+            this.btnSearch.UseVisualStyleBackColor = true;
+            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             // 
             // flyLayout
             // 
             this.flyLayout.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.flyLayout.Location = new System.Drawing.Point(3, 37);
+            this.flyLayout.Location = new System.Drawing.Point(3, 53);
             this.flyLayout.Name = "flyLayout";
-            this.flyLayout.Size = new System.Drawing.Size(590, 274);
+            this.flyLayout.Size = new System.Drawing.Size(559, 258);
             this.flyLayout.TabIndex = 4;
+            // 
+            // shapeContainer3
+            // 
+            this.shapeContainer3.Location = new System.Drawing.Point(0, 0);
+            this.shapeContainer3.Margin = new System.Windows.Forms.Padding(0);
+            this.shapeContainer3.Name = "shapeContainer3";
+            this.shapeContainer3.Shapes.AddRange(new Microsoft.VisualBasic.PowerPacks.Shape[] {
+            this.rectangleShape2});
+            this.shapeContainer3.Size = new System.Drawing.Size(565, 314);
+            this.shapeContainer3.TabIndex = 6;
+            this.shapeContainer3.TabStop = false;
+            // 
+            // rectangleShape2
+            // 
+            this.rectangleShape2.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(225)))), ((int)(((byte)(225)))));
+            this.rectangleShape2.FillColor = System.Drawing.Color.White;
+            this.rectangleShape2.FillStyle = Microsoft.VisualBasic.PowerPacks.FillStyle.Solid;
+            this.rectangleShape2.Location = new System.Drawing.Point(3, 10);
+            this.rectangleShape2.Name = "rectangleShape2";
+            this.rectangleShape2.Size = new System.Drawing.Size(293, 34);
             // 
             // lstCart
             // 
+            this.lstCart.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lstCart.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1,
-            this.columnHeader2});
+            this.columnHeader2,
+            this.columnHeader3});
+            this.lstCart.Cursor = System.Windows.Forms.Cursors.Hand;
             this.lstCart.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lstCart.Location = new System.Drawing.Point(612, 62);
+            this.lstCart.FullRowSelect = true;
+            this.lstCart.GridLines = true;
+            this.lstCart.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.lstCart.Location = new System.Drawing.Point(585, 69);
+            this.lstCart.Margin = new System.Windows.Forms.Padding(0, 10, 0, 0);
             this.lstCart.Name = "lstCart";
-            this.lstCart.Size = new System.Drawing.Size(272, 308);
+            this.lstCart.Size = new System.Drawing.Size(290, 304);
             this.lstCart.TabIndex = 6;
             this.lstCart.UseCompatibleStateImageBehavior = false;
             this.lstCart.View = System.Windows.Forms.View.Details;
             // 
             // columnHeader1
             // 
-            this.columnHeader1.Text = "Item";
-            this.columnHeader1.Width = 193;
+            this.columnHeader1.Text = "Items";
+            this.columnHeader1.Width = 180;
             // 
             // columnHeader2
             // 
-            this.columnHeader2.Text = "Price";
-            this.columnHeader2.Width = 70;
+            this.columnHeader2.Text = "Qty";
+            this.columnHeader2.Width = 40;
+            // 
+            // columnHeader3
+            // 
+            this.columnHeader3.Text = "Price";
+            this.columnHeader3.Width = 100;
             // 
             // frmMain
             // 
@@ -350,11 +397,11 @@
             this.Controls.Add(this.tblMainLayout);
             this.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmMain";
-            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Load += new System.EventHandler(this.frmMain_Load);
             this.tblMainLayout.ResumeLayout(false);
@@ -389,9 +436,12 @@
         private System.Windows.Forms.FlowLayoutPanel flyLayout;
         private System.Windows.Forms.Panel pnlBase;
         private System.Windows.Forms.Button btnSearch;
-        private System.Windows.Forms.TextBox txtSearch;
         private System.Windows.Forms.ListView lstCart;
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.ColumnHeader columnHeader2;
+        private CustomServerControls.TxtBox txtSearch;
+        private Microsoft.VisualBasic.PowerPacks.ShapeContainer shapeContainer3;
+        private Microsoft.VisualBasic.PowerPacks.RectangleShape rectangleShape2;
+        private System.Windows.Forms.ColumnHeader columnHeader3;
     }
 }
