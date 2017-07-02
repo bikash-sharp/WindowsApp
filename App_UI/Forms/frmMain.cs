@@ -1,4 +1,5 @@
 ﻿using App_BAL;
+using App_UI.UserControls;
 using CustomServerControls;
 using System;
 using System.Collections.Generic;
@@ -154,6 +155,38 @@ namespace App_UI.Forms
                 {
                     BindProducts(SelectedCategoryID, txtSearch.Text.Trim());
                 }
+            }
+        }
+
+        private void btnPay_Click(object sender, EventArgs e)
+        {
+            var TotalAmount = 0;  // Total Price
+            FrmContainer frm = new FrmContainer();
+            ucPayment uc = new ucPayment();
+            frm.Dock = DockStyle.Fill;
+            uc.BindData(TotalAmount);
+            frm.Controls.Add(uc);
+            var dgRes = frm.ShowDialog();
+            if (dgRes == System.Windows.Forms.DialogResult.OK)
+            {
+                string OrderNumber = DateTime.UtcNow.Ticks.ToString();
+
+                CartCL cart = new CartCL();
+                cart.IsOrderConfirmed = false;
+                cart.OrderID = 0;
+                cart.OrderNo = OrderNumber;
+                if (rdbDelivery.Checked)
+                {
+                    cart.OrderType = EmOrderType.Delivery;
+                }
+                else
+                {
+                    cart.OrderType = EmOrderType.TakeAway;
+                }
+                cart.PaymentType = uc.PayementType;
+                // cart.Items= 
+
+                MessageBox.Show("Order Number : " + OrderNumber + " has been placed successfully", " Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
     }

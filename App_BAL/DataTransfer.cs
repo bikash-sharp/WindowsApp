@@ -11,6 +11,7 @@ namespace App_BAL
 
     }
 
+
     public enum EmOrderType
     {
         TakeAway = 1,
@@ -29,7 +30,7 @@ namespace App_BAL
         public EmOrderType OrderType { get; set; }
         public List<CartItemsCL> Items { get; set; }
         public bool IsOrderConfirmed { get; set; }
-        public EmOrderType PaymentType { get; set; }
+        public EmPaymentType PaymentType { get; set; }
     }
 
     public class CartItemsCL
