@@ -36,12 +36,13 @@
             this.btnCard = new System.Windows.Forms.Button();
             this.pnlBase = new System.Windows.Forms.Panel();
             this.pnlCash = new System.Windows.Forms.Panel();
+            this.txtAmount = new CustomServerControls.TxtBox();
             this.btnExactAmount = new System.Windows.Forms.Button();
-            this.txtAmount = new System.Windows.Forms.TextBox();
             this.lblRem = new System.Windows.Forms.Label();
-            this.lblAmount = new System.Windows.Forms.Label();
             this.pnlCard = new System.Windows.Forms.Panel();
             this.lblCardMsg = new System.Windows.Forms.Label();
+            this.rectangleShape2 = new Microsoft.VisualBasic.PowerPacks.RectangleShape();
+            this.shapeContainer1 = new Microsoft.VisualBasic.PowerPacks.ShapeContainer();
             this.tblBase.SuspendLayout();
             this.pnlBase.SuspendLayout();
             this.pnlCash.SuspendLayout();
@@ -63,6 +64,7 @@
             this.tblBase.Controls.Add(this.pnlBase, 1, 1);
             this.tblBase.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tblBase.Location = new System.Drawing.Point(0, 0);
+            this.tblBase.Margin = new System.Windows.Forms.Padding(0);
             this.tblBase.Name = "tblBase";
             this.tblBase.RowCount = 5;
             this.tblBase.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 49F));
@@ -93,16 +95,17 @@
             // 
             this.btnPay.BackColor = System.Drawing.Color.LimeGreen;
             this.tblBase.SetColumnSpan(this.btnPay, 2);
+            this.btnPay.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnPay.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnPay.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnPay.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnPay.ForeColor = System.Drawing.Color.White;
-            this.btnPay.Location = new System.Drawing.Point(1, 348);
-            this.btnPay.Margin = new System.Windows.Forms.Padding(1);
+            this.btnPay.Location = new System.Drawing.Point(0, 347);
+            this.btnPay.Margin = new System.Windows.Forms.Padding(0);
             this.btnPay.Name = "btnPay";
-            this.btnPay.Size = new System.Drawing.Size(250, 70);
+            this.btnPay.Size = new System.Drawing.Size(252, 72);
             this.btnPay.TabIndex = 1;
-            this.btnPay.Text = "PAY";
+            this.btnPay.Text = "Pay";
             this.btnPay.UseVisualStyleBackColor = false;
             this.btnPay.Click += new System.EventHandler(this.btnPay_Click);
             // 
@@ -110,14 +113,15 @@
             // 
             this.btnCancel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(26)))), ((int)(((byte)(26)))));
             this.tblBase.SetColumnSpan(this.btnCancel, 2);
+            this.btnCancel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnCancel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCancel.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCancel.ForeColor = System.Drawing.Color.White;
-            this.btnCancel.Location = new System.Drawing.Point(253, 348);
-            this.btnCancel.Margin = new System.Windows.Forms.Padding(1);
+            this.btnCancel.Location = new System.Drawing.Point(252, 347);
+            this.btnCancel.Margin = new System.Windows.Forms.Padding(0);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(250, 70);
+            this.btnCancel.Size = new System.Drawing.Size(252, 72);
             this.btnCancel.TabIndex = 2;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = false;
@@ -125,7 +129,9 @@
             // 
             // btnCash
             // 
+            this.btnCash.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnCash.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnCash.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCash.Location = new System.Drawing.Point(1, 50);
             this.btnCash.Margin = new System.Windows.Forms.Padding(1);
             this.btnCash.Name = "btnCash";
@@ -137,7 +143,9 @@
             // 
             // btnCard
             // 
+            this.btnCard.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnCard.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnCard.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCard.Location = new System.Drawing.Point(1, 101);
             this.btnCard.Margin = new System.Windows.Forms.Padding(1);
             this.btnCard.Name = "btnCard";
@@ -162,10 +170,10 @@
             // 
             // pnlCash
             // 
-            this.pnlCash.Controls.Add(this.btnExactAmount);
             this.pnlCash.Controls.Add(this.txtAmount);
+            this.pnlCash.Controls.Add(this.btnExactAmount);
             this.pnlCash.Controls.Add(this.lblRem);
-            this.pnlCash.Controls.Add(this.lblAmount);
+            this.pnlCash.Controls.Add(this.shapeContainer1);
             this.pnlCash.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlCash.Location = new System.Drawing.Point(0, 0);
             this.pnlCash.Margin = new System.Windows.Forms.Padding(0);
@@ -173,23 +181,30 @@
             this.pnlCash.Size = new System.Drawing.Size(368, 298);
             this.pnlCash.TabIndex = 1;
             // 
+            // txtAmount
+            // 
+            this.txtAmount.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtAmount.Font = new System.Drawing.Font("Segoe UI Semibold", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtAmount.ForeColor = System.Drawing.Color.Gray;
+            this.txtAmount.Location = new System.Drawing.Point(10, 14);
+            this.txtAmount.Name = "txtAmount";
+            this.txtAmount.PlaceholderText = "Enter Amount";
+            this.txtAmount.Size = new System.Drawing.Size(348, 29);
+            this.txtAmount.TabIndex = 5;
+            this.txtAmount.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtAmount.TextChanged += new System.EventHandler(this.txtAmount_TextChanged);
+            // 
             // btnExactAmount
             // 
+            this.btnExactAmount.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnExactAmount.Location = new System.Drawing.Point(142, 87);
             this.btnExactAmount.Name = "btnExactAmount";
             this.btnExactAmount.Size = new System.Drawing.Size(163, 31);
             this.btnExactAmount.TabIndex = 3;
             this.btnExactAmount.Text = "Exact Amount";
             this.btnExactAmount.UseVisualStyleBackColor = true;
+            this.btnExactAmount.Visible = false;
             this.btnExactAmount.Click += new System.EventHandler(this.btnExactAmount_Click);
-            // 
-            // txtAmount
-            // 
-            this.txtAmount.Location = new System.Drawing.Point(142, 37);
-            this.txtAmount.Name = "txtAmount";
-            this.txtAmount.Size = new System.Drawing.Size(163, 29);
-            this.txtAmount.TabIndex = 2;
-            this.txtAmount.TextChanged += new System.EventHandler(this.txtAmount_TextChanged);
             // 
             // lblRem
             // 
@@ -197,20 +212,12 @@
             this.lblRem.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.lblRem.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblRem.Location = new System.Drawing.Point(0, 257);
+            this.lblRem.Margin = new System.Windows.Forms.Padding(0);
             this.lblRem.Name = "lblRem";
             this.lblRem.Size = new System.Drawing.Size(368, 41);
             this.lblRem.TabIndex = 1;
             this.lblRem.Text = "Balance : 0.00";
             this.lblRem.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lblAmount
-            // 
-            this.lblAmount.AutoSize = true;
-            this.lblAmount.Location = new System.Drawing.Point(28, 40);
-            this.lblAmount.Name = "lblAmount";
-            this.lblAmount.Size = new System.Drawing.Size(117, 21);
-            this.lblAmount.TabIndex = 0;
-            this.lblAmount.Text = "Enter Amount : ";
             // 
             // pnlCard
             // 
@@ -231,6 +238,27 @@
             this.lblCardMsg.Size = new System.Drawing.Size(268, 21);
             this.lblCardMsg.TabIndex = 0;
             this.lblCardMsg.Text = "Click on Pay to complete your order...";
+            // 
+            // rectangleShape2
+            // 
+            this.rectangleShape2.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(225)))), ((int)(((byte)(225)))));
+            this.rectangleShape2.BorderWidth = 2;
+            this.rectangleShape2.FillColor = System.Drawing.Color.White;
+            this.rectangleShape2.FillStyle = Microsoft.VisualBasic.PowerPacks.FillStyle.Solid;
+            this.rectangleShape2.Location = new System.Drawing.Point(8, 9);
+            this.rectangleShape2.Name = "rectangleShape2";
+            this.rectangleShape2.Size = new System.Drawing.Size(351, 40);
+            // 
+            // shapeContainer1
+            // 
+            this.shapeContainer1.Location = new System.Drawing.Point(0, 0);
+            this.shapeContainer1.Margin = new System.Windows.Forms.Padding(0);
+            this.shapeContainer1.Name = "shapeContainer1";
+            this.shapeContainer1.Shapes.AddRange(new Microsoft.VisualBasic.PowerPacks.Shape[] {
+            this.rectangleShape2});
+            this.shapeContainer1.Size = new System.Drawing.Size(368, 298);
+            this.shapeContainer1.TabIndex = 6;
+            this.shapeContainer1.TabStop = false;
             // 
             // ucPayment
             // 
@@ -266,8 +294,9 @@
         private System.Windows.Forms.Panel pnlCash;
         private System.Windows.Forms.Label lblCardMsg;
         private System.Windows.Forms.Button btnExactAmount;
-        private System.Windows.Forms.TextBox txtAmount;
         private System.Windows.Forms.Label lblRem;
-        private System.Windows.Forms.Label lblAmount;
+        private CustomServerControls.TxtBox txtAmount;
+        private Microsoft.VisualBasic.PowerPacks.ShapeContainer shapeContainer1;
+        private Microsoft.VisualBasic.PowerPacks.RectangleShape rectangleShape2;
     }
 }

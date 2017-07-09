@@ -89,7 +89,7 @@ namespace App_UI.Forms
 
             Label lblName = new Label();
             lblName.Name = "lblProductName_" + itm.ProductID;
-            lblName.Text = itm.ProductName + Environment.NewLine + "MYR - " + itm.Price;
+            lblName.Text = itm.ProductName + Environment.NewLine + "MYR - " + itm.Price.ToString("N");
             lblName.Location = new Point(5, pic.Height + 5);
             lblName.AutoSize = false;
             lblName.Width = pnl.Width - 10;
@@ -209,9 +209,11 @@ namespace App_UI.Forms
                 ucPayment uc = new ucPayment();
                 frm.Dock = DockStyle.Fill;
                 uc.BindData(TotalAmount);
-                frm.Width = uc.Width + 20; ;
+                frm.Width = uc.Width+20 ;
                 frm.Height = uc.Height + 40;
                 frm.Controls.Add(uc);
+                //frm.FormBorderStyle = FormBorderStyle.None;
+                frm.StartPosition = FormStartPosition.CenterScreen;
                 var dgRes = frm.ShowDialog();
                 if (dgRes == System.Windows.Forms.DialogResult.OK)
                 {

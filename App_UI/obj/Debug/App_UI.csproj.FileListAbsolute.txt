@@ -93,3 +93,6 @@ F:\Work\POS\Latest\App_UI\obj\Debug\App_UI.application
 F:\Work\POS\Latest\App_UI\obj\Debug\App_UI.Forms.FrmContainer.resources
 F:\Work\POS\Latest\App_UI\obj\Debug\App_UI.UserControls.ucPayment.resources
 F:\Work\POS\Latest\App_UI\obj\Debug\App_UI.UserControls.uc_ConfirmOrder.resources
+E:\Projects\GitHub\WindowsApp\App_UI\obj\Debug\App_UI.Forms.FrmContainer.resources
+E:\Projects\GitHub\WindowsApp\App_UI\obj\Debug\App_UI.UserControls.ucPayment.resources
+E:\Projects\GitHub\WindowsApp\App_UI\obj\Debug\App_UI.UserControls.uc_ConfirmOrder.resources

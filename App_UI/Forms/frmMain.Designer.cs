@@ -58,8 +58,8 @@
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.removeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.clearAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.clearAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tblMainLayout.SuspendLayout();
             this.pnlTopMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -77,7 +77,7 @@
             this.tblMainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tblMainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 290F));
             this.tblMainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tblMainLayout.Controls.Add(this.pnlTopMenu, 0, 0);
+            this.tblMainLayout.Controls.Add(this.pnlTopMenu, 1, 0);
             this.tblMainLayout.Controls.Add(this.pnlPay, 2, 2);
             this.tblMainLayout.Controls.Add(this.uc_CategoryMenu1, 1, 2);
             this.tblMainLayout.Controls.Add(this.pnlBase, 1, 1);
@@ -96,7 +96,7 @@
             // pnlTopMenu
             // 
             this.pnlTopMenu.BackColor = System.Drawing.Color.Black;
-            this.tblMainLayout.SetColumnSpan(this.pnlTopMenu, 4);
+            this.tblMainLayout.SetColumnSpan(this.pnlTopMenu, 3);
             this.pnlTopMenu.Controls.Add(this.btnExit);
             this.pnlTopMenu.Controls.Add(this.lblOrderCount);
             this.pnlTopMenu.Controls.Add(this.pictureBox1);
@@ -105,10 +105,10 @@
             this.pnlTopMenu.Controls.Add(this.rdbDelivery);
             this.pnlTopMenu.Controls.Add(this.shapeContainer2);
             this.pnlTopMenu.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlTopMenu.Location = new System.Drawing.Point(0, 0);
+            this.pnlTopMenu.Location = new System.Drawing.Point(20, 0);
             this.pnlTopMenu.Margin = new System.Windows.Forms.Padding(0);
             this.pnlTopMenu.Name = "pnlTopMenu";
-            this.pnlTopMenu.Size = new System.Drawing.Size(895, 59);
+            this.pnlTopMenu.Size = new System.Drawing.Size(875, 59);
             this.pnlTopMenu.TabIndex = 0;
             // 
             // btnExit
@@ -123,7 +123,7 @@
             this.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnExit.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnExit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
-            this.btnExit.Location = new System.Drawing.Point(817, 11);
+            this.btnExit.Location = new System.Drawing.Point(797, 11);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(70, 38);
             this.btnExit.TabIndex = 6;
@@ -170,7 +170,7 @@
             this.rdbOrder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.rdbOrder.Cursor = System.Windows.Forms.Cursors.Hand;
             this.rdbOrder.ForeColor = System.Drawing.Color.White;
-            this.rdbOrder.Location = new System.Drawing.Point(608, 19);
+            this.rdbOrder.Location = new System.Drawing.Point(588, 19);
             this.rdbOrder.Name = "rdbOrder";
             this.rdbOrder.Size = new System.Drawing.Size(102, 25);
             this.rdbOrder.TabIndex = 1;
@@ -183,7 +183,7 @@
             this.rdbDelivery.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.rdbDelivery.Cursor = System.Windows.Forms.Cursors.Hand;
             this.rdbDelivery.ForeColor = System.Drawing.Color.White;
-            this.rdbDelivery.Location = new System.Drawing.Point(712, 19);
+            this.rdbDelivery.Location = new System.Drawing.Point(692, 19);
             this.rdbDelivery.Name = "rdbDelivery";
             this.rdbDelivery.Size = new System.Drawing.Size(97, 25);
             this.rdbDelivery.TabIndex = 0;
@@ -198,7 +198,7 @@
             this.shapeContainer2.Shapes.AddRange(new Microsoft.VisualBasic.PowerPacks.Shape[] {
             this.rectangleShape1,
             this.ovalShape1});
-            this.shapeContainer2.Size = new System.Drawing.Size(895, 59);
+            this.shapeContainer2.Size = new System.Drawing.Size(875, 59);
             this.shapeContainer2.TabIndex = 4;
             this.shapeContainer2.TabStop = false;
             // 
@@ -212,7 +212,7 @@
             this.rectangleShape1.FillColor = System.Drawing.Color.Black;
             this.rectangleShape1.FillGradientColor = System.Drawing.Color.Black;
             this.rectangleShape1.FillStyle = Microsoft.VisualBasic.PowerPacks.FillStyle.Solid;
-            this.rectangleShape1.Location = new System.Drawing.Point(815, 8);
+            this.rectangleShape1.Location = new System.Drawing.Point(795, 8);
             this.rectangleShape1.Name = "rectangleShape1";
             this.rectangleShape1.Size = new System.Drawing.Size(75, 44);
             // 
@@ -404,28 +404,28 @@
             this.toolStripSeparator1,
             this.clearAllToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(153, 84);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(136, 62);
             // 
             // removeToolStripMenuItem
             // 
             this.removeToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.removeToolStripMenuItem.Name = "removeToolStripMenuItem";
-            this.removeToolStripMenuItem.Size = new System.Drawing.Size(152, 26);
+            this.removeToolStripMenuItem.Size = new System.Drawing.Size(135, 26);
             this.removeToolStripMenuItem.Text = "Remove";
             this.removeToolStripMenuItem.Click += new System.EventHandler(this.removeToolStripMenuItem_Click);
-            // 
-            // clearAllToolStripMenuItem
-            // 
-            this.clearAllToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.clearAllToolStripMenuItem.Name = "clearAllToolStripMenuItem";
-            this.clearAllToolStripMenuItem.Size = new System.Drawing.Size(152, 26);
-            this.clearAllToolStripMenuItem.Text = "Clear All";
-            this.clearAllToolStripMenuItem.Click += new System.EventHandler(this.clearAllToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(132, 6);
+            // 
+            // clearAllToolStripMenuItem
+            // 
+            this.clearAllToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.clearAllToolStripMenuItem.Name = "clearAllToolStripMenuItem";
+            this.clearAllToolStripMenuItem.Size = new System.Drawing.Size(135, 26);
+            this.clearAllToolStripMenuItem.Text = "Clear All";
+            this.clearAllToolStripMenuItem.Click += new System.EventHandler(this.clearAllToolStripMenuItem_Click);
             // 
             // frmMain
             // 
