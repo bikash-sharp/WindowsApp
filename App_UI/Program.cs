@@ -12,6 +12,7 @@ namespace App_UI
     {
         public static List<CategoryListCL> Categories = new List<CategoryListCL>();
         public static List<ProductListCL> Products = new List<ProductListCL>();
+        public static List<CartCL> PlacedOrders = new List<CartCL>();
 
         /// <summary>
         /// The main entry point for the application.

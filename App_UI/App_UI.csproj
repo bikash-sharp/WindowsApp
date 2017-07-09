@@ -120,6 +120,12 @@
     <Compile Include="UserControls\uc_CategoryMenu.Designer.cs">
       <DependentUpon>uc_CategoryMenu.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\uc_ConfirmOrder.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\uc_ConfirmOrder.Designer.cs">
+      <DependentUpon>uc_ConfirmOrder.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Forms\FrmContainer.resx">
       <DependentUpon>FrmContainer.cs</DependentUpon>
     </EmbeddedResource>
@@ -147,6 +153,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\uc_CategoryMenu.resx">
       <DependentUpon>uc_CategoryMenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\uc_ConfirmOrder.resx">
+      <DependentUpon>uc_ConfirmOrder.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="App_UI_TemporaryKey.pfx" />
     <None Include="Properties\Settings.settings">

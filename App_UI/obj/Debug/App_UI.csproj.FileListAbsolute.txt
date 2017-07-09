@@ -92,3 +92,4 @@ F:\Work\POS\Latest\App_UI\obj\Debug\App_UI.exe.manifest
 F:\Work\POS\Latest\App_UI\obj\Debug\App_UI.application
 F:\Work\POS\Latest\App_UI\obj\Debug\App_UI.Forms.FrmContainer.resources
 F:\Work\POS\Latest\App_UI\obj\Debug\App_UI.UserControls.ucPayment.resources
+F:\Work\POS\Latest\App_UI\obj\Debug\App_UI.UserControls.uc_ConfirmOrder.resources

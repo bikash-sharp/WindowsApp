@@ -45,13 +45,19 @@ namespace App_UI.UserControls
             }
             else
             {
-                // return success
+                if (this.ParentForm.Modal)
+                {
+                    this.ParentForm.DialogResult = DialogResult.OK;
+                }
             }
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            // return cancel
+            if (this.ParentForm.Modal)
+            {
+                this.ParentForm.DialogResult = DialogResult.Cancel;
+            }
         }
 
         private void btnExactAmount_Click(object sender, EventArgs e)

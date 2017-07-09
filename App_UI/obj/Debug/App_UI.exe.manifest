@@ -55,14 +55,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="App_UI.exe" size="474112">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="App_UI.exe" size="479744">
       <assemblyIdentity name="App_UI" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>nijHavHGDrT1BKbu+UTHhK6By6AUG4MCzA1im+2QSl8=</dsig:DigestValue>
+        <dsig:DigestValue>NM5shvkmBa+d+YS0grtUM6FNXy9ogGdWc0ObsAcxikw=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
