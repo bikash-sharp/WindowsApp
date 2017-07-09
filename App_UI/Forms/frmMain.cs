@@ -124,18 +124,51 @@ namespace App_UI.Forms
             }
             if (prod != null)
             {
-                ListViewItem itm = new ListViewItem(prod.ProductName.ToString());
-                itm.SubItems.Add("1");
-                itm.SubItems.Add("MYR " + prod.Price.ToString("N"));
-                itm.Tag = prod;
-                lstCart.Items.Add(itm);
-
                 CartItemsCL cl = new CartItemsCL();
-                cl.ProductID = prod.ProductID;
-                cl.CategoryID = prod.CategoryID;
-                cl.Price = prod.Price;
-                cl.ProductName = prod.ProductName;
-                cartItems.Add(cl);
+                bool IsNew = false;
+                if (cartItems.Count > 0)
+                {
+                    cl = cartItems.Where(p => p.ProductID == prod.ProductID).FirstOrDefault();
+                    if(cl != null)
+                    {
+                        cl.Quantity += 1;
+                        cl.Price = prod.Price * cl.Quantity;
+                    }
+                    else
+                    {
+                        IsNew = true;
+                    }
+                    
+                }
+                else
+                {
+                    IsNew = true;
+                }
+
+                if (IsNew)
+                {
+                    cl = new CartItemsCL();
+                    cl.ProductID = prod.ProductID;
+                    cl.CategoryID = prod.CategoryID;
+                    cl.Price = prod.Price;
+                    cl.Quantity = 1;
+                    cl.ProductName = prod.ProductName;
+                    cartItems.Add(cl);
+                }
+
+                BindCart(cartItems);
+            }
+        }
+
+        private void BindCart(List<CartItemsCL> cartItems)
+        {
+            lstCart.Items.Clear();
+            foreach (CartItemsCL cartItem in cartItems)
+            {
+                ListViewItem item = new ListViewItem(cartItem.ProductName.ToString());
+                item.SubItems.Add(cartItem.Quantity.ToString());
+                item.SubItems.Add("MYR " + cartItem.Price.ToString("N"));
+                lstCart.Items.Add(item);
             }
         }
 
