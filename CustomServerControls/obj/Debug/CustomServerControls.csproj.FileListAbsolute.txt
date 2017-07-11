@@ -12,3 +12,7 @@ E:\Projects\GitHub\WindowsApp\CustomServerControls\bin\Debug\CustomServerControl
 E:\Projects\GitHub\WindowsApp\CustomServerControls\obj\Debug\CustomServerControls.csprojResolveAssemblyReference.cache
 E:\Projects\GitHub\WindowsApp\CustomServerControls\obj\Debug\CustomServerControls.dll
 E:\Projects\GitHub\WindowsApp\CustomServerControls\obj\Debug\CustomServerControls.pdb
+F:\Work\POS\Latest\CustomServerControls\bin\Debug\CustomServerControls.dll
+F:\Work\POS\Latest\CustomServerControls\bin\Debug\CustomServerControls.pdb
+F:\Work\POS\Latest\CustomServerControls\obj\Debug\CustomServerControls.dll
+F:\Work\POS\Latest\CustomServerControls\obj\Debug\CustomServerControls.pdb

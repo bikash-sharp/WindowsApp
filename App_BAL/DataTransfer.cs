@@ -56,4 +56,32 @@ namespace App_BAL
         public int CategoryID { get; set; }
         public string ImageName { get; set; }
     }
+
+    public enum Verbs
+    {
+        GET,
+        POST,
+        PUT
+    }
+
+    public class LoginCL
+    {
+        public bool status { get; set; }
+        public string data { get; set; }
+        public string message { get; set; }
+    }
+
+    public class Data
+    {
+        public string __invalid_name__6 { get; set; }
+        public string __invalid_name__4 { get; set; }
+        public string __invalid_name__1 { get; set; }
+    }
+
+    public class CategoryCL
+    {
+        public bool status { get; set; }
+        public Data data { get; set; }
+        public string message { get; set; }
+    }
 }

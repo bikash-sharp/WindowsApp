@@ -7,12 +7,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using App_Wrapper;
+using App_BAL;
+using System.Web.Script.Serialization;
 
 namespace App_UI.UserControls
 {
     public partial class uc_CategoryMenu : UserControl
     {
-        public static string currentBtnName= "All";
+        public static string currentBtnName = "All";
         public uc_CategoryMenu()
         {
             InitializeComponent();
@@ -27,6 +30,14 @@ namespace App_UI.UserControls
         public void BindData()
         {
             flowLayoutPanel1.Controls.Clear();
+
+            string URL = Program.BaseUrl;
+            string CategoryURL = URL + "/getmenu?acess_token=" + Program.Token;
+
+            var CategoryList = DataProviderWrapper.Instance.GetData(CategoryURL, Verbs.GET, "");
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            var result = serializer.Deserialize<CategoryCL>(CategoryList);
+
             foreach (var item in Program.Categories)
             {
                 CreateButton(item.CategoryID, item.CategoryName);

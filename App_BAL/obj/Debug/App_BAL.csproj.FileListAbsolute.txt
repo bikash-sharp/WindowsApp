@@ -12,9 +12,8 @@ E:\Projects\GitHub\WindowsApp\App_BAL\bin\Debug\App_BAL.dll
 E:\Projects\GitHub\WindowsApp\App_BAL\bin\Debug\App_BAL.pdb
 E:\Projects\GitHub\WindowsApp\App_BAL\obj\Debug\App_BAL.dll
 E:\Projects\GitHub\WindowsApp\App_BAL\obj\Debug\App_BAL.pdb
+E:\Projects\GitHub\WindowsApp\App_BAL\obj\Debug\App_BAL.csprojResolveAssemblyReference.cache
 F:\Work\POS\Latest\App_BAL\bin\Debug\App_BAL.dll
 F:\Work\POS\Latest\App_BAL\bin\Debug\App_BAL.pdb
-F:\Work\POS\Latest\App_BAL\obj\Debug\App_BAL.csprojResolveAssemblyReference.cache
 F:\Work\POS\Latest\App_BAL\obj\Debug\App_BAL.dll
 F:\Work\POS\Latest\App_BAL\obj\Debug\App_BAL.pdb
-E:\Projects\GitHub\WindowsApp\App_BAL\obj\Debug\App_BAL.csprojResolveAssemblyReference.cache

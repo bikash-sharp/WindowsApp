@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using App_BAL;
+using App_Wrapper;
+using System.Web.Script.Serialization;
 
 namespace App_UI.Forms
 {
@@ -42,9 +44,18 @@ namespace App_UI.Forms
                 this.rectangleShape3.BorderColor = Color.FromArgb(225, 225, 225);
                 try
                 {
-                    if(txtUserName.Text == "Admin" && txtPassword.Text == "12345")
+                    string URL = Program.BaseUrl;
+                    string LoginUrl = URL + "/login?username=" + txtUserName.Text.Trim() + "&password=" + txtPassword.Text.Trim();
+
+                    var GetLoginDetails = DataProviderWrapper.Instance.GetData(LoginUrl, Verbs.GET, "");
+                    JavaScriptSerializer serializer = new JavaScriptSerializer();
+                    LoginCL result = serializer.Deserialize<LoginCL>(GetLoginDetails);
+
+                    //if(txtUserName.Text == "Admin" && txtPassword.Text == "12345")
+                    if (result.message == "success")
                     {
                         this.Hide();
+                        Program.Token = result.data;
                         frmMain _main = new frmMain();
                         _main.ShowDialog();
                     }

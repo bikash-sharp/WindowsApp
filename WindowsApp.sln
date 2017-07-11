@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomServerControls", "Cus
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App_BAL", "App_BAL\App_BAL.csproj", "{33F53F44-A219-4CE0-A499-695A6906768B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App_Wrapper", "App_Wrapper\App_Wrapper.csproj", "{401D1D22-A1D6-4053-A368-A96FC24929AD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{33F53F44-A219-4CE0-A499-695A6906768B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{33F53F44-A219-4CE0-A499-695A6906768B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{33F53F44-A219-4CE0-A499-695A6906768B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{401D1D22-A1D6-4053-A368-A96FC24929AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{401D1D22-A1D6-4053-A368-A96FC24929AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{401D1D22-A1D6-4053-A368-A96FC24929AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{401D1D22-A1D6-4053-A368-A96FC24929AD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
