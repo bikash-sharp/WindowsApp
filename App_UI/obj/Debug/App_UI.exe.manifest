@@ -43,26 +43,26 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="App_BAL.dll" size="9728">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="App_BAL.dll" size="9216">
       <assemblyIdentity name="App_BAL" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>foIKzI5ip5BPrnthZ8fN5jDra59t9JCw5QoQ+vVg19E=</dsig:DigestValue>
+        <dsig:DigestValue>EocNchCnH1/9+rgR905FNKxsSDXmbAjFbLprItyB6Q4=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="App_UI.exe" size="481792">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="App_UI.exe" size="481280">
       <assemblyIdentity name="App_UI" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>mFTaneyJYGOl8YwhoV6Vm4jMauExRpUjxyJXOMxM31g=</dsig:DigestValue>
+        <dsig:DigestValue>wmy9QAbhSRnynbzmaCLHV2YlpPeg4eeGjJ2J/m3C49M=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

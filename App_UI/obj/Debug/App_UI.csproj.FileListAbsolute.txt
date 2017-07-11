@@ -97,3 +97,5 @@ F:\Work\POS\Latest\App_UI\obj\Debug\App_UI.application
 F:\Work\POS\Latest\App_UI\obj\Debug\App_UI.exe
 F:\Work\POS\Latest\App_UI\obj\Debug\App_UI.pdb
 F:\Work\POS\Latest\App_UI\bin\Debug\App_UI.pdb
+E:\Projects\GitHub\WindowsApp\App_UI\bin\Debug\App_Wrapper.dll
+E:\Projects\GitHub\WindowsApp\App_UI\bin\Debug\App_Wrapper.pdb

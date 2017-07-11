@@ -81,7 +81,7 @@ namespace App_BAL
     public class CategoryCL
     {
         public bool status { get; set; }
-        public Data data { get; set; }
+        public Object data { get; set; }
         public string message { get; set; }
     }
 }
