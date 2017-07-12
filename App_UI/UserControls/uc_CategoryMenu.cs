@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using App_Wrapper;
 using App_BAL;
 using System.Web.Script.Serialization;
+using System.Collections;
 
 namespace App_UI.UserControls
 {
@@ -38,10 +39,19 @@ namespace App_UI.UserControls
             JavaScriptSerializer serializer = new JavaScriptSerializer();
             var result = serializer.Deserialize<CategoryCL>(CategoryList);
 
-            foreach (var item in Program.Categories)
+            var AllCategoryList = ((IEnumerable)result.data).Cast<object>()
+                                   .Select(x => x == null ? x : x.ToString())
+                                   .ToArray();
+
+            CreateButton(0, "All");  //this is mandotry to show all items
+            foreach (var item in AllCategoryList)
             {
-                CreateButton(item.CategoryID, item.CategoryName);
+                int CategoryID = Convert.ToInt32(item.ToString().Split(',')[0].Replace("[", ""));
+                string CategoryName = item.ToString().Split(',')[1].Replace("]", "");
+
+                CreateButton(CategoryID, CategoryName);
             }
+            
             SelectedControls();
         }
 
@@ -104,7 +114,7 @@ namespace App_UI.UserControls
 
             SelectedControls();
 
-            EventCategoryClicked(Cur_btn.Tag, EventArgs.Empty);
+            EventCategoryClicked(Cur_btn.Text, EventArgs.Empty);
 
         }
 
@@ -125,8 +135,6 @@ namespace App_UI.UserControls
                     }
                 }
             }
-
-
         }
     }
 }

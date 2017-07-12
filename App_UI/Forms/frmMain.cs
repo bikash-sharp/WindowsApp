@@ -1,5 +1,6 @@
 ﻿using App_BAL;
 using App_UI.UserControls;
+using App_Wrapper;
 using CustomServerControls;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Script.Serialization;
 using System.Windows.Forms;
 
 namespace App_UI.Forms
@@ -34,38 +36,61 @@ namespace App_UI.Forms
             flyLayout.AutoScroll = true;
             flyLayout.VerticalScroll.Visible = true;
             flyLayout.VerticalScroll.Enabled = true;
-            BindProducts(0);
-
+            BindProducts();
         }
 
         void uc_CategoryMenu1_EventCategoryClicked(object sender, EventArgs e)
         {
-            SelectedCategoryID = 0;
-            if (sender != null)
+            string FoodType = sender.ToString().Trim();
+            if (FoodType.ToLower() != "all")
             {
-                int.TryParse(sender.ToString(), out SelectedCategoryID);
-                BindProducts(SelectedCategoryID);
+                string URL = Program.BaseUrl;
+                string FiltrPrdURL = URL + "/filterproducts?category=" + FoodType + "&acess_token=" + Program.Token;
+
+                var ProductList = DataProviderWrapper.Instance.GetData(FiltrPrdURL, Verbs.GET, "");
+                JavaScriptSerializer serializer = new JavaScriptSerializer();
+                var result = serializer.Deserialize<ProductListAPICL>(ProductList);
+
+                if (result.status)
+                {
+                    flyLayout.Controls.Clear();
+                    foreach (var itm in result.data)
+                    {
+                        CreateProdButtons(itm.Product);
+                    }
+                }
+            }
+            else
+            {
+                BindProducts();
             }
         }
 
-        private void BindProducts(int CategoryID, string SearchText = "")
+        private void BindProducts()
         {
-            var prods = Program.Products.Where(p => (CategoryID == 0 ? true : p.CategoryID == CategoryID)
-                & (SearchText != "" ? p.ProductName.ToLower().Contains(SearchText.ToLower()) : true)).ToList();
+            string URL = Program.BaseUrl;
+            string ProductURL = URL + "/productlisting?acess_token=" + Program.Token;
 
-            flyLayout.Controls.Clear();
-            foreach (var itm in prods)
+            var ProductList = DataProviderWrapper.Instance.GetData(ProductURL, Verbs.GET, "");
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            var result = serializer.Deserialize<ProductListAPICL>(ProductList);
+
+            if (result.status)
             {
-                CreateProdButtons(itm);
+                flyLayout.Controls.Clear();
+                foreach (var itm in result.data)
+                {
+                    CreateProdButtons(itm.Product);
+                }
             }
 
         }
 
-        private void CreateProdButtons(ProductListCL itm)
+        private void CreateProdButtons(ProductCL itm)
         {
             Panel pnl = new Panel();
 
-            pnl.Name = "pnl_" + itm.ProductID;
+            pnl.Name = "pnl_" + itm.id;
             pnl.Width = 200;
             pnl.Height = 200;
             pnl.Tag = itm;
@@ -74,7 +99,7 @@ namespace App_UI.Forms
 
 
             PictureBox pic = new PictureBox();
-            pic.Name = "pic_" + itm.ProductID;
+            pic.Name = "pic_" + itm.id;
             pic.Image = global::App_UI.Properties.Resources.IMG_NotFound;
             pic.Width = 200;
             pic.Height = 130;
@@ -88,8 +113,8 @@ namespace App_UI.Forms
             pnl.Controls.Add(pic);
 
             Label lblName = new Label();
-            lblName.Name = "lblProductName_" + itm.ProductID;
-            lblName.Text = itm.ProductName + Environment.NewLine + "MYR - " + itm.Price.ToString("N");
+            lblName.Name = "lblProductName_" + itm.id;
+            lblName.Text = itm.product_name + Environment.NewLine + "MYR - " + itm.product_price;
             lblName.Location = new Point(5, pic.Height + 5);
             lblName.AutoSize = false;
             lblName.Width = pnl.Width - 10;
@@ -103,24 +128,22 @@ namespace App_UI.Forms
             pnl.Click += pnl_Click;
             pnl.Margin = new Padding(0, 0, 10, 20);
             flyLayout.Controls.Add(pnl);
-
-
         }
 
         void pnl_Click(object sender, EventArgs e)
         {
-            ProductListCL prod = new ProductListCL();
+            ProductCL prod = new ProductCL();
             if (sender is Panel)
             {
-                prod = (ProductListCL)(sender as Panel).Tag;
+                prod = (ProductCL)(sender as Panel).Tag;
             }
             else if (sender is Label)
             {
-                prod = (ProductListCL)(sender as Label).Tag;
+                prod = (ProductCL)(sender as Label).Tag;
             }
             else if (sender is PictureBox)
             {
-                prod = (ProductListCL)(sender as PictureBox).Tag;
+                prod = (ProductCL)(sender as PictureBox).Tag;
             }
             if (prod != null)
             {
@@ -128,17 +151,17 @@ namespace App_UI.Forms
                 bool IsNew = false;
                 if (cartItems.Count > 0)
                 {
-                    cl = cartItems.Where(p => p.ProductID == prod.ProductID).FirstOrDefault();
-                    if(cl != null)
+                    cl = cartItems.Where(p => p.ProductID == Convert.ToInt32(prod.id)).FirstOrDefault();
+                    if (cl != null)
                     {
                         cl.Quantity += 1;
-                        cl.Price = prod.Price * cl.Quantity;
+                        cl.Price = Convert.ToDouble(prod.product_price) * cl.Quantity;
                     }
                     else
                     {
                         IsNew = true;
                     }
-                    
+
                 }
                 else
                 {
@@ -148,11 +171,11 @@ namespace App_UI.Forms
                 if (IsNew)
                 {
                     cl = new CartItemsCL();
-                    cl.ProductID = prod.ProductID;
-                    cl.CategoryID = prod.CategoryID;
-                    cl.Price = prod.Price;
+                    cl.ProductID = Convert.ToInt32(prod.id);
+                    cl.FoodType = prod.food_type;
+                    cl.Price = Convert.ToDouble(prod.product_price);
                     cl.Quantity = 1;
-                    cl.ProductName = prod.ProductName;
+                    cl.ProductName = prod.product_name;
                     cartItems.Add(cl);
                 }
 
@@ -184,7 +207,26 @@ namespace App_UI.Forms
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
-            BindProducts(SelectedCategoryID, txtSearch.Text.Trim());
+            BindProductBySearchText();
+        }
+
+        private void BindProductBySearchText()
+        {
+            string URL = Program.BaseUrl;
+            string SearchTextURL = URL + "/filterbyname?name=" + txtSearch.Text.Trim() + "&acess_token=" + Program.Token;
+
+            var ProductList = DataProviderWrapper.Instance.GetData(SearchTextURL, Verbs.GET, "");
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            var result = serializer.Deserialize<ProductListAPICL>(ProductList);
+
+            if (result.status)
+            {
+                flyLayout.Controls.Clear();
+                foreach (var itm in result.data)
+                {
+                    CreateProdButtons(itm.Product);
+                }
+            }
         }
 
         private void txtSearch_KeyPress(object sender, KeyPressEventArgs e)
@@ -194,7 +236,7 @@ namespace App_UI.Forms
             {
                 if (e.KeyChar == (char)Keys.Return)
                 {
-                    BindProducts(SelectedCategoryID, txtSearch.Text.Trim());
+                    BindProductBySearchText();
                 }
             }
         }
@@ -209,7 +251,7 @@ namespace App_UI.Forms
                 ucPayment uc = new ucPayment();
                 frm.Dock = DockStyle.Fill;
                 uc.BindData(TotalAmount);
-                frm.Width = uc.Width+20 ;
+                frm.Width = uc.Width + 20;
                 frm.Height = uc.Height + 40;
                 frm.Controls.Add(uc);
                 //frm.FormBorderStyle = FormBorderStyle.None;

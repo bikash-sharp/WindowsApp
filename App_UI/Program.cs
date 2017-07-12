@@ -23,7 +23,7 @@ namespace App_UI
         [STAThread]
         static void Main()
         {
-            BindData();
+            //BindData();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new frmLogin());

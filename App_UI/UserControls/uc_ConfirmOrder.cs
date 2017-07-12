@@ -7,6 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using App_Wrapper;
+using System.Web.Script.Serialization;
+using App_BAL;
 
 namespace App_UI.UserControls
 {
@@ -64,6 +67,12 @@ namespace App_UI.UserControls
                 var itm = Program.PlacedOrders.Where(p => p.OrderNo == OrderNo).FirstOrDefault();
                 if (itm != null)
                 {
+                    string URL = Program.BaseUrl;
+                    string ChangeOrdStatusURL = URL + "/confirmorder?order_id=" + OrderNo + "&order_status=completed&acess_token=" + Program.Token;
+
+                    var GetStatus = DataProviderWrapper.Instance.GetData(ChangeOrdStatusURL, Verbs.GET, "");
+                    JavaScriptSerializer serializer = new JavaScriptSerializer();
+                    var result = serializer.Deserialize<MessageCL>(GetStatus);
                     itm.IsOrderConfirmed = true;
                     BindData();
                 }
