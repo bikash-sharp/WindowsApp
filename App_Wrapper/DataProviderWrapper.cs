@@ -19,23 +19,10 @@ namespace App_Wrapper
         public static string DataBaseName = "";
         public static int InstanceNo = 0;
 
-        public static Stopwatch sw = new Stopwatch();
-
         public static DataProviderWrapper Instance
         {
             get
             {
-                #region HideMe
-                if (InstanceNo == 0)
-                {
-                    sw.Start();
-                }
-
-                Debug.WriteLine(sw.ElapsedMilliseconds);
-                InstanceNo++;
-                Debug.WriteLine("Instance " + InstanceNo);
-                Debug.WriteLine(sw.ElapsedMilliseconds);
-                #endregion
                 return instance;
             }
         }

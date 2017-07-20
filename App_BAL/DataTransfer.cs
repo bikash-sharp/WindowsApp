@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -28,19 +31,57 @@ namespace App_BAL
         public int OrderID { get; set; }
         public string OrderNo { get; set; }
         public EmOrderType OrderType { get; set; }
-        public List<CartItemsCL> Items { get; set; }
+        public BindingList<CartItemsCL> Items { get; set; }
         public bool IsOrderConfirmed { get; set; }
         public EmPaymentType PaymentType { get; set; }
+        public CartCL()
+        {
+            Items = new BindingList<CartItemsCL>();
+        }
     }
 
-    public class CartItemsCL
+    public class CartItemsCL : INotifyPropertyChanged
     {
+        private int QuantityValue = 0;
+        private double PriceValue = 0;
         public int ProductID { get; set; }
         public string ProductName { get; set; }
         public int CategoryID { get; set; }
         public string FoodType { get; set; }
-        public double Price { get; set; }
-        public int Quantity { get; set; }
+        public double Price {
+            get
+            {
+                return this.PriceValue;
+            }
+            set {
+                if (value != this.PriceValue)
+                {
+                    this.PriceValue = value;
+                    this.NotifyPropertyChanged();
+                }
+            }
+        }
+        public int Quantity {
+            get {
+                return this.QuantityValue;
+            }
+            set {
+                if(value != this.QuantityValue)
+                {
+                    this.QuantityValue = value;
+                    this.NotifyPropertyChanged();
+                }
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void NotifyPropertyChanged([CallerMemberName] String propertyName="")
+        {
+            if(PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
     }
 
     public class CategoryListCL

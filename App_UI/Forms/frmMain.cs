@@ -4,6 +4,7 @@ using App_Wrapper;
 using CustomServerControls;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
@@ -12,12 +13,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace App_UI.Forms
 {
     public partial class frmMain : Form
     {
-        List<CartItemsCL> cartItems = new List<CartItemsCL>();
         public static bool IsClosed = false;
         public int SelectedCategoryID = 0;
         public frmMain()
@@ -37,6 +38,7 @@ namespace App_UI.Forms
             flyLayout.VerticalScroll.Visible = true;
             flyLayout.VerticalScroll.Enabled = true;
             BindProducts();
+            //BindCart(Program.cartItems);
         }
 
         void uc_CategoryMenu1_EventCategoryClicked(object sender, EventArgs e)
@@ -92,7 +94,7 @@ namespace App_UI.Forms
 
             pnl.Name = "pnl_" + itm.id;
             pnl.Width = 200;
-            pnl.Height = 200;
+            pnl.Height = 220;
             pnl.Tag = itm;
             pnl.BorderStyle = BorderStyle.FixedSingle;
             pnl.Cursor = Cursors.Hand;
@@ -118,7 +120,7 @@ namespace App_UI.Forms
             lblName.Location = new Point(5, pic.Height + 5);
             lblName.AutoSize = false;
             lblName.Width = pnl.Width - 10;
-            lblName.Height = 50;
+            lblName.Height = 80;
             lblName.Cursor = Cursors.Hand;
             lblName.Font = new Font("Segoe UI Semilight", 12, FontStyle.Regular);
             lblName.Click += pnl_Click;
@@ -149,9 +151,9 @@ namespace App_UI.Forms
             {
                 CartItemsCL cl = new CartItemsCL();
                 bool IsNew = false;
-                if (cartItems.Count > 0)
+                if (Program.cartItems.Count > 0)
                 {
-                    cl = cartItems.Where(p => p.ProductID == Convert.ToInt32(prod.id)).FirstOrDefault();
+                    cl = Program.cartItems.Where(p => p.ProductID == Convert.ToInt32(prod.id)).FirstOrDefault();
                     if (cl != null)
                     {
                         cl.Quantity += 1;
@@ -176,22 +178,33 @@ namespace App_UI.Forms
                     cl.Price = Convert.ToDouble(prod.product_price);
                     cl.Quantity = 1;
                     cl.ProductName = prod.product_name;
-                    cartItems.Add(cl);
+                    Program.cartItems.Add(cl);
                 }
 
-                BindCart(cartItems);
+                var source = new BindingSource(Program.cartItems,null);
+                dataGridView1.AutoGenerateColumns = false;
+                dataGridView1.DataSource = source;
+                dataGridView1.ClearSelection();
+               // BindCart(Program.cartItems);
             }
         }
 
-        private void BindCart(List<CartItemsCL> cartItems)
+        public void BindCart(ObservableCollection<CartItemsCL> cartItems)
         {
-            lstCart.Items.Clear();
+            //lstCart.Items.Clear();
+            int i = 0;
             foreach (CartItemsCL cartItem in cartItems)
             {
-                ListViewItem item = new ListViewItem(cartItem.ProductName.ToString());
+                i = i + 1;
+                ListViewItem item = new ListViewItem(i.ToString());
+                item.Tag = cartItem.ProductID;
+                item.SubItems.Add(cartItem.ProductName.ToString());
                 item.SubItems.Add(cartItem.Quantity.ToString());
-                item.SubItems.Add("MYR " + cartItem.Price.ToString("N"));
-                lstCart.Items.Add(item);
+                //item.SubItems.Add("MYR " + cartItem.Price.ToString("N"));
+                item.SubItems.Add(cartItem.Price.ToString("N")); 
+                
+                               
+                //lstCart.Items.Add(item);
             }
         }
 
@@ -243,10 +256,10 @@ namespace App_UI.Forms
 
         private void btnPay_Click(object sender, EventArgs e)
         {
-            if (cartItems.Count > 0)
+            if (Program.cartItems.Count > 0)
             {
                 var TotalAmount = 0.0;  // Total Price
-                TotalAmount = cartItems.Sum(p => p.Price);
+                TotalAmount = Program.cartItems.Sum(p => p.Price);
                 FrmContainer frm = new FrmContainer();
                 ucPayment uc = new ucPayment();
                 frm.Dock = DockStyle.Fill;
@@ -274,7 +287,7 @@ namespace App_UI.Forms
                         cart.OrderType = EmOrderType.TakeAway;
                     }
                     cart.PaymentType = uc.PayementType;
-                    cart.Items = cartItems;
+                    cart.Items = Program.cartItems;
                     MessageBox.Show("Order Number : " + OrderNumber + " has been placed successfully", " Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     Program.PlacedOrders.Add(cart);
 
@@ -291,8 +304,10 @@ namespace App_UI.Forms
 
         private void ClearList()
         {
-            cartItems = new List<CartItemsCL>();
-            lstCart.Items.Clear();
+            //Program.cartItems = new BindingList<CartItemsCL>();
+            Program.cartItems.Clear();
+            dataGridView1.Rows.Clear();
+            //lstCart.Items.Clear();
         }
 
         private void lblOrderCount_Click(object sender, EventArgs e)
@@ -314,22 +329,51 @@ namespace App_UI.Forms
 
         private void removeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (lstCart.SelectedItems.Count > 0)
-            {
-                var item = lstCart.SelectedItems[0];
-                ProductListCL prod = (ProductListCL)item.Tag;
-                var itm = cartItems.Where(p => p.ProductID == prod.ProductID && p.CategoryID == prod.CategoryID && p.Price == prod.Price).FirstOrDefault();
-                if (itm != null)
-                {
-                    cartItems.Remove(itm);
-                    lstCart.Items.Remove(item);
-                }
-            }
+            //if (lstCart.SelectedItems.Count > 0)
+            //{
+            //    var item = lstCart.SelectedItems[0];
+            //    ProductListCL prod = (ProductListCL)item.Tag;
+            //    var itm = Program.cartItems.Where(p => p.ProductID == prod.ProductID && p.CategoryID == prod.CategoryID && p.Price == prod.Price).FirstOrDefault();
+            //    if (itm != null)
+            //    {
+            //        Program.cartItems.Remove(itm);
+            //        lstCart.Items.Remove(item);
+            //    }
+            //}
         }
 
         private void clearAllToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ClearList();
+        }
+
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            bool IsSelected = dataGridView1.CurrentCell.Selected;
+            int ProductId = 0;
+            if (IsSelected)
+            {
+                string value = dataGridView1.Rows[e.RowIndex].Cells["Column1"].FormattedValue.ToString();
+                int.TryParse(value, out ProductId);
+            }
+
+            if (ProductId != 0)
+            {
+                Program.SelectedProductId = ProductId;
+
+                frmProductQty objFrmQty = new frmProductQty();
+                objFrmQty.ShowDialog();
+            }
+        }
+
+        private void rdbOrder_CheckedChanged(object sender, EventArgs e)
+        {
+            BindProducts();
+        }
+
+        private void rdbDelivery_CheckedChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
