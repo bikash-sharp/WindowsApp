@@ -16,7 +16,7 @@ namespace App_UI
         public static List<ProductListCL> Products = new List<ProductListCL>();
         public static List<CartCL> PlacedOrders = new List<CartCL>();
         public static BindingList<CartItemsCL> cartItems = new BindingList<CartItemsCL>();
-
+        public static BindingList<CalculateCart> cartTotal = new BindingList<CalculateCart>();
         public const String BaseUrl = "http://202.75.42.25/index.php/restwebservices/";
         public static string Token { get; set; }
         public static int SelectedProductId { get; set;}
@@ -31,7 +31,15 @@ namespace App_UI
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new frmLogin());
         }
+        public static void TotalCart()
+        {
+            foreach (var item in Program.cartItems)
+            {
+                item.CartTotal = Program.cartItems.Sum(p => p.Price);
+                item.GrandTotal = Program.cartItems.Sum(p => p.Price);
+            }
 
+        }
         //public static void BindData()
         //{
         //    CategoryListCL cl = new CategoryListCL();

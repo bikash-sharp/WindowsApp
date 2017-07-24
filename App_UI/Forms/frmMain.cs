@@ -21,6 +21,7 @@ namespace App_UI.Forms
     {
         public static bool IsClosed = false;
         public int SelectedCategoryID = 0;
+        public static bool IsConnected = false;
         public frmMain()
         {
             InitializeComponent();
@@ -39,6 +40,9 @@ namespace App_UI.Forms
             flyLayout.VerticalScroll.Enabled = true;
             BindProducts();
             //BindCart(Program.cartItems);
+
+            this.rdbDelivery.Checked = false;
+            this.rdbOrder.Checked = false;
         }
 
         void uc_CategoryMenu1_EventCategoryClicked(object sender, EventArgs e)
@@ -181,11 +185,24 @@ namespace App_UI.Forms
                     Program.cartItems.Add(cl);
                 }
 
-                var source = new BindingSource(Program.cartItems,null);
+                var source = new BindingSource(Program.cartItems, null);
                 dataGridView1.AutoGenerateColumns = false;
                 dataGridView1.DataSource = source;
                 dataGridView1.ClearSelection();
-               // BindCart(Program.cartItems);
+
+                Program.TotalCart();
+                lblCartTotal.DataBindings.Clear();
+                lblGrandTotal.DataBindings.Clear();
+                lblTax.DataBindings.Clear();
+                //if(!IsConnected)
+                //{
+                    var CartTotalBinding = new Binding("Text", Program.cartItems.FirstOrDefault(), "CartTotal");
+                    lblCartTotal.DataBindings.Add(CartTotalBinding);
+                    var GrandTotalBinding = new Binding("Text", Program.cartItems.FirstOrDefault(), "GrandTotal");
+                    lblGrandTotal.DataBindings.Add(GrandTotalBinding);
+                  //  IsConnected = true;
+                //}
+                // BindCart(Program.cartItems);
             }
         }
 
@@ -201,9 +218,9 @@ namespace App_UI.Forms
                 item.SubItems.Add(cartItem.ProductName.ToString());
                 item.SubItems.Add(cartItem.Quantity.ToString());
                 //item.SubItems.Add("MYR " + cartItem.Price.ToString("N"));
-                item.SubItems.Add(cartItem.Price.ToString("N")); 
-                
-                               
+                item.SubItems.Add(cartItem.Price.ToString("N"));
+
+
                 //lstCart.Items.Add(item);
             }
         }
@@ -305,8 +322,18 @@ namespace App_UI.Forms
         private void ClearList()
         {
             //Program.cartItems = new BindingList<CartItemsCL>();
+            
             Program.cartItems.Clear();
+            Program.TotalCart();
+
             dataGridView1.Rows.Clear();
+            lblTax.Text = "0.00";
+            lblCartTotal.Text = "0.00";
+            lblGrandTotal.Text = "0.00";
+            lblCartTotal.DataBindings.Clear();
+            lblGrandTotal.DataBindings.Clear();
+            lblTax.DataBindings.Clear();
+
             //lstCart.Items.Clear();
         }
 
@@ -374,6 +401,11 @@ namespace App_UI.Forms
         private void rdbDelivery_CheckedChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void ovalShape2_Click(object sender, EventArgs e)
+        {
+            ClearList();
         }
     }
 }

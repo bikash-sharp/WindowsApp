@@ -55,15 +55,28 @@
             this.flyLayout = new System.Windows.Forms.FlowLayoutPanel();
             this.shapeContainer3 = new Microsoft.VisualBasic.PowerPacks.ShapeContainer();
             this.rectangleShape2 = new Microsoft.VisualBasic.PowerPacks.RectangleShape();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.removeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.clearAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tblCart = new System.Windows.Forms.TableLayoutPanel();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.pnlCart = new System.Windows.Forms.Panel();
+            this.lblGrandTotal = new System.Windows.Forms.Label();
+            this.lblCartTotal = new System.Windows.Forms.Label();
+            this.lblTax = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.shapeContainer4 = new Microsoft.VisualBasic.PowerPacks.ShapeContainer();
+            this.lineShape2 = new Microsoft.VisualBasic.PowerPacks.LineShape();
+            this.lineShape1 = new Microsoft.VisualBasic.PowerPacks.LineShape();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.removeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.clearAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ovalShape2 = new Microsoft.VisualBasic.PowerPacks.OvalShape();
+            this.lineShape3 = new Microsoft.VisualBasic.PowerPacks.LineShape();
             this.uc_CategoryMenu1 = new App_UI.UserControls.uc_CategoryMenu();
             this.tblMainLayout.SuspendLayout();
             this.pnlTopMenu.SuspendLayout();
@@ -71,8 +84,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.pbLogo)).BeginInit();
             this.pnlPay.SuspendLayout();
             this.pnlBase.SuspendLayout();
-            this.contextMenuStrip1.SuspendLayout();
+            this.tblCart.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.pnlCart.SuspendLayout();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tblMainLayout
@@ -87,7 +102,7 @@
             this.tblMainLayout.Controls.Add(this.pnlPay, 2, 2);
             this.tblMainLayout.Controls.Add(this.uc_CategoryMenu1, 1, 2);
             this.tblMainLayout.Controls.Add(this.pnlBase, 1, 1);
-            this.tblMainLayout.Controls.Add(this.dataGridView1, 2, 1);
+            this.tblMainLayout.Controls.Add(this.tblCart, 2, 1);
             this.tblMainLayout.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tblMainLayout.Location = new System.Drawing.Point(0, 0);
             this.tblMainLayout.Margin = new System.Windows.Forms.Padding(0);
@@ -228,10 +243,12 @@
             // 
             this.ovalShape1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
             this.ovalShape1.BackStyle = Microsoft.VisualBasic.PowerPacks.BackStyle.Opaque;
+            this.ovalShape1.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ovalShape1.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
             this.ovalShape1.Location = new System.Drawing.Point(333, 11);
             this.ovalShape1.Name = "ovalShape1";
             this.ovalShape1.Size = new System.Drawing.Size(38, 33);
+            this.ovalShape1.Click += new System.EventHandler(this.lblOrderCount_Click);
             // 
             // pnlPay
             // 
@@ -268,6 +285,8 @@
             this.shapeContainer1.Margin = new System.Windows.Forms.Padding(0);
             this.shapeContainer1.Name = "shapeContainer1";
             this.shapeContainer1.Shapes.AddRange(new Microsoft.VisualBasic.PowerPacks.Shape[] {
+            this.lineShape3,
+            this.ovalShape2,
             this.rectangleShape4});
             this.shapeContainer1.Size = new System.Drawing.Size(290, 104);
             this.shapeContainer1.TabIndex = 0;
@@ -359,35 +378,22 @@
             this.rectangleShape2.Name = "rectangleShape2";
             this.rectangleShape2.Size = new System.Drawing.Size(293, 34);
             // 
-            // contextMenuStrip1
+            // tblCart
             // 
-            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.removeToolStripMenuItem,
-            this.toolStripSeparator1,
-            this.clearAllToolStripMenuItem});
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(136, 62);
-            // 
-            // removeToolStripMenuItem
-            // 
-            this.removeToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.removeToolStripMenuItem.Name = "removeToolStripMenuItem";
-            this.removeToolStripMenuItem.Size = new System.Drawing.Size(135, 26);
-            this.removeToolStripMenuItem.Text = "Remove";
-            this.removeToolStripMenuItem.Click += new System.EventHandler(this.removeToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(132, 6);
-            // 
-            // clearAllToolStripMenuItem
-            // 
-            this.clearAllToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.clearAllToolStripMenuItem.Name = "clearAllToolStripMenuItem";
-            this.clearAllToolStripMenuItem.Size = new System.Drawing.Size(135, 26);
-            this.clearAllToolStripMenuItem.Text = "Clear All";
-            this.clearAllToolStripMenuItem.Click += new System.EventHandler(this.clearAllToolStripMenuItem_Click);
+            this.tblCart.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
+            this.tblCart.ColumnCount = 1;
+            this.tblCart.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tblCart.Controls.Add(this.dataGridView1, 0, 0);
+            this.tblCart.Controls.Add(this.pnlCart, 0, 1);
+            this.tblCart.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tblCart.Location = new System.Drawing.Point(585, 59);
+            this.tblCart.Margin = new System.Windows.Forms.Padding(0);
+            this.tblCart.Name = "tblCart";
+            this.tblCart.RowCount = 2;
+            this.tblCart.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tblCart.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 130F));
+            this.tblCart.Size = new System.Drawing.Size(290, 314);
+            this.tblCart.TabIndex = 6;
             // 
             // dataGridView1
             // 
@@ -408,7 +414,7 @@
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView1.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.dataGridView1.GridColor = System.Drawing.Color.White;
-            this.dataGridView1.Location = new System.Drawing.Point(585, 59);
+            this.dataGridView1.Location = new System.Drawing.Point(1, 1);
             this.dataGridView1.Margin = new System.Windows.Forms.Padding(0);
             this.dataGridView1.MultiSelect = false;
             this.dataGridView1.Name = "dataGridView1";
@@ -429,8 +435,8 @@
             this.dataGridView1.ShowCellToolTips = false;
             this.dataGridView1.ShowEditingIcon = false;
             this.dataGridView1.ShowRowErrors = false;
-            this.dataGridView1.Size = new System.Drawing.Size(290, 314);
-            this.dataGridView1.TabIndex = 6;
+            this.dataGridView1.Size = new System.Drawing.Size(288, 181);
+            this.dataGridView1.TabIndex = 7;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             // 
             // Column1
@@ -483,6 +489,183 @@
             this.Column4.ReadOnly = true;
             this.Column4.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             // 
+            // pnlCart
+            // 
+            this.pnlCart.Controls.Add(this.lblGrandTotal);
+            this.pnlCart.Controls.Add(this.lblCartTotal);
+            this.pnlCart.Controls.Add(this.lblTax);
+            this.pnlCart.Controls.Add(this.label3);
+            this.pnlCart.Controls.Add(this.label2);
+            this.pnlCart.Controls.Add(this.label1);
+            this.pnlCart.Controls.Add(this.shapeContainer4);
+            this.pnlCart.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlCart.Location = new System.Drawing.Point(1, 183);
+            this.pnlCart.Margin = new System.Windows.Forms.Padding(0);
+            this.pnlCart.Name = "pnlCart";
+            this.pnlCart.Size = new System.Drawing.Size(288, 130);
+            this.pnlCart.TabIndex = 8;
+            // 
+            // lblGrandTotal
+            // 
+            this.lblGrandTotal.AutoSize = true;
+            this.lblGrandTotal.BackColor = System.Drawing.Color.Transparent;
+            this.lblGrandTotal.Font = new System.Drawing.Font("Segoe UI Semibold", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblGrandTotal.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.lblGrandTotal.Location = new System.Drawing.Point(198, 84);
+            this.lblGrandTotal.Name = "lblGrandTotal";
+            this.lblGrandTotal.Size = new System.Drawing.Size(69, 37);
+            this.lblGrandTotal.TabIndex = 6;
+            this.lblGrandTotal.Text = "0.00";
+            this.lblGrandTotal.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // lblCartTotal
+            // 
+            this.lblCartTotal.AutoSize = true;
+            this.lblCartTotal.BackColor = System.Drawing.Color.Transparent;
+            this.lblCartTotal.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCartTotal.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.lblCartTotal.Location = new System.Drawing.Point(226, 42);
+            this.lblCartTotal.Name = "lblCartTotal";
+            this.lblCartTotal.Size = new System.Drawing.Size(41, 21);
+            this.lblCartTotal.TabIndex = 5;
+            this.lblCartTotal.Text = "0.00";
+            this.lblCartTotal.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // lblTax
+            // 
+            this.lblTax.AutoSize = true;
+            this.lblTax.BackColor = System.Drawing.Color.Transparent;
+            this.lblTax.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTax.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.lblTax.Location = new System.Drawing.Point(226, 6);
+            this.lblTax.Name = "lblTax";
+            this.lblTax.Size = new System.Drawing.Size(41, 21);
+            this.lblTax.TabIndex = 4;
+            this.lblTax.Text = "0.00";
+            this.lblTax.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.BackColor = System.Drawing.Color.Transparent;
+            this.label3.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.label3.Location = new System.Drawing.Point(14, 87);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(56, 21);
+            this.label3.TabIndex = 3;
+            this.label3.Text = "TOTAL";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.BackColor = System.Drawing.Color.Transparent;
+            this.label2.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.label2.Location = new System.Drawing.Point(14, 42);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(56, 21);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "TOTAL";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.Transparent;
+            this.label1.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.label1.Location = new System.Drawing.Point(14, 6);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(39, 21);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "TAX";
+            // 
+            // shapeContainer4
+            // 
+            this.shapeContainer4.Location = new System.Drawing.Point(0, 0);
+            this.shapeContainer4.Margin = new System.Windows.Forms.Padding(0);
+            this.shapeContainer4.Name = "shapeContainer4";
+            this.shapeContainer4.Shapes.AddRange(new Microsoft.VisualBasic.PowerPacks.Shape[] {
+            this.lineShape2,
+            this.lineShape1});
+            this.shapeContainer4.Size = new System.Drawing.Size(288, 130);
+            this.shapeContainer4.TabIndex = 0;
+            this.shapeContainer4.TabStop = false;
+            // 
+            // lineShape2
+            // 
+            this.lineShape2.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(225)))), ((int)(((byte)(225)))));
+            this.lineShape2.BorderWidth = 2;
+            this.lineShape2.Name = "lineShape2";
+            this.lineShape2.X1 = -1;
+            this.lineShape2.X2 = 289;
+            this.lineShape2.Y1 = 71;
+            this.lineShape2.Y2 = 71;
+            // 
+            // lineShape1
+            // 
+            this.lineShape1.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(225)))), ((int)(((byte)(225)))), ((int)(((byte)(225)))));
+            this.lineShape1.BorderWidth = 2;
+            this.lineShape1.Name = "lineShape1";
+            this.lineShape1.X1 = 0;
+            this.lineShape1.X2 = 290;
+            this.lineShape1.Y1 = 34;
+            this.lineShape1.Y2 = 34;
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.removeToolStripMenuItem,
+            this.toolStripSeparator1,
+            this.clearAllToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(136, 62);
+            // 
+            // removeToolStripMenuItem
+            // 
+            this.removeToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.removeToolStripMenuItem.Name = "removeToolStripMenuItem";
+            this.removeToolStripMenuItem.Size = new System.Drawing.Size(135, 26);
+            this.removeToolStripMenuItem.Text = "Remove";
+            this.removeToolStripMenuItem.Click += new System.EventHandler(this.removeToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(132, 6);
+            // 
+            // clearAllToolStripMenuItem
+            // 
+            this.clearAllToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.clearAllToolStripMenuItem.Name = "clearAllToolStripMenuItem";
+            this.clearAllToolStripMenuItem.Size = new System.Drawing.Size(135, 26);
+            this.clearAllToolStripMenuItem.Text = "Clear All";
+            this.clearAllToolStripMenuItem.Click += new System.EventHandler(this.clearAllToolStripMenuItem_Click);
+            // 
+            // ovalShape2
+            // 
+            this.ovalShape2.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+            this.ovalShape2.BorderStyle = System.Drawing.Drawing2D.DashStyle.Dash;
+            this.ovalShape2.BorderWidth = 2;
+            this.ovalShape2.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ovalShape2.Location = new System.Drawing.Point(8, 27);
+            this.ovalShape2.Name = "ovalShape2";
+            this.ovalShape2.Size = new System.Drawing.Size(75, 56);
+            this.ovalShape2.Click += new System.EventHandler(this.ovalShape2_Click);
+            // 
+            // lineShape3
+            // 
+            this.lineShape3.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+            this.lineShape3.BorderStyle = System.Drawing.Drawing2D.DashStyle.Dash;
+            this.lineShape3.BorderWidth = 2;
+            this.lineShape3.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lineShape3.Name = "lineShape3";
+            this.lineShape3.X1 = 23;
+            this.lineShape3.X2 = 68;
+            this.lineShape3.Y1 = 36;
+            this.lineShape3.Y2 = 77;
+            this.lineShape3.Click += new System.EventHandler(this.ovalShape2_Click);
+            // 
             // uc_CategoryMenu1
             // 
             this.uc_CategoryMenu1.AutoScroll = true;
@@ -517,8 +700,11 @@
             this.pnlPay.ResumeLayout(false);
             this.pnlBase.ResumeLayout(false);
             this.pnlBase.PerformLayout();
-            this.contextMenuStrip1.ResumeLayout(false);
+            this.tblCart.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.pnlCart.ResumeLayout(false);
+            this.pnlCart.PerformLayout();
+            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -550,10 +736,23 @@
         private System.Windows.Forms.ToolStripMenuItem removeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem clearAllToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.TableLayoutPanel tblCart;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
+        private System.Windows.Forms.Panel pnlCart;
+        private Microsoft.VisualBasic.PowerPacks.ShapeContainer shapeContainer4;
+        private Microsoft.VisualBasic.PowerPacks.LineShape lineShape2;
+        private Microsoft.VisualBasic.PowerPacks.LineShape lineShape1;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label lblTax;
+        private System.Windows.Forms.Label lblCartTotal;
+        private System.Windows.Forms.Label lblGrandTotal;
+        private Microsoft.VisualBasic.PowerPacks.OvalShape ovalShape2;
+        private Microsoft.VisualBasic.PowerPacks.LineShape lineShape3;
     }
 }

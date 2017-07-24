@@ -37,13 +37,22 @@ namespace App_UI.Forms
             if (SelectedProduct != null)
             {
                 int.TryParse(txtQty.Text.ToString(), out Quantity);
-                SelectedProduct.Quantity = Quantity;
-                SelectedProduct.Price = Convert.ToDouble(SelectedProduct.Price) * SelectedProduct.Quantity;
-                //Reset the SelectProductId
-                Program.SelectedProductId = 0;
+                if(Quantity <= 0)
+                {
+                    MessageBox.Show("Quantity cannot be less than 1 ?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    SelectedProduct.Quantity = Quantity;
+                    SelectedProduct.Price = Convert.ToDouble(SelectedProduct.Price) * SelectedProduct.Quantity;
+                    //Reset the SelectProductId
+                    Program.SelectedProductId = 0;
+                    Program.TotalCart();
+                    this.Close();
+                }
+                
             }
-
-            this.Close();
+            
         }
 
         private void btnRemoveProduct_Click(object sender, EventArgs e)
@@ -56,7 +65,7 @@ namespace App_UI.Forms
                 //Reset the SelectProductId
                 Program.SelectedProductId = 0;
             }
-
+            Program.TotalCart();
             this.Close();
         }
 

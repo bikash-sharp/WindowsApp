@@ -44,6 +44,9 @@ namespace App_BAL
     {
         private int QuantityValue = 0;
         private double PriceValue = 0;
+        private double CartTotalValue = 0;
+        private double GrandTotalValue = 0;
+        private double TaxValue = 0;
         public int ProductID { get; set; }
         public string ProductName { get; set; }
         public int CategoryID { get; set; }
@@ -74,10 +77,124 @@ namespace App_BAL
             }
         }
 
+         
+        public double CartTotal
+        {
+            get
+            {
+                return this.CartTotalValue;
+            }
+            set
+            {
+                if (value != this.CartTotalValue)
+                {
+                    this.CartTotalValue = value;
+                    this.NotifyPropertyChanged();
+                }
+            }
+        }
+
+        public double GrandTotal
+        {
+            get
+            {
+                return this.GrandTotalValue;
+            }
+            set
+            {
+                if (value != this.GrandTotalValue)
+                {
+                    this.GrandTotalValue = value;
+                    this.NotifyPropertyChanged();
+                }
+            }
+        }
+
+
+        public double Tax
+        {
+            get
+            {
+                return this.TaxValue;
+            }
+            set
+            {
+                if (value != this.TaxValue)
+                {
+                    this.TaxValue = value;
+                    this.NotifyPropertyChanged();
+                }
+            }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
         private void NotifyPropertyChanged([CallerMemberName] String propertyName="")
         {
             if(PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+
+    public class CalculateCart : INotifyPropertyChanged
+    {
+        private double CartTotalValue = 0;
+        private double GrandTotalValue = 0;
+        private double TaxValue = 0;
+        public double CartTotal
+        {
+            get
+            {
+                return this.CartTotalValue;
+            }
+            set
+            {
+                if (value != this.CartTotalValue)
+                {
+                    this.CartTotalValue = value;
+                    this.NotifyPropertyChanged();
+                }
+            }
+        }
+
+        public double GrandTotal
+        {
+            get
+            {
+                return this.GrandTotalValue;
+            }
+            set
+            {
+                if (value != this.GrandTotalValue)
+                {
+                    this.GrandTotalValue = value;
+                    this.NotifyPropertyChanged();
+                }
+            }
+        }
+
+
+        public double Tax
+        {
+            get
+            {
+                return this.TaxValue;
+            }
+            set
+            {
+                if (value != this.TaxValue)
+                {
+                    this.TaxValue = value;
+                    this.NotifyPropertyChanged();
+                }
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
+        {
+            if (PropertyChanged != null)
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
