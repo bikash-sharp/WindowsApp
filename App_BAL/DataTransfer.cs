@@ -23,7 +23,8 @@ namespace App_BAL
     public enum EmPaymentType
     {
         Cash = 1,
-        Card = 2
+        Card = 2,
+        Wallet=3
     }
     public class CartCL
     {

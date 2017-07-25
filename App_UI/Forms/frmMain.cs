@@ -40,9 +40,8 @@ namespace App_UI.Forms
             flyLayout.VerticalScroll.Enabled = true;
             BindProducts();
             //BindCart(Program.cartItems);
-
-            this.rdbDelivery.Checked = false;
-            this.rdbOrder.Checked = false;
+            rdbDelivery.Checked = rdbDelivery.AutoCheck = false;
+            rdbOrder.Checked = rdbOrder.AutoCheck = false;
         }
 
         void uc_CategoryMenu1_EventCategoryClicked(object sender, EventArgs e)

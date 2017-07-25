@@ -32,8 +32,6 @@
             this.lblTotal = new System.Windows.Forms.Label();
             this.btnPay = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
-            this.btnCash = new System.Windows.Forms.Button();
-            this.btnCard = new System.Windows.Forms.Button();
             this.pnlBase = new System.Windows.Forms.Panel();
             this.pnlCash = new System.Windows.Forms.Panel();
             this.txtAmount = new CustomServerControls.TxtBox();
@@ -44,15 +42,17 @@
             this.pnlCard = new System.Windows.Forms.Panel();
             this.lblCardMsg = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnCash = new System.Windows.Forms.Button();
             this.shapeContainer2 = new Microsoft.VisualBasic.PowerPacks.ShapeContainer();
-            this.rectangleShape1 = new Microsoft.VisualBasic.PowerPacks.RectangleShape();
+            this.rectbtnCash = new Microsoft.VisualBasic.PowerPacks.RectangleShape();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.rectangleShape3 = new Microsoft.VisualBasic.PowerPacks.RectangleShape();
+            this.btnCard = new System.Windows.Forms.Button();
             this.shapeContainer3 = new Microsoft.VisualBasic.PowerPacks.ShapeContainer();
-            this.rectangleShape4 = new Microsoft.VisualBasic.PowerPacks.RectangleShape();
+            this.rectBtnCard = new Microsoft.VisualBasic.PowerPacks.RectangleShape();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.shapeContainer4 = new Microsoft.VisualBasic.PowerPacks.ShapeContainer();
             this.btnWallet = new System.Windows.Forms.Button();
+            this.shapeContainer4 = new Microsoft.VisualBasic.PowerPacks.ShapeContainer();
+            this.rectBtnWallet = new Microsoft.VisualBasic.PowerPacks.RectangleShape();
             this.tblBase.SuspendLayout();
             this.pnlBase.SuspendLayout();
             this.pnlCash.SuspendLayout();
@@ -141,40 +141,6 @@
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = false;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
-            // 
-            // btnCash
-            // 
-            this.btnCash.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnCash.FlatAppearance.BorderSize = 0;
-            this.btnCash.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
-            this.btnCash.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
-            this.btnCash.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCash.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCash.Location = new System.Drawing.Point(7, 7);
-            this.btnCash.Margin = new System.Windows.Forms.Padding(1);
-            this.btnCash.Name = "btnCash";
-            this.btnCash.Size = new System.Drawing.Size(121, 36);
-            this.btnCash.TabIndex = 3;
-            this.btnCash.Text = "CASH";
-            this.btnCash.UseVisualStyleBackColor = true;
-            this.btnCash.Click += new System.EventHandler(this.btnCash_Click);
-            // 
-            // btnCard
-            // 
-            this.btnCard.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnCard.FlatAppearance.BorderSize = 0;
-            this.btnCard.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
-            this.btnCard.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
-            this.btnCard.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCard.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCard.Location = new System.Drawing.Point(9, 8);
-            this.btnCard.Margin = new System.Windows.Forms.Padding(1);
-            this.btnCard.Name = "btnCard";
-            this.btnCard.Size = new System.Drawing.Size(119, 33);
-            this.btnCard.TabIndex = 4;
-            this.btnCard.Text = "CARD";
-            this.btnCard.UseVisualStyleBackColor = true;
-            this.btnCard.Click += new System.EventHandler(this.btnCard_Click);
             // 
             // pnlBase
             // 
@@ -293,26 +259,44 @@
             this.panel1.Size = new System.Drawing.Size(136, 51);
             this.panel1.TabIndex = 6;
             // 
+            // btnCash
+            // 
+            this.btnCash.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnCash.FlatAppearance.BorderSize = 0;
+            this.btnCash.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
+            this.btnCash.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
+            this.btnCash.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCash.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCash.Location = new System.Drawing.Point(7, 7);
+            this.btnCash.Margin = new System.Windows.Forms.Padding(1);
+            this.btnCash.Name = "btnCash";
+            this.btnCash.Size = new System.Drawing.Size(121, 36);
+            this.btnCash.TabIndex = 3;
+            this.btnCash.Text = "CASH";
+            this.btnCash.UseVisualStyleBackColor = true;
+            this.btnCash.Click += new System.EventHandler(this.btnCash_Click);
+            // 
             // shapeContainer2
             // 
             this.shapeContainer2.Location = new System.Drawing.Point(0, 0);
             this.shapeContainer2.Margin = new System.Windows.Forms.Padding(0);
             this.shapeContainer2.Name = "shapeContainer2";
             this.shapeContainer2.Shapes.AddRange(new Microsoft.VisualBasic.PowerPacks.Shape[] {
-            this.rectangleShape1});
+            this.rectbtnCash});
             this.shapeContainer2.Size = new System.Drawing.Size(136, 51);
             this.shapeContainer2.TabIndex = 0;
             this.shapeContainer2.TabStop = false;
             // 
-            // rectangleShape1
+            // rectbtnCash
             // 
-            this.rectangleShape1.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
-            this.rectangleShape1.BorderStyle = System.Drawing.Drawing2D.DashStyle.Dash;
-            this.rectangleShape1.BorderWidth = 2;
-            this.rectangleShape1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.rectangleShape1.Location = new System.Drawing.Point(4, 5);
-            this.rectangleShape1.Name = "rectangleShape1";
-            this.rectangleShape1.Size = new System.Drawing.Size(128, 42);
+            this.rectbtnCash.BackStyle = Microsoft.VisualBasic.PowerPacks.BackStyle.Opaque;
+            this.rectbtnCash.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+            this.rectbtnCash.BorderStyle = System.Drawing.Drawing2D.DashStyle.Dash;
+            this.rectbtnCash.BorderWidth = 2;
+            this.rectbtnCash.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.rectbtnCash.Location = new System.Drawing.Point(4, 5);
+            this.rectbtnCash.Name = "rectbtnCash";
+            this.rectbtnCash.Size = new System.Drawing.Size(128, 42);
             // 
             // panel2
             // 
@@ -325,15 +309,22 @@
             this.panel2.Size = new System.Drawing.Size(136, 51);
             this.panel2.TabIndex = 7;
             // 
-            // rectangleShape3
+            // btnCard
             // 
-            this.rectangleShape3.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
-            this.rectangleShape3.BorderStyle = System.Drawing.Drawing2D.DashStyle.Dash;
-            this.rectangleShape3.BorderWidth = 2;
-            this.rectangleShape3.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.rectangleShape3.Location = new System.Drawing.Point(4, 4);
-            this.rectangleShape3.Name = "rectangleShape3";
-            this.rectangleShape3.Size = new System.Drawing.Size(128, 42);
+            this.btnCard.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnCard.FlatAppearance.BorderSize = 0;
+            this.btnCard.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
+            this.btnCard.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
+            this.btnCard.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCard.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCard.Location = new System.Drawing.Point(9, 8);
+            this.btnCard.Margin = new System.Windows.Forms.Padding(1);
+            this.btnCard.Name = "btnCard";
+            this.btnCard.Size = new System.Drawing.Size(119, 33);
+            this.btnCard.TabIndex = 4;
+            this.btnCard.Text = "CARD";
+            this.btnCard.UseVisualStyleBackColor = true;
+            this.btnCard.Click += new System.EventHandler(this.btnCard_Click);
             // 
             // shapeContainer3
             // 
@@ -341,20 +332,21 @@
             this.shapeContainer3.Margin = new System.Windows.Forms.Padding(0);
             this.shapeContainer3.Name = "shapeContainer3";
             this.shapeContainer3.Shapes.AddRange(new Microsoft.VisualBasic.PowerPacks.Shape[] {
-            this.rectangleShape3});
+            this.rectBtnCard});
             this.shapeContainer3.Size = new System.Drawing.Size(136, 51);
             this.shapeContainer3.TabIndex = 0;
             this.shapeContainer3.TabStop = false;
             // 
-            // rectangleShape4
+            // rectBtnCard
             // 
-            this.rectangleShape4.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
-            this.rectangleShape4.BorderStyle = System.Drawing.Drawing2D.DashStyle.Dash;
-            this.rectangleShape4.BorderWidth = 2;
-            this.rectangleShape4.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.rectangleShape4.Location = new System.Drawing.Point(4, 4);
-            this.rectangleShape4.Name = "rectangleShape4";
-            this.rectangleShape4.Size = new System.Drawing.Size(128, 42);
+            this.rectBtnCard.BackStyle = Microsoft.VisualBasic.PowerPacks.BackStyle.Opaque;
+            this.rectBtnCard.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+            this.rectBtnCard.BorderStyle = System.Drawing.Drawing2D.DashStyle.Dash;
+            this.rectBtnCard.BorderWidth = 2;
+            this.rectBtnCard.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.rectBtnCard.Location = new System.Drawing.Point(4, 4);
+            this.rectBtnCard.Name = "rectBtnCard";
+            this.rectBtnCard.Size = new System.Drawing.Size(128, 42);
             // 
             // panel3
             // 
@@ -366,17 +358,6 @@
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(136, 52);
             this.panel3.TabIndex = 8;
-            // 
-            // shapeContainer4
-            // 
-            this.shapeContainer4.Location = new System.Drawing.Point(0, 0);
-            this.shapeContainer4.Margin = new System.Windows.Forms.Padding(0);
-            this.shapeContainer4.Name = "shapeContainer4";
-            this.shapeContainer4.Shapes.AddRange(new Microsoft.VisualBasic.PowerPacks.Shape[] {
-            this.rectangleShape4});
-            this.shapeContainer4.Size = new System.Drawing.Size(136, 52);
-            this.shapeContainer4.TabIndex = 0;
-            this.shapeContainer4.TabStop = false;
             // 
             // btnWallet
             // 
@@ -393,6 +374,29 @@
             this.btnWallet.TabIndex = 1;
             this.btnWallet.Text = "WALLET";
             this.btnWallet.UseVisualStyleBackColor = true;
+            this.btnWallet.Click += new System.EventHandler(this.btnWallet_Click);
+            // 
+            // shapeContainer4
+            // 
+            this.shapeContainer4.Location = new System.Drawing.Point(0, 0);
+            this.shapeContainer4.Margin = new System.Windows.Forms.Padding(0);
+            this.shapeContainer4.Name = "shapeContainer4";
+            this.shapeContainer4.Shapes.AddRange(new Microsoft.VisualBasic.PowerPacks.Shape[] {
+            this.rectBtnWallet});
+            this.shapeContainer4.Size = new System.Drawing.Size(136, 52);
+            this.shapeContainer4.TabIndex = 0;
+            this.shapeContainer4.TabStop = false;
+            // 
+            // rectBtnWallet
+            // 
+            this.rectBtnWallet.BackStyle = Microsoft.VisualBasic.PowerPacks.BackStyle.Opaque;
+            this.rectBtnWallet.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+            this.rectBtnWallet.BorderStyle = System.Drawing.Drawing2D.DashStyle.Dash;
+            this.rectBtnWallet.BorderWidth = 2;
+            this.rectBtnWallet.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.rectBtnWallet.Location = new System.Drawing.Point(4, 4);
+            this.rectBtnWallet.Name = "rectBtnWallet";
+            this.rectBtnWallet.Size = new System.Drawing.Size(128, 42);
             // 
             // ucPayment
             // 
@@ -437,13 +441,13 @@
         private Microsoft.VisualBasic.PowerPacks.RectangleShape rectangleShape2;
         private System.Windows.Forms.Panel panel1;
         private Microsoft.VisualBasic.PowerPacks.ShapeContainer shapeContainer2;
-        private Microsoft.VisualBasic.PowerPacks.RectangleShape rectangleShape1;
+        private Microsoft.VisualBasic.PowerPacks.RectangleShape rectbtnCash;
         private System.Windows.Forms.Panel panel2;
         private Microsoft.VisualBasic.PowerPacks.ShapeContainer shapeContainer3;
-        private Microsoft.VisualBasic.PowerPacks.RectangleShape rectangleShape3;
+        private Microsoft.VisualBasic.PowerPacks.RectangleShape rectBtnCard;
         private System.Windows.Forms.Panel panel3;
         private Microsoft.VisualBasic.PowerPacks.ShapeContainer shapeContainer4;
-        private Microsoft.VisualBasic.PowerPacks.RectangleShape rectangleShape4;
+        private Microsoft.VisualBasic.PowerPacks.RectangleShape rectBtnWallet;
         private System.Windows.Forms.Button btnWallet;
     }
 }

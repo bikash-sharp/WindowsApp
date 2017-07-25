@@ -28,6 +28,8 @@ namespace App_UI.UserControls
             lblTotal.Text = _Amount.ToString("N");
             RemAmount = 0 - _Amount;
             lblRem.Text = "Balance : " + RemAmount.ToString("N");
+            ChangeColorSelectedButton(btnCard);
+            
         }
 
         private void txtAmount_TextChanged(object sender, EventArgs e)
@@ -68,16 +70,65 @@ namespace App_UI.UserControls
 
         private void btnCash_Click(object sender, EventArgs e)
         {
+            ChangeColorSelectedButton(btnCash);
             txtAmount.Text = "";
+            txtAmount.PlaceholderText = "Cash Amount";
             PayementType = EmPaymentType.Card;
             pnlCash.BringToFront();
         }
 
         private void btnCard_Click(object sender, EventArgs e)
         {
+            ChangeColorSelectedButton(btnCard);
             txtAmount.Text = TotalAmount.ToString("N");
             PayementType = EmPaymentType.Cash;
             pnlCard.BringToFront();
+        }
+
+        public void ChangeColorSelectedButton(Button btn)
+        {
+            if(btn != null)
+            {
+                String Name = btn.Name;
+                btnCash.BackColor = btnCard.BackColor = btnWallet.BackColor = Color.White;
+                btnCash.FlatAppearance.MouseOverBackColor = btnCard.FlatAppearance.MouseOverBackColor = btnWallet.FlatAppearance.MouseOverBackColor = Color.White;
+                rectBtnCard.BackColor = Color.White;
+                rectbtnCash.BackColor = Color.White;
+                rectBtnWallet.BackColor = Color.White;
+                switch (Name)
+                {
+                    case "btnCard":
+                        rectBtnCard.BackColor = Color.FromArgb(93, 213, 93);
+                        btn.BackColor = Color.FromArgb(93, 213, 93);
+                        btn.FlatAppearance.MouseOverBackColor = Color.FromArgb(93, 213, 93);
+                        btn.FlatAppearance.MouseDownBackColor = Color.FromArgb(93, 213, 93);
+                        break;
+                    case "btnCash":
+                        rectbtnCash.BackColor = Color.FromArgb(93, 213, 93);
+                        btn.BackColor = Color.FromArgb(93, 213, 93);
+                        btn.FlatAppearance.MouseOverBackColor = Color.FromArgb(93, 213, 93);
+                        btn.FlatAppearance.MouseDownBackColor = Color.FromArgb(93, 213, 93);
+                        break;
+                    case "btnWallet":
+                        rectBtnWallet.BackColor = Color.FromArgb(93, 213, 93);
+                        btn.BackColor = Color.FromArgb(93, 213, 93);
+                        btn.FlatAppearance.MouseOverBackColor = Color.FromArgb(93, 213, 93);
+                        btn.FlatAppearance.MouseDownBackColor = Color.FromArgb(93, 213, 93);
+                        break;
+                    default :
+                        btnCash.BackColor = Color.FromArgb(93, 213, 93);
+
+                        rectBtnCard.BackColor = Color.FromArgb(93, 213, 93);
+                        break; 
+                }
+                
+            }
+        }
+
+        private void btnWallet_Click(object sender, EventArgs e)
+        {
+            ChangeColorSelectedButton(btnWallet);
+            txtAmount.PlaceholderText = "Transaction Number";
         }
     }
 }
