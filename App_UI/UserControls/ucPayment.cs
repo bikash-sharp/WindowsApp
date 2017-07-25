@@ -19,6 +19,7 @@ namespace App_UI.UserControls
         public ucPayment()
         {
             InitializeComponent();
+            
         }
 
         public void BindData(double _Amount)

@@ -1,7 +1,0 @@
-F:\Work\POS\latest\App_Wrapper\bin\Debug\App_Wrapper.dll
-F:\Work\POS\latest\App_Wrapper\bin\Debug\App_Wrapper.pdb
-F:\Work\POS\latest\App_Wrapper\bin\Debug\App_BAL.dll
-F:\Work\POS\latest\App_Wrapper\bin\Debug\App_BAL.pdb
-F:\Work\POS\latest\App_Wrapper\obj\Debug\App_Wrapper.csprojResolveAssemblyReference.cache
-F:\Work\POS\latest\App_Wrapper\obj\Debug\App_Wrapper.dll
-F:\Work\POS\latest\App_Wrapper\obj\Debug\App_Wrapper.pdb
