@@ -155,10 +155,10 @@ namespace App_UI.UserControls
 
         private void btnWallet_Click(object sender, EventArgs e)
         {
-            ChangeColorSelectedButton(btnWallet);
+            ChangeColorSelectedButton(btnWallet); txtAmount.Text = "";
             txtAmount.PlaceholderText = "Transaction Number";
             PayementType = EmPaymentType.Wallet;
-            pnlCard.BringToFront();
+            pnlCash.BringToFront();
         }
     }
 }
