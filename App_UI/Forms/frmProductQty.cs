@@ -44,7 +44,7 @@ namespace App_UI.Forms
                 else
                 {
                     SelectedProduct.Quantity = Quantity;
-                    SelectedProduct.Price = Convert.ToDouble(SelectedProduct.Price) * SelectedProduct.Quantity;
+                    SelectedProduct.Price = Convert.ToDouble(SelectedProduct.OriginalPrice) * Quantity;
                     //Reset the SelectProductId
                     Program.SelectedProductId = 0;
                     Program.TotalCart();

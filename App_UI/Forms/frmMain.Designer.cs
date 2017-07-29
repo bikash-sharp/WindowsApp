@@ -532,37 +532,40 @@
             // 
             // lblGrandTotal
             // 
-            this.lblGrandTotal.AutoSize = true;
+            this.lblGrandTotal.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.lblGrandTotal.BackColor = System.Drawing.Color.Transparent;
             this.lblGrandTotal.Font = new System.Drawing.Font("Segoe UI Semibold", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblGrandTotal.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.lblGrandTotal.Location = new System.Drawing.Point(198, 84);
+            this.lblGrandTotal.Location = new System.Drawing.Point(76, 80);
+            this.lblGrandTotal.Margin = new System.Windows.Forms.Padding(3, 0, 60, 0);
             this.lblGrandTotal.Name = "lblGrandTotal";
-            this.lblGrandTotal.Size = new System.Drawing.Size(69, 37);
+            this.lblGrandTotal.Size = new System.Drawing.Size(211, 37);
             this.lblGrandTotal.TabIndex = 6;
             this.lblGrandTotal.Text = "0.00";
             this.lblGrandTotal.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // lblCartTotal
             // 
-            this.lblCartTotal.AutoSize = true;
+            this.lblCartTotal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblCartTotal.BackColor = System.Drawing.Color.Transparent;
             this.lblCartTotal.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCartTotal.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.lblCartTotal.Location = new System.Drawing.Point(226, 42);
+            this.lblCartTotal.Location = new System.Drawing.Point(95, 42);
             this.lblCartTotal.Name = "lblCartTotal";
-            this.lblCartTotal.Size = new System.Drawing.Size(41, 21);
+            this.lblCartTotal.Size = new System.Drawing.Size(190, 21);
             this.lblCartTotal.TabIndex = 5;
             this.lblCartTotal.Text = "0.00";
             this.lblCartTotal.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // lblTax
             // 
+            this.lblTax.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblTax.AutoSize = true;
             this.lblTax.BackColor = System.Drawing.Color.Transparent;
             this.lblTax.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTax.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.lblTax.Location = new System.Drawing.Point(226, 6);
+            this.lblTax.Location = new System.Drawing.Point(232, 6);
             this.lblTax.Name = "lblTax";
             this.lblTax.Size = new System.Drawing.Size(41, 21);
             this.lblTax.TabIndex = 4;
@@ -680,7 +683,7 @@
             this.rdbProducts.TabStop = true;
             this.rdbProducts.Text = "ALL";
             this.rdbProducts.UseVisualStyleBackColor = true;
-            this.rdbProducts.CheckedChanged += new System.EventHandler(this.rdbProducts_CheckedChanged);
+            this.rdbProducts.Visible = false;
             // 
             // uc_CategoryMenu1
             // 

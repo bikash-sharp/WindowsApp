@@ -38,20 +38,58 @@ namespace App_UI.Forms
             flyLayout.AutoScroll = true;
             flyLayout.VerticalScroll.Visible = true;
             flyLayout.VerticalScroll.Enabled = true;
-            //BindProducts();
+            BindProducts();
             //BindCart(Program.cartItems);
         }
 
        
         void uc_CategoryMenu1_EventCategoryClicked(object sender, EventArgs e)
         {
+            rdbOrder.Checked = rdbDelivery.Checked = false;
+            rdbProducts.Checked = true;
             string FoodType = sender.ToString().Trim();
-            if (FoodType.ToLower() != "all")
+            BindProducts(FoodType.ToLower());
+
+            //if (FoodType.ToLower() != "all")
+            //{
+            //    string URL = Program.BaseUrl;
+            //    string FiltrPrdURL = URL + "/filterproducts?category=" + FoodType + "&acess_token=" + Program.Token;
+
+            //    var ProductList = DataProviderWrapper.Instance.GetData(FiltrPrdURL, Verbs.GET, "");
+            //    JavaScriptSerializer serializer = new JavaScriptSerializer();
+            //    var result = serializer.Deserialize<ProductListAPICL>(ProductList);
+
+            //    if (result.status)
+            //    {
+            //        flyLayout.Controls.Clear();
+            //        foreach (var itm in result.data)
+            //        {
+            //            CreateProdButtons(itm.Product);
+            //        }
+            //    }
+            //}
+            //else
+            //{
+            //    BindProducts();
+            //}
+        }
+
+        private void BindProducts(String foodtype="all")
+        {
+            if(rdbDelivery.Checked != true && rdbOrder.Checked != true)
             {
                 string URL = Program.BaseUrl;
-                string FiltrPrdURL = URL + "/filterproducts?category=" + FoodType + "&acess_token=" + Program.Token;
+                string ProductURL = String.Empty;
+                if (foodtype == "all")
+                {
+                    ProductURL = URL + "/productlisting?acess_token=" + Program.Token;
+                }
+                else
+                {
+                    ProductURL = URL + "/filterproducts?category=" + foodtype + "&acess_token=" + Program.Token;
+                }
 
-                var ProductList = DataProviderWrapper.Instance.GetData(FiltrPrdURL, Verbs.GET, "");
+                var ProductList = DataProviderWrapper.Instance.GetData(ProductURL, Verbs.GET, "");
                 JavaScriptSerializer serializer = new JavaScriptSerializer();
                 var result = serializer.Deserialize<ProductListAPICL>(ProductList);
 
@@ -63,30 +101,7 @@ namespace App_UI.Forms
                         CreateProdButtons(itm.Product);
                     }
                 }
-            }
-            else
-            {
-                BindProducts();
-            }
-        }
-
-        private void BindProducts()
-        {
-            string URL = Program.BaseUrl;
-            string ProductURL = URL + "/productlisting?acess_token=" + Program.Token;
-
-            var ProductList = DataProviderWrapper.Instance.GetData(ProductURL, Verbs.GET, "");
-            JavaScriptSerializer serializer = new JavaScriptSerializer();
-            var result = serializer.Deserialize<ProductListAPICL>(ProductList);
-
-            if (result.status)
-            {
-                flyLayout.Controls.Clear();
-                foreach (var itm in result.data)
-                {
-                    CreateProdButtons(itm.Product);
-                }
-            }
+            }         
 
         }
 
@@ -159,7 +174,7 @@ namespace App_UI.Forms
                     if (cl != null)
                     {
                         cl.Quantity += 1;
-                        cl.Price = Convert.ToDouble(prod.product_price) * cl.Quantity;
+                        cl.Price = Convert.ToDouble(cl.OriginalPrice) * cl.Quantity;
                     }
                     else
                     {
@@ -178,6 +193,7 @@ namespace App_UI.Forms
                     cl.ProductID = Convert.ToInt32(prod.id);
                     cl.FoodType = prod.food_type;
                     cl.Price = Convert.ToDouble(prod.product_price);
+                    cl.OriginalPrice = Convert.ToDouble(prod.product_price);
                     cl.Quantity = 1;
                     cl.ProductName = prod.product_name;
                     Program.cartItems.Add(cl);
@@ -439,10 +455,6 @@ namespace App_UI.Forms
                 //lblOrderCount.Text = Program.PlacedOrders.Where(p => p.IsOrderConfirmed == false).Count().ToString();
 
                 flyLayout.Controls.Add(uc);
-            }
-            else
-            {
-                BindProducts();
             }
         }
 

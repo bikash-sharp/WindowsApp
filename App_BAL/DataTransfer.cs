@@ -80,6 +80,7 @@ namespace App_BAL
         public string ProductName { get; set; }
         public int CategoryID { get; set; }
         public string FoodType { get; set; }
+        public double OriginalPrice { get; set; }
         public double Price {
             get
             {
