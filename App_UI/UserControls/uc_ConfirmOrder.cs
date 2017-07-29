@@ -20,9 +20,10 @@ namespace App_UI.UserControls
             InitializeComponent();
         }
 
-        public void BindData()
+        public void BindData(bool? IsOrderConfirmed = null)
         {
-            var OrderLst = Program.PlacedOrders.Where(p => p.IsOrderConfirmed == false).ToList();
+            var OrderLst = Program.PlacedOrders.Where(p=> IsOrderConfirmed== null ? true : p.IsOrderConfirmed == IsOrderConfirmed.Value).ToList();
+            //var OrderLst = Program.PlacedOrders.Where(p => p.IsOrderConfirmed == false).ToList();
             flyLayout.Controls.Clear();
             foreach (var itm in OrderLst)
             {
@@ -47,13 +48,27 @@ namespace App_UI.UserControls
             pnl.Controls.Add(lbl);
 
             Button btn = new Button();
-            btn.Text = "Confirm";
+            if(itm.IsOrderConfirmed)
+            {
+                btn.Text = "Delivered";                
+                btn.Enabled = false;
+            }
+            else
+            {
+                btn.Text = "Confirm";
+                btn.Click += btn_Click;
+            }
             btn.Location = new Point(pnl.Width - 130, 15);
+            btn.Font = new Font("Segoe UI Semilight", 12, FontStyle.Bold);
             btn.Tag = itm.OrderNo;
-            btn.Click += btn_Click;
-            btn.FlatStyle = FlatStyle.Flat;
             btn.Height = 35;
             btn.Width = 120;
+            btn.Cursor = Cursors.Hand;
+            btn.FlatStyle = FlatStyle.Flat;
+            btn.FlatAppearance.BorderColor = Color.FromArgb(251, 51, 51);
+            btn.FlatAppearance.BorderSize = 2;
+            btn.FlatAppearance.MouseOverBackColor = Color.White;
+            btn.FlatAppearance.MouseDownBackColor = Color.White;
             pnl.Controls.Add(btn);
 
             flyLayout.Controls.Add(pnl);
@@ -74,7 +89,8 @@ namespace App_UI.UserControls
                     JavaScriptSerializer serializer = new JavaScriptSerializer();
                     var result = serializer.Deserialize<MessageCL>(GetStatus);
                     itm.IsOrderConfirmed = true;
-                    BindData();
+                    BindData(false);
+                    Program.OrderCount();
                 }
             }
         }

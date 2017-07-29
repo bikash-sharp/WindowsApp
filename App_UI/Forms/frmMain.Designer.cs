@@ -48,6 +48,8 @@
             this.pnlPay = new System.Windows.Forms.Panel();
             this.btnPay = new System.Windows.Forms.Button();
             this.shapeContainer1 = new Microsoft.VisualBasic.PowerPacks.ShapeContainer();
+            this.lineShape3 = new Microsoft.VisualBasic.PowerPacks.LineShape();
+            this.ovalShape2 = new Microsoft.VisualBasic.PowerPacks.OvalShape();
             this.rectangleShape4 = new Microsoft.VisualBasic.PowerPacks.RectangleShape();
             this.pnlBase = new System.Windows.Forms.Panel();
             this.txtSearch = new CustomServerControls.TxtBox();
@@ -75,8 +77,7 @@
             this.removeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.clearAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ovalShape2 = new Microsoft.VisualBasic.PowerPacks.OvalShape();
-            this.lineShape3 = new Microsoft.VisualBasic.PowerPacks.LineShape();
+            this.rdbProducts = new System.Windows.Forms.RadioButton();
             this.uc_CategoryMenu1 = new App_UI.UserControls.uc_CategoryMenu();
             this.tblMainLayout.SuspendLayout();
             this.pnlTopMenu.SuspendLayout();
@@ -118,6 +119,7 @@
             // 
             this.pnlTopMenu.BackColor = System.Drawing.Color.Black;
             this.tblMainLayout.SetColumnSpan(this.pnlTopMenu, 3);
+            this.pnlTopMenu.Controls.Add(this.rdbProducts);
             this.pnlTopMenu.Controls.Add(this.btnExit);
             this.pnlTopMenu.Controls.Add(this.lblOrderCount);
             this.pnlTopMenu.Controls.Add(this.pictureBox1);
@@ -195,7 +197,6 @@
             this.rdbOrder.Name = "rdbOrder";
             this.rdbOrder.Size = new System.Drawing.Size(102, 25);
             this.rdbOrder.TabIndex = 1;
-            this.rdbOrder.TabStop = true;
             this.rdbOrder.Text = "ORDER-IN";
             this.rdbOrder.UseVisualStyleBackColor = true;
             this.rdbOrder.CheckedChanged += new System.EventHandler(this.rdbOrder_CheckedChanged);
@@ -291,6 +292,30 @@
             this.shapeContainer1.Size = new System.Drawing.Size(290, 104);
             this.shapeContainer1.TabIndex = 0;
             this.shapeContainer1.TabStop = false;
+            // 
+            // lineShape3
+            // 
+            this.lineShape3.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+            this.lineShape3.BorderStyle = System.Drawing.Drawing2D.DashStyle.Dash;
+            this.lineShape3.BorderWidth = 2;
+            this.lineShape3.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lineShape3.Name = "lineShape3";
+            this.lineShape3.X1 = 23;
+            this.lineShape3.X2 = 68;
+            this.lineShape3.Y1 = 36;
+            this.lineShape3.Y2 = 77;
+            this.lineShape3.Click += new System.EventHandler(this.ovalShape2_Click);
+            // 
+            // ovalShape2
+            // 
+            this.ovalShape2.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+            this.ovalShape2.BorderStyle = System.Drawing.Drawing2D.DashStyle.Dash;
+            this.ovalShape2.BorderWidth = 2;
+            this.ovalShape2.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ovalShape2.Location = new System.Drawing.Point(8, 27);
+            this.ovalShape2.Name = "ovalShape2";
+            this.ovalShape2.Size = new System.Drawing.Size(75, 56);
+            this.ovalShape2.Click += new System.EventHandler(this.ovalShape2_Click);
             // 
             // rectangleShape4
             // 
@@ -642,29 +667,20 @@
             this.clearAllToolStripMenuItem.Text = "Clear All";
             this.clearAllToolStripMenuItem.Click += new System.EventHandler(this.clearAllToolStripMenuItem_Click);
             // 
-            // ovalShape2
+            // rdbProducts
             // 
-            this.ovalShape2.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
-            this.ovalShape2.BorderStyle = System.Drawing.Drawing2D.DashStyle.Dash;
-            this.ovalShape2.BorderWidth = 2;
-            this.ovalShape2.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ovalShape2.Location = new System.Drawing.Point(8, 27);
-            this.ovalShape2.Name = "ovalShape2";
-            this.ovalShape2.Size = new System.Drawing.Size(75, 56);
-            this.ovalShape2.Click += new System.EventHandler(this.ovalShape2_Click);
-            // 
-            // lineShape3
-            // 
-            this.lineShape3.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
-            this.lineShape3.BorderStyle = System.Drawing.Drawing2D.DashStyle.Dash;
-            this.lineShape3.BorderWidth = 2;
-            this.lineShape3.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.lineShape3.Name = "lineShape3";
-            this.lineShape3.X1 = 23;
-            this.lineShape3.X2 = 68;
-            this.lineShape3.Y1 = 36;
-            this.lineShape3.Y2 = 77;
-            this.lineShape3.Click += new System.EventHandler(this.ovalShape2_Click);
+            this.rdbProducts.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.rdbProducts.Checked = true;
+            this.rdbProducts.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.rdbProducts.ForeColor = System.Drawing.Color.White;
+            this.rdbProducts.Location = new System.Drawing.Point(518, 18);
+            this.rdbProducts.Name = "rdbProducts";
+            this.rdbProducts.Size = new System.Drawing.Size(61, 25);
+            this.rdbProducts.TabIndex = 7;
+            this.rdbProducts.TabStop = true;
+            this.rdbProducts.Text = "ALL";
+            this.rdbProducts.UseVisualStyleBackColor = true;
+            this.rdbProducts.CheckedChanged += new System.EventHandler(this.rdbProducts_CheckedChanged);
             // 
             // uc_CategoryMenu1
             // 
@@ -754,5 +770,6 @@
         private System.Windows.Forms.Label lblGrandTotal;
         private Microsoft.VisualBasic.PowerPacks.OvalShape ovalShape2;
         private Microsoft.VisualBasic.PowerPacks.LineShape lineShape3;
+        private System.Windows.Forms.RadioButton rdbProducts;
     }
 }

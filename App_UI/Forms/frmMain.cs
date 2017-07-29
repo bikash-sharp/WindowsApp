@@ -38,12 +38,11 @@ namespace App_UI.Forms
             flyLayout.AutoScroll = true;
             flyLayout.VerticalScroll.Visible = true;
             flyLayout.VerticalScroll.Enabled = true;
-            BindProducts();
+            //BindProducts();
             //BindCart(Program.cartItems);
-            rdbDelivery.Checked = rdbDelivery.AutoCheck = false;
-            rdbOrder.Checked = rdbOrder.AutoCheck = false;
         }
 
+       
         void uc_CategoryMenu1_EventCategoryClicked(object sender, EventArgs e)
         {
             string FoodType = sender.ToString().Trim();
@@ -195,9 +194,9 @@ namespace App_UI.Forms
                 lblTax.DataBindings.Clear();
                 //if(!IsConnected)
                 //{
-                    var CartTotalBinding = new Binding("Text", Program.cartItems.FirstOrDefault(), "CartTotal");
+                    var CartTotalBinding = new Binding("Text", Program.cartItems.FirstOrDefault(), "CartTotal", true, DataSourceUpdateMode.Never, "0.00", "N");
                     lblCartTotal.DataBindings.Add(CartTotalBinding);
-                    var GrandTotalBinding = new Binding("Text", Program.cartItems.FirstOrDefault(), "GrandTotal");
+                    var GrandTotalBinding = new Binding("Text", Program.cartItems.FirstOrDefault(), "GrandTotal",true,DataSourceUpdateMode.Never,"0.00","N");
                     lblGrandTotal.DataBindings.Add(GrandTotalBinding);
                   //  IsConnected = true;
                 //}
@@ -205,24 +204,24 @@ namespace App_UI.Forms
             }
         }
 
-        public void BindCart(ObservableCollection<CartItemsCL> cartItems)
-        {
-            //lstCart.Items.Clear();
-            int i = 0;
-            foreach (CartItemsCL cartItem in cartItems)
-            {
-                i = i + 1;
-                ListViewItem item = new ListViewItem(i.ToString());
-                item.Tag = cartItem.ProductID;
-                item.SubItems.Add(cartItem.ProductName.ToString());
-                item.SubItems.Add(cartItem.Quantity.ToString());
-                //item.SubItems.Add("MYR " + cartItem.Price.ToString("N"));
-                item.SubItems.Add(cartItem.Price.ToString("N"));
+        //public void BindCart(ObservableCollection<CartItemsCL> cartItems)
+        //{
+        //    //lstCart.Items.Clear();
+        //    int i = 0;
+        //    foreach (CartItemsCL cartItem in cartItems)
+        //    {
+        //        i = i + 1;
+        //        ListViewItem item = new ListViewItem(i.ToString());
+        //        item.Tag = cartItem.ProductID;
+        //        item.SubItems.Add(cartItem.ProductName.ToString());
+        //        item.SubItems.Add(cartItem.Quantity.ToString());
+        //        //item.SubItems.Add("MYR " + cartItem.Price.ToString("N"));
+        //        item.SubItems.Add(cartItem.Price.ToString("N"));
 
 
-                //lstCart.Items.Add(item);
-            }
-        }
+        //        //lstCart.Items.Add(item);
+        //    }
+        //}
 
         private void btnExit_Click(object sender, EventArgs e)
         {
@@ -306,8 +305,14 @@ namespace App_UI.Forms
                     cart.Items = Program.cartItems;
                     MessageBox.Show("Order Number : " + OrderNumber + " has been placed successfully", " Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     Program.PlacedOrders.Add(cart);
-
-                    lblOrderCount.Text = Program.PlacedOrders.Where(p => p.IsOrderConfirmed == false).Count().ToString();
+                    Program.OrderCount();
+                    lblOrderCount.DataBindings.Clear();
+                    
+                    //if(!IsConnected)
+                    //{
+                    var OrderCount = new Binding("Text", Program.unComfirmedOrder, "OrderCount", true, DataSourceUpdateMode.Never, "0", "");
+                    lblOrderCount.DataBindings.Add(OrderCount);
+                    //lblOrderCount.Text = Program.PlacedOrders.Where(p => p.IsOrderConfirmed == false).Count().ToString();
 
                     ClearList();
                 }
@@ -338,19 +343,28 @@ namespace App_UI.Forms
 
         private void lblOrderCount_Click(object sender, EventArgs e)
         {
-            if (Program.PlacedOrders.Where(p => p.IsOrderConfirmed == false).Count() > 0)
-            {
-                FrmContainer frm = new FrmContainer();
-                uc_ConfirmOrder uc = new uc_ConfirmOrder();
-                frm.Dock = DockStyle.Fill;
-                uc.BindData();
-                frm.Width = uc.Width + 20; ;
-                frm.Height = uc.Height + 40;
-                frm.Controls.Add(uc);
-                frm.ShowDialog();
-                lblOrderCount.Text = Program.PlacedOrders.Where(p => p.IsOrderConfirmed == false).Count().ToString();
+            BindOrders(false);
+            //int Count = Program.PlacedOrders.Where(p => p.IsOrderConfirmed == false).Count();
+            //if (Count > 0)
+            //{
+            //    FrmContainer frm = new FrmContainer();
+            //    uc_ConfirmOrder uc = new uc_ConfirmOrder();
+            //    frm.Dock = DockStyle.Fill;
+            //    uc.BindData(false);
+            //    frm.Width = uc.Width + 20; ;
+            //    frm.Height = uc.Height + 40;
+            //    //frm.Controls.Add(uc);
+            //    //frm.ShowDialog();
+            //    //lblOrderCount.Text = Program.PlacedOrders.Where(p => p.IsOrderConfirmed == false).Count().ToString();
+            //    flyLayout.Controls.Clear();
+            //    flyLayout.Controls.Add(uc);
+                
+            //    //pnlBase.Controls.Add(uc);
+            //    //uc.BringToFront();
 
-            }
+            //}
+
+            
         }
 
         private void removeToolStripMenuItem_Click(object sender, EventArgs e)
@@ -394,17 +408,47 @@ namespace App_UI.Forms
 
         private void rdbOrder_CheckedChanged(object sender, EventArgs e)
         {
-            BindProducts();
+            BindOrders(false);
         }
 
         private void rdbDelivery_CheckedChanged(object sender, EventArgs e)
         {
-
+            BindOrders(true);
         }
 
         private void ovalShape2_Click(object sender, EventArgs e)
         {
             ClearList();
+        }
+
+        public void BindOrders(bool? IsOrderConfirmed = null)
+        {
+            flyLayout.Controls.Clear();
+            int Count = Program.PlacedOrders.Where(p => IsOrderConfirmed == null ? true : p.IsOrderConfirmed == IsOrderConfirmed.Value).Count();
+            if (Count > 0)
+            {
+                FrmContainer frm = new FrmContainer();
+                
+                uc_ConfirmOrder uc = new uc_ConfirmOrder();
+                frm.Dock = DockStyle.Fill;
+                uc.BindData(IsOrderConfirmed);
+                frm.Width = uc.Width + 20; ;
+                frm.Height = uc.Height + 40;
+                //frm.Controls.Add(uc);
+                //frm.ShowDialog();
+                //lblOrderCount.Text = Program.PlacedOrders.Where(p => p.IsOrderConfirmed == false).Count().ToString();
+
+                flyLayout.Controls.Add(uc);
+            }
+            else
+            {
+                BindProducts();
+            }
+        }
+
+        private void rdbProducts_CheckedChanged(object sender, EventArgs e)
+        {
+            BindProducts();
         }
     }
 }

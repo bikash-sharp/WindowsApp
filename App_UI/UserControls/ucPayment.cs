@@ -28,25 +28,53 @@ namespace App_UI.UserControls
             lblTotal.Text = _Amount.ToString("N");
             RemAmount = 0 - _Amount;
             lblRem.Text = "Balance : " + RemAmount.ToString("N");
-            ChangeColorSelectedButton(btnCard);
+            ChangeColorSelectedButton(btnCash);
             
         }
 
         private void txtAmount_TextChanged(object sender, EventArgs e)
         {
-            double PaidAmount = 0;
-            double.TryParse(txtAmount.Text, out PaidAmount);
-            RemAmount = PaidAmount - TotalAmount;
-            lblRem.Text = "Balance : " + RemAmount.ToString("N");
+            if(PayementType == EmPaymentType.Cash)
+            {
+                double PaidAmount = 0;
+                double.TryParse(txtAmount.Text, out PaidAmount);
+                RemAmount = PaidAmount - TotalAmount;
+                lblRem.Text = "Balance : " + RemAmount.ToString("N");
+            }
         }
 
         private void btnPay_Click(object sender, EventArgs e)
         {
-            if (RemAmount < 0)
+            bool IsDone = false;
+            if(PayementType == EmPaymentType.Cash)
             {
-                MessageBox.Show("Payment not complete", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                if (RemAmount < 0)
+                {
+                    MessageBox.Show("Payment not complete", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    IsDone = true;
+                }
+            }
+            else if(PayementType == EmPaymentType.Wallet)
+            {
+                if (txtAmount.TextLength <= 0)
+                {
+                    MessageBox.Show("Please enter the Transaction Id", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    //Verify the transaction Id here
+                    IsDone = true;
+                }
             }
             else
+            {
+                IsDone = true;
+            }
+            
+            if(IsDone)
             {
                 if (this.ParentForm.Modal)
                 {
@@ -73,7 +101,7 @@ namespace App_UI.UserControls
             ChangeColorSelectedButton(btnCash);
             txtAmount.Text = "";
             txtAmount.PlaceholderText = "Cash Amount";
-            PayementType = EmPaymentType.Card;
+            PayementType = EmPaymentType.Cash;
             pnlCash.BringToFront();
         }
 
@@ -81,7 +109,7 @@ namespace App_UI.UserControls
         {
             ChangeColorSelectedButton(btnCard);
             txtAmount.Text = TotalAmount.ToString("N");
-            PayementType = EmPaymentType.Cash;
+            PayementType = EmPaymentType.Card;
             pnlCard.BringToFront();
         }
 
@@ -129,6 +157,8 @@ namespace App_UI.UserControls
         {
             ChangeColorSelectedButton(btnWallet);
             txtAmount.PlaceholderText = "Transaction Number";
+            PayementType = EmPaymentType.Wallet;
+            pnlCard.BringToFront();
         }
     }
 }

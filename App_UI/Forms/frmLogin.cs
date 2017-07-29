@@ -105,5 +105,11 @@ namespace App_UI.Forms
                 this.rectangleShape2.BorderColor = Color.FromArgb(225, 225, 225);
             }
         }
+
+        private void frmLogin_Load(object sender, EventArgs e)
+        {
+            txtUserName.Text = "tanent_admin_1";
+            txtPassword.Text = "welcome2sw";
+        }
     }
 }

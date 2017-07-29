@@ -41,6 +41,34 @@ namespace App_BAL
         }
     }
 
+    public class UnConfirmedOrder : INotifyPropertyChanged
+    {
+        private int _orderCount=0;
+        public int OrderCount
+        {
+            get
+            {
+                return this._orderCount;
+            }
+            set
+            {
+                if (value != this._orderCount)
+                {
+                    this._orderCount = value;
+                    this.NotifyPropertyChanged();
+                }
+            }
+        }
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+
     public class CartItemsCL : INotifyPropertyChanged
     {
         private int QuantityValue = 0;

@@ -20,6 +20,7 @@ namespace App_UI
         public const String BaseUrl = "http://202.75.42.25/index.php/restwebservices/";
         public static string Token { get; set; }
         public static int SelectedProductId { get; set;}
+        public static UnConfirmedOrder unComfirmedOrder = new UnConfirmedOrder();
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -39,6 +40,11 @@ namespace App_UI
                 item.GrandTotal = Program.cartItems.Sum(p => p.Price);
             }
 
+        }
+
+        public static void OrderCount()
+        {
+            unComfirmedOrder.OrderCount = PlacedOrders.Where(p => p.IsOrderConfirmed == false).Count();
         }
         //public static void BindData()
         //{
