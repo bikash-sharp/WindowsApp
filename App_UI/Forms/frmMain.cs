@@ -319,6 +319,7 @@ namespace App_UI.Forms
                     }
                     cart.PaymentType = uc.PayementType;
                     cart.Items = Program.cartItems;
+                    cart.OrderTotal = Program.cartItems.First().GrandTotal.ToString("N");
                     MessageBox.Show("Order Number : " + OrderNumber + " has been placed successfully", " Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     Program.PlacedOrders.Add(cart);
                     Program.OrderCount();
@@ -359,6 +360,7 @@ namespace App_UI.Forms
 
         private void lblOrderCount_Click(object sender, EventArgs e)
         {
+            rdbOrder.Checked = true;
             BindOrders(false);
             //int Count = Program.PlacedOrders.Where(p => p.IsOrderConfirmed == false).Count();
             //if (Count > 0)
@@ -443,18 +445,20 @@ namespace App_UI.Forms
             int Count = Program.PlacedOrders.Where(p => IsOrderConfirmed == null ? true : p.IsOrderConfirmed == IsOrderConfirmed.Value).Count();
             if (Count > 0)
             {
-                FrmContainer frm = new FrmContainer();
+                //FrmContainer frm = new FrmContainer();
                 
                 uc_ConfirmOrder uc = new uc_ConfirmOrder();
-                frm.Dock = DockStyle.Fill;
+                //uc.Dock = DockStyle.Fill;
+                uc.Width = flyLayout.Width - 15;
+                uc.Height = flyLayout.Height - 15;
                 uc.BindData(IsOrderConfirmed);
-                frm.Width = uc.Width + 20; ;
-                frm.Height = uc.Height + 40;
+                //frm.Width = uc.Width + 20; ;
+                //frm.Height = uc.Height + 40;
                 //frm.Controls.Add(uc);
                 //frm.ShowDialog();
                 //lblOrderCount.Text = Program.PlacedOrders.Where(p => p.IsOrderConfirmed == false).Count().ToString();
-
-                flyLayout.Controls.Add(uc);
+                this.flyLayout.Controls.Add(uc);
+                
             }
         }
 

@@ -31,9 +31,17 @@ namespace App_BAL
         public int SrNo { get; set; }
         public int OrderID { get; set; }
         public string OrderNo { get; set; }
+        public string OrderTotal { get; set; }
         public EmOrderType OrderType { get; set; }
         public BindingList<CartItemsCL> Items { get; set; }
         public bool IsOrderConfirmed { get; set; }
+        public string OrderStatus { get
+            {
+                if (IsOrderConfirmed)
+                    return "Delivered";
+                else
+                    return "Confirm";
+            } }
         public EmPaymentType PaymentType { get; set; }
         public CartCL()
         {

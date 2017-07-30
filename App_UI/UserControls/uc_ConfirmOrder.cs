@@ -23,19 +23,25 @@ namespace App_UI.UserControls
         public void BindData(bool? IsOrderConfirmed = null)
         {
             var OrderLst = Program.PlacedOrders.Where(p=> IsOrderConfirmed== null ? true : p.IsOrderConfirmed == IsOrderConfirmed.Value).ToList();
+            var source = new BindingSource(OrderLst, null);
+            dataGridView1.AutoGenerateColumns = false;
+            dataGridView1.DataSource = source;
+            dataGridView1.ClearSelection();
             //var OrderLst = Program.PlacedOrders.Where(p => p.IsOrderConfirmed == false).ToList();
-            flyLayout.Controls.Clear();
-            foreach (var itm in OrderLst)
-            {
-                CreateControl(itm);
-            }
+            //dataGridView1.Width = this.Width-20;
+            //dataGridView1.Height = this.Height - 100;
+            //flyLayout.Controls.Clear();
+            //foreach (var itm in OrderLst)
+            //{
+            //    CreateControl(itm);
+            //}
         }
 
         private void CreateControl(App_BAL.CartCL itm)
         {
             Panel pnl = new Panel();
             pnl.Height = 60;
-            pnl.Width = flyLayout.Width - 5;
+            //pnl.Width = flyLayout.Width - 10;
             pnl.BackColor = Color.LightGray;
 
             Label lbl = new Label();
@@ -71,7 +77,7 @@ namespace App_UI.UserControls
             btn.FlatAppearance.MouseDownBackColor = Color.White;
             pnl.Controls.Add(btn);
 
-            flyLayout.Controls.Add(pnl);
+            //flyLayout.Controls.Add(pnl);
         }
 
         void btn_Click(object sender, EventArgs e)
