@@ -22,7 +22,7 @@ namespace App_UI.UserControls
 
         public void BindData(bool? IsOrderConfirmed = null)
         {
-            var OrderLst = Program.PlacedOrders.Where(p=> IsOrderConfirmed== null ? true : p.IsOrderConfirmed == IsOrderConfirmed.Value).ToList();
+            var OrderLst = Program.PlacedOrders.Where(p => IsOrderConfirmed == null ? true : p.IsOrderConfirmed == IsOrderConfirmed.Value).ToList();
             var source = new BindingSource(OrderLst, null);
             dataGridView1.AutoGenerateColumns = false;
             dataGridView1.DataSource = source;
@@ -54,9 +54,9 @@ namespace App_UI.UserControls
             pnl.Controls.Add(lbl);
 
             Button btn = new Button();
-            if(itm.IsOrderConfirmed)
+            if (itm.IsOrderConfirmed)
             {
-                btn.Text = "Delivered";                
+                btn.Text = "Delivered";
                 btn.Enabled = false;
             }
             else
@@ -97,6 +97,34 @@ namespace App_UI.UserControls
                     itm.IsOrderConfirmed = true;
                     BindData(false);
                     Program.OrderCount();
+                }
+            }
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                DataGridViewRow row = this.dataGridView1.Rows[e.RowIndex];
+                if (row != null)
+                {
+                    string OrderNo = row.Cells["OrderNo"].Value.ToString();
+                    if (!string.IsNullOrEmpty(OrderNo))
+                    {
+                        var itm = Program.PlacedOrders.Where(p => p.OrderNo == OrderNo).FirstOrDefault();
+                        if (itm != null)
+                        {
+                            string URL = Program.BaseUrl;
+                            string ChangeOrdStatusURL = URL + "/confirmorder?order_id=" + OrderNo + "&order_status=in_progress&acess_token=" + Program.Token;
+
+                            var GetStatus = DataProviderWrapper.Instance.GetData(ChangeOrdStatusURL, Verbs.GET, "");
+                            JavaScriptSerializer serializer = new JavaScriptSerializer();
+                            var result = serializer.Deserialize<MessageCL>(GetStatus);
+                            itm.IsOrderConfirmed = true;
+                            BindData(false);
+                            Program.OrderCount();
+                        }
+                    }
                 }
             }
         }
