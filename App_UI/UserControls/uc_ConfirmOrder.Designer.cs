@@ -28,15 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tblMainLayout = new System.Windows.Forms.TableLayoutPanel();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.OrderNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.OrderType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.OrderTotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.OrderStatus = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.pnlOrderTotal = new System.Windows.Forms.Panel();
+            this.lblOrderTotal = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.tblMainLayout.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.pnlOrderTotal.SuspendLayout();
             this.SuspendLayout();
             // 
             // tblMainLayout
@@ -45,6 +49,7 @@
             this.tblMainLayout.ColumnCount = 1;
             this.tblMainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tblMainLayout.Controls.Add(this.dataGridView1, 0, 0);
+            this.tblMainLayout.Controls.Add(this.pnlOrderTotal, 0, 1);
             this.tblMainLayout.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tblMainLayout.ForeColor = System.Drawing.SystemColors.ControlText;
             this.tblMainLayout.Location = new System.Drawing.Point(0, 0);
@@ -85,10 +90,10 @@
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowHeadersWidth = 10;
             this.dataGridView1.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle1.Padding = new System.Windows.Forms.Padding(5, 2, 5, 5);
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.dataGridView1.RowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle7.Padding = new System.Windows.Forms.Padding(5, 2, 5, 5);
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.dataGridView1.RowsDefaultCellStyle = dataGridViewCellStyle7;
             this.dataGridView1.RowTemplate.Height = 35;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView1.ShowCellErrors = false;
@@ -135,6 +140,43 @@
             this.OrderStatus.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.OrderStatus.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
+            // pnlOrderTotal
+            // 
+            this.pnlOrderTotal.Controls.Add(this.label2);
+            this.pnlOrderTotal.Controls.Add(this.lblOrderTotal);
+            this.pnlOrderTotal.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlOrderTotal.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.pnlOrderTotal.Location = new System.Drawing.Point(1, 284);
+            this.pnlOrderTotal.Margin = new System.Windows.Forms.Padding(0);
+            this.pnlOrderTotal.Name = "pnlOrderTotal";
+            this.pnlOrderTotal.Size = new System.Drawing.Size(521, 50);
+            this.pnlOrderTotal.TabIndex = 2;
+            // 
+            // lblOrderTotal
+            // 
+            this.lblOrderTotal.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblOrderTotal.BackColor = System.Drawing.Color.Transparent;
+            this.lblOrderTotal.Font = new System.Drawing.Font("Segoe UI Semibold", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblOrderTotal.Location = new System.Drawing.Point(345, 7);
+            this.lblOrderTotal.Name = "lblOrderTotal";
+            this.lblOrderTotal.Size = new System.Drawing.Size(163, 35);
+            this.lblOrderTotal.TabIndex = 0;
+            this.lblOrderTotal.Text = "0.00";
+            this.lblOrderTotal.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // label2
+            // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(293, 12);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(63, 25);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "Total :";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
             // uc_ConfirmOrder
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
@@ -146,6 +188,8 @@
             this.Size = new System.Drawing.Size(523, 335);
             this.tblMainLayout.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.pnlOrderTotal.ResumeLayout(false);
+            this.pnlOrderTotal.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -158,5 +202,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn OrderType;
         private System.Windows.Forms.DataGridViewTextBoxColumn OrderTotal;
         private System.Windows.Forms.DataGridViewButtonColumn OrderStatus;
+        private System.Windows.Forms.Panel pnlOrderTotal;
+        private System.Windows.Forms.Label lblOrderTotal;
+        private System.Windows.Forms.Label label2;
     }
 }

@@ -24,7 +24,9 @@ namespace App_UI.UserControls
         {
             var OrderLst = Program.PlacedOrders.Where(p => IsOrderConfirmed == null ? true : p.IsOrderConfirmed == IsOrderConfirmed.Value).ToList();
 
-            if(IsOrderConfirmed.Value)
+            lblOrderTotal.DataBindings.Clear();
+
+            if (IsOrderConfirmed.Value)
             {
                 dataGridView1.Columns.RemoveAt(3);
                 DataGridViewTextBoxColumn txtCol = new DataGridViewTextBoxColumn();
@@ -33,6 +35,10 @@ namespace App_UI.UserControls
                 txtCol.Resizable =  DataGridViewTriState.False;
                 txtCol.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                 dataGridView1.Columns.Add(txtCol);
+
+                var OrderSum = new Binding("Text", Program.OrderBindings, "SumConfirmedAmountTotal", true, DataSourceUpdateMode.Never, "0", "F");
+                lblOrderTotal.DataBindings.Add(OrderSum);
+
             }
             else
             {
@@ -43,13 +49,21 @@ namespace App_UI.UserControls
                 btnCol.Resizable = DataGridViewTriState.False;
                 btnCol.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                 dataGridView1.Columns.Add(btnCol);
+
+                var OrderSum = new Binding("Text", Program.OrderBindings, "SumUnconfirmedAmountTotal", true, DataSourceUpdateMode.Never, "0.00", "F");
+                lblOrderTotal.DataBindings.Add(OrderSum);
             }
 
             var source = new BindingSource(OrderLst, null);
             dataGridView1.AutoGenerateColumns = false;
-            dataGridView1.DataSource = source;
-            
+            dataGridView1.DataSource = source;            
             dataGridView1.ClearSelection();
+
+            
+
+            //if(!IsConnected)
+            //{
+            
             //var OrderLst = Program.PlacedOrders.Where(p => p.IsOrderConfirmed == false).ToList();
             //dataGridView1.Width = this.Width-20;
             //dataGridView1.Height = this.Height - 100;
@@ -103,26 +117,26 @@ namespace App_UI.UserControls
         //    //flyLayout.Controls.Add(pnl);
         //}
 
-        void btn_Click(object sender, EventArgs e)
-        {
-            if (sender is Button)
-            {
-                var OrderNo = (sender as Button).Tag.ToString();
-                var itm = Program.PlacedOrders.Where(p => p.OrderNo == OrderNo).FirstOrDefault();
-                if (itm != null)
-                {
-                    string URL = Program.BaseUrl;
-                    string ChangeOrdStatusURL = URL + "/confirmorder?order_id=" + OrderNo + "&order_status=completed&acess_token=" + Program.Token;
+        //void btn_Click(object sender, EventArgs e)
+        //{
+        //    if (sender is Button)
+        //    {
+        //        var OrderNo = (sender as Button).Tag.ToString();
+        //        var itm = Program.PlacedOrders.Where(p => p.OrderNo == OrderNo).FirstOrDefault();
+        //        if (itm != null)
+        //        {
+        //            string URL = Program.BaseUrl;
+        //            string ChangeOrdStatusURL = URL + "/confirmorder?order_id=" + OrderNo + "&order_status=completed&acess_token=" + Program.Token;
 
-                    var GetStatus = DataProviderWrapper.Instance.GetData(ChangeOrdStatusURL, Verbs.GET, "");
-                    JavaScriptSerializer serializer = new JavaScriptSerializer();
-                    var result = serializer.Deserialize<MessageCL>(GetStatus);
-                    itm.IsOrderConfirmed = true;
-                    BindData(false);
-                    Program.OrderCount();
-                }
-            }
-        }
+        //            var GetStatus = DataProviderWrapper.Instance.GetData(ChangeOrdStatusURL, Verbs.GET, "");
+        //            JavaScriptSerializer serializer = new JavaScriptSerializer();
+        //            var result = serializer.Deserialize<MessageCL>(GetStatus);
+        //            itm.IsOrderConfirmed = true;
+        //            BindData(false);
+        //            Program.OrderCount();
+        //        }
+        //    }
+        //}
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {

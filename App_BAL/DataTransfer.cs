@@ -49,9 +49,11 @@ namespace App_BAL
         }
     }
 
-    public class UnConfirmedOrder : INotifyPropertyChanged
+    public class PlaceOrderBinding : INotifyPropertyChanged
     {
         private int _orderCount=0;
+        private double _sumConfirmedAmountTotal = 0.00;
+        private double _sumUnconfirmedAmountTotal = 0.00;
         public int OrderCount
         {
             get
@@ -67,6 +69,39 @@ namespace App_BAL
                 }
             }
         }
+
+        public double SumConfirmedAmountTotal
+        {
+            get
+            {
+                return this._sumConfirmedAmountTotal;
+            }
+            set
+            {
+                if (value != this._sumConfirmedAmountTotal)
+                {
+                    this._sumConfirmedAmountTotal = value;
+                    this.NotifyPropertyChanged();
+                }
+            }
+        }
+
+        public double SumUnconfirmedAmountTotal
+        {
+            get
+            {
+                return this._sumUnconfirmedAmountTotal;
+            }
+            set
+            {
+                if (value != this._sumUnconfirmedAmountTotal)
+                {
+                    this._sumUnconfirmedAmountTotal = value;
+                    this.NotifyPropertyChanged();
+                }
+            }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
         {

@@ -20,7 +20,7 @@ namespace App_UI
         public const String BaseUrl = "http://202.75.42.25/index.php/restwebservices/";
         public static string Token { get; set; }
         public static int SelectedProductId { get; set;}
-        public static UnConfirmedOrder unComfirmedOrder = new UnConfirmedOrder();
+        public static PlaceOrderBinding OrderBindings = new PlaceOrderBinding();
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -44,7 +44,11 @@ namespace App_UI
 
         public static void OrderCount()
         {
-            unComfirmedOrder.OrderCount = PlacedOrders.Where(p => p.IsOrderConfirmed == false).Count();
+            OrderBindings.OrderCount = PlacedOrders.Where(p => p.IsOrderConfirmed == false).Count();
+            var SumConfirmed = PlacedOrders.Where(p => p.IsOrderConfirmed == true).Sum(p => double.Parse(p.OrderTotal));
+            var SumUncofirmed = PlacedOrders.Where(p => p.IsOrderConfirmed == false).Sum(p => double.Parse(p.OrderTotal));
+            OrderBindings.SumConfirmedAmountTotal = double.Parse(SumConfirmed.ToString());
+            OrderBindings.SumUnconfirmedAmountTotal = double.Parse(SumUncofirmed.ToString());
         }
         //public static void BindData()
         //{

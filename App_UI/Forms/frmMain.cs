@@ -327,7 +327,7 @@ namespace App_UI.Forms
                     
                     //if(!IsConnected)
                     //{
-                    var OrderCount = new Binding("Text", Program.unComfirmedOrder, "OrderCount", true, DataSourceUpdateMode.Never, "0", "");
+                    var OrderCount = new Binding("Text", Program.OrderBindings, "OrderCount", true, DataSourceUpdateMode.Never, "0", "");
                     lblOrderCount.DataBindings.Add(OrderCount);
                     //lblOrderCount.Text = Program.PlacedOrders.Where(p => p.IsOrderConfirmed == false).Count().ToString();
 
