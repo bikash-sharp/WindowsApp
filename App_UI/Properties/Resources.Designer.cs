@@ -103,9 +103,9 @@ namespace App_UI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap refresh_16 {
+        internal static System.Drawing.Bitmap refresh_24 {
             get {
-                object obj = ResourceManager.GetObject("refresh-16", resourceCulture);
+                object obj = ResourceManager.GetObject("refresh-24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

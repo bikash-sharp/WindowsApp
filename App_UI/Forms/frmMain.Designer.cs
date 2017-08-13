@@ -368,7 +368,7 @@
             // btnRefresh
             // 
             this.btnRefresh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRefresh.BackgroundImage = global::App_UI.Properties.Resources.refresh_16;
+            this.btnRefresh.BackgroundImage = global::App_UI.Properties.Resources.refresh_24;
             this.btnRefresh.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.btnRefresh.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnRefresh.FlatAppearance.BorderColor = System.Drawing.Color.White;
