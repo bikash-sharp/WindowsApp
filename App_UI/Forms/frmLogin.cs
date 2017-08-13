@@ -19,15 +19,14 @@ namespace App_UI.Forms
         public frmLogin()
         {
             InitializeComponent();
+            this.SetStyle(ControlStyles.DoubleBuffer, true);
+            this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
+            this.SetStyle(ControlStyles.UserPaint, true);
+            this.SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            //btnLogin.TabStop = false;
-            //this.btnLogin.FlatStyle = FlatStyle.Flat;
-            //this.btnLogin.FlatAppearance.BorderColor = Color.White;
-            //this.btnLogin.FlatAppearance.BorderSize = 0;
-
             if (String.IsNullOrEmpty(txtUserName.Text.Trim()))
             {
                 this.rectangleShape2.BorderColor = Color.FromArgb(251, 51, 51);

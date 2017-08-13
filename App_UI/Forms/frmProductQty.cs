@@ -16,6 +16,10 @@ namespace App_UI.Forms
         public frmProductQty()
         {
             InitializeComponent();
+            this.SetStyle(ControlStyles.DoubleBuffer, true);
+            this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
+            this.SetStyle(ControlStyles.UserPaint, true);
+            this.SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
         }
 
         private void frmProductQty_Load(object sender, EventArgs e)

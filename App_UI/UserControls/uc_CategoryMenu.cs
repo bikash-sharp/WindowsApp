@@ -136,5 +136,15 @@ namespace App_UI.UserControls
                 }
             }
         }
+
+        public string GetCurrentControlBtnName()
+        {
+            return currentBtnName;
+        }
+
+        public void SetCurrentControlBtnName( string name)
+        {
+            currentBtnName = name;
+        }
     }
 }

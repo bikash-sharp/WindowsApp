@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -36,6 +35,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.tblMainLayout = new System.Windows.Forms.TableLayoutPanel();
             this.pnlTopMenu = new System.Windows.Forms.Panel();
+            this.rdbProducts = new System.Windows.Forms.RadioButton();
             this.btnExit = new System.Windows.Forms.Button();
             this.lblOrderCount = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -51,7 +51,9 @@
             this.lineShape3 = new Microsoft.VisualBasic.PowerPacks.LineShape();
             this.ovalShape2 = new Microsoft.VisualBasic.PowerPacks.OvalShape();
             this.rectangleShape4 = new Microsoft.VisualBasic.PowerPacks.RectangleShape();
+            this.uc_CategoryMenu1 = new App_UI.UserControls.uc_CategoryMenu();
             this.pnlBase = new System.Windows.Forms.Panel();
+            this.btnRefresh = new System.Windows.Forms.Button();
             this.txtSearch = new CustomServerControls.TxtBox();
             this.btnSearch = new System.Windows.Forms.Button();
             this.flyLayout = new System.Windows.Forms.FlowLayoutPanel();
@@ -73,12 +75,6 @@
             this.shapeContainer4 = new Microsoft.VisualBasic.PowerPacks.ShapeContainer();
             this.lineShape2 = new Microsoft.VisualBasic.PowerPacks.LineShape();
             this.lineShape1 = new Microsoft.VisualBasic.PowerPacks.LineShape();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.removeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.clearAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.rdbProducts = new System.Windows.Forms.RadioButton();
-            this.uc_CategoryMenu1 = new App_UI.UserControls.uc_CategoryMenu();
             this.tblMainLayout.SuspendLayout();
             this.pnlTopMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -88,7 +84,6 @@
             this.tblCart.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.pnlCart.SuspendLayout();
-            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tblMainLayout
@@ -133,6 +128,21 @@
             this.pnlTopMenu.Name = "pnlTopMenu";
             this.pnlTopMenu.Size = new System.Drawing.Size(875, 59);
             this.pnlTopMenu.TabIndex = 0;
+            // 
+            // rdbProducts
+            // 
+            this.rdbProducts.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.rdbProducts.Checked = true;
+            this.rdbProducts.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.rdbProducts.ForeColor = System.Drawing.Color.White;
+            this.rdbProducts.Location = new System.Drawing.Point(518, 18);
+            this.rdbProducts.Name = "rdbProducts";
+            this.rdbProducts.Size = new System.Drawing.Size(61, 25);
+            this.rdbProducts.TabIndex = 7;
+            this.rdbProducts.TabStop = true;
+            this.rdbProducts.Text = "ALL";
+            this.rdbProducts.UseVisualStyleBackColor = true;
+            this.rdbProducts.Visible = false;
             // 
             // btnExit
             // 
@@ -330,8 +340,20 @@
             this.rectangleShape4.Name = "rectangleShape4";
             this.rectangleShape4.Size = new System.Drawing.Size(191, 59);
             // 
+            // uc_CategoryMenu1
+            // 
+            this.uc_CategoryMenu1.AutoScroll = true;
+            this.uc_CategoryMenu1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.uc_CategoryMenu1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.uc_CategoryMenu1.Location = new System.Drawing.Point(24, 378);
+            this.uc_CategoryMenu1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.uc_CategoryMenu1.Name = "uc_CategoryMenu1";
+            this.uc_CategoryMenu1.Size = new System.Drawing.Size(557, 94);
+            this.uc_CategoryMenu1.TabIndex = 3;
+            // 
             // pnlBase
             // 
+            this.pnlBase.Controls.Add(this.btnRefresh);
             this.pnlBase.Controls.Add(this.txtSearch);
             this.pnlBase.Controls.Add(this.btnSearch);
             this.pnlBase.Controls.Add(this.flyLayout);
@@ -342,6 +364,25 @@
             this.pnlBase.Name = "pnlBase";
             this.pnlBase.Size = new System.Drawing.Size(565, 314);
             this.pnlBase.TabIndex = 5;
+            // 
+            // btnRefresh
+            // 
+            this.btnRefresh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnRefresh.BackgroundImage = global::App_UI.Properties.Resources.refresh_16;
+            this.btnRefresh.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnRefresh.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnRefresh.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnRefresh.FlatAppearance.BorderSize = 0;
+            this.btnRefresh.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
+            this.btnRefresh.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
+            this.btnRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRefresh.Location = new System.Drawing.Point(531, 14);
+            this.btnRefresh.Name = "btnRefresh";
+            this.btnRefresh.Size = new System.Drawing.Size(30, 29);
+            this.btnRefresh.TabIndex = 7;
+            this.btnRefresh.Tag = "Refresh";
+            this.btnRefresh.UseVisualStyleBackColor = true;
+            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
             // 
             // txtSearch
             // 
@@ -537,10 +578,10 @@
             this.lblGrandTotal.BackColor = System.Drawing.Color.Transparent;
             this.lblGrandTotal.Font = new System.Drawing.Font("Segoe UI Semibold", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblGrandTotal.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.lblGrandTotal.Location = new System.Drawing.Point(76, 80);
+            this.lblGrandTotal.Location = new System.Drawing.Point(65, 80);
             this.lblGrandTotal.Margin = new System.Windows.Forms.Padding(3, 0, 60, 0);
             this.lblGrandTotal.Name = "lblGrandTotal";
-            this.lblGrandTotal.Size = new System.Drawing.Size(211, 37);
+            this.lblGrandTotal.Size = new System.Drawing.Size(225, 37);
             this.lblGrandTotal.TabIndex = 6;
             this.lblGrandTotal.Text = "0.00";
             this.lblGrandTotal.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -561,13 +602,12 @@
             // lblTax
             // 
             this.lblTax.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblTax.AutoSize = true;
             this.lblTax.BackColor = System.Drawing.Color.Transparent;
             this.lblTax.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTax.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.lblTax.Location = new System.Drawing.Point(232, 6);
+            this.lblTax.Location = new System.Drawing.Point(95, 6);
             this.lblTax.Name = "lblTax";
-            this.lblTax.Size = new System.Drawing.Size(41, 21);
+            this.lblTax.Size = new System.Drawing.Size(190, 21);
             this.lblTax.TabIndex = 4;
             this.lblTax.Text = "0.00";
             this.lblTax.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -578,7 +618,7 @@
             this.label3.BackColor = System.Drawing.Color.Transparent;
             this.label3.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label3.Location = new System.Drawing.Point(14, 87);
+            this.label3.Location = new System.Drawing.Point(3, 87);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(56, 21);
             this.label3.TabIndex = 3;
@@ -590,11 +630,11 @@
             this.label2.BackColor = System.Drawing.Color.Transparent;
             this.label2.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label2.Location = new System.Drawing.Point(14, 42);
+            this.label2.Location = new System.Drawing.Point(4, 42);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(56, 21);
+            this.label2.Size = new System.Drawing.Size(92, 21);
             this.label2.TabIndex = 2;
-            this.label2.Text = "TOTAL";
+            this.label2.Text = "SUB-TOTAL";
             // 
             // label1
             // 
@@ -602,7 +642,7 @@
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label1.Location = new System.Drawing.Point(14, 6);
+            this.label1.Location = new System.Drawing.Point(3, 6);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(39, 21);
             this.label1.TabIndex = 1;
@@ -640,62 +680,6 @@
             this.lineShape1.Y1 = 34;
             this.lineShape1.Y2 = 34;
             // 
-            // contextMenuStrip1
-            // 
-            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.removeToolStripMenuItem,
-            this.toolStripSeparator1,
-            this.clearAllToolStripMenuItem});
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(136, 62);
-            // 
-            // removeToolStripMenuItem
-            // 
-            this.removeToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.removeToolStripMenuItem.Name = "removeToolStripMenuItem";
-            this.removeToolStripMenuItem.Size = new System.Drawing.Size(135, 26);
-            this.removeToolStripMenuItem.Text = "Remove";
-            this.removeToolStripMenuItem.Click += new System.EventHandler(this.removeToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(132, 6);
-            // 
-            // clearAllToolStripMenuItem
-            // 
-            this.clearAllToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.clearAllToolStripMenuItem.Name = "clearAllToolStripMenuItem";
-            this.clearAllToolStripMenuItem.Size = new System.Drawing.Size(135, 26);
-            this.clearAllToolStripMenuItem.Text = "Clear All";
-            this.clearAllToolStripMenuItem.Click += new System.EventHandler(this.clearAllToolStripMenuItem_Click);
-            // 
-            // rdbProducts
-            // 
-            this.rdbProducts.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.rdbProducts.Checked = true;
-            this.rdbProducts.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.rdbProducts.ForeColor = System.Drawing.Color.White;
-            this.rdbProducts.Location = new System.Drawing.Point(518, 18);
-            this.rdbProducts.Name = "rdbProducts";
-            this.rdbProducts.Size = new System.Drawing.Size(61, 25);
-            this.rdbProducts.TabIndex = 7;
-            this.rdbProducts.TabStop = true;
-            this.rdbProducts.Text = "ALL";
-            this.rdbProducts.UseVisualStyleBackColor = true;
-            this.rdbProducts.Visible = false;
-            // 
-            // uc_CategoryMenu1
-            // 
-            this.uc_CategoryMenu1.AutoScroll = true;
-            this.uc_CategoryMenu1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.uc_CategoryMenu1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uc_CategoryMenu1.Location = new System.Drawing.Point(24, 378);
-            this.uc_CategoryMenu1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.uc_CategoryMenu1.Name = "uc_CategoryMenu1";
-            this.uc_CategoryMenu1.Size = new System.Drawing.Size(557, 94);
-            this.uc_CategoryMenu1.TabIndex = 3;
-            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
@@ -723,7 +707,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.pnlCart.ResumeLayout(false);
             this.pnlCart.PerformLayout();
-            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -751,10 +734,6 @@
         private CustomServerControls.TxtBox txtSearch;
         private Microsoft.VisualBasic.PowerPacks.ShapeContainer shapeContainer3;
         private Microsoft.VisualBasic.PowerPacks.RectangleShape rectangleShape2;
-        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem removeToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem clearAllToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.TableLayoutPanel tblCart;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
@@ -774,5 +753,6 @@
         private Microsoft.VisualBasic.PowerPacks.OvalShape ovalShape2;
         private Microsoft.VisualBasic.PowerPacks.LineShape lineShape3;
         private System.Windows.Forms.RadioButton rdbProducts;
+        private System.Windows.Forms.Button btnRefresh;
     }
 }
