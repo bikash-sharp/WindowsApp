@@ -1,4 +1,5 @@
-﻿using System;
+﻿using App_UI.UserControls;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,6 +16,11 @@ namespace App_UI.Forms
         public FrmContainer()
         {
             InitializeComponent();
+        }
+
+        private void FrmContainer_Load(object sender, EventArgs e)
+        {
+            
         }
     }
 }

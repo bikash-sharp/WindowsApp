@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using App_BAL;
+using App_Wrapper;
+using System.Web.Script.Serialization;
 
 namespace App_UI.UserControls
 {
@@ -19,7 +21,7 @@ namespace App_UI.UserControls
         public ucPayment()
         {
             InitializeComponent();
-            
+            this.txtAmount.Focus();
         }
 
         public void BindData(double _Amount)
@@ -29,12 +31,12 @@ namespace App_UI.UserControls
             RemAmount = 0 - _Amount;
             lblRem.Text = "Balance : " + RemAmount.ToString("N");
             ChangeColorSelectedButton(btnCash);
-            
+            txtAmount.Focus();
         }
 
         private void txtAmount_TextChanged(object sender, EventArgs e)
         {
-            if(PayementType == EmPaymentType.Cash)
+            if (PayementType == EmPaymentType.Cash)
             {
                 double PaidAmount = 0;
                 double.TryParse(txtAmount.Text, out PaidAmount);
@@ -46,9 +48,9 @@ namespace App_UI.UserControls
         private void btnPay_Click(object sender, EventArgs e)
         {
             bool IsDone = false;
-            if(PayementType == EmPaymentType.Cash)
+            if (PayementType == EmPaymentType.Cash)
             {
-                if (RemAmount < 0)
+                if (RemAmount < 1)
                 {
                     MessageBox.Show("Payment not complete", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
@@ -57,24 +59,47 @@ namespace App_UI.UserControls
                     IsDone = true;
                 }
             }
-            else if(PayementType == EmPaymentType.Wallet)
+            else if (PayementType == EmPaymentType.Wallet)
             {
-                if (txtAmount.TextLength <= 0)
+                if (txtAmount.Text == "" || String.IsNullOrEmpty(txtAmount.Text) == true)
                 {
                     MessageBox.Show("Please enter the Transaction Id", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else
                 {
                     //Verify the transaction Id here
+                    string URL = Program.BaseUrl;
+                    string _transID = txtAmount.Text.Trim();
+                    //http://202.75.42.25/index.php/restwebservices/orderdetailusingtransaction?tn_id=test&acess_token=b358898d9b9a51f43386a1792d39d9a7
+                    string TransactionStatusURL = URL + "/orderdetailusingtransaction?tn_id=" + _transID + "&acess_token=" + Program.Token;
+
+                    var GetStatus = DataProviderWrapper.Instance.GetData(TransactionStatusURL, Verbs.GET, "");
+                    JavaScriptSerializer serializer = new JavaScriptSerializer();
+                    var result = serializer.Deserialize<TransactionAPICL>(GetStatus);
+                    if (result.status)
+                        IsDone = true;
+                    else
+                    {
+                        IsDone = false;
+                        MessageBox.Show("The transaction not successful or enter a valid transaction id", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+
+                }
+            }
+            else if (PayementType == EmPaymentType.Card)
+            {
+                if (txtAmount.Text == "" || String.IsNullOrEmpty(txtAmount.Text) == true)
+                {
+                    MessageBox.Show("Please enter the Code", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    //Verify the code here
                     IsDone = true;
                 }
             }
-            else
-            {
-                IsDone = true;
-            }
-            
-            if(IsDone)
+
+            if (IsDone)
             {
                 if (this.ParentForm.Modal)
                 {
@@ -101,6 +126,7 @@ namespace App_UI.UserControls
             ChangeColorSelectedButton(btnCash);
             txtAmount.Text = "";
             txtAmount.PlaceholderText = "Cash Amount";
+            txtAmount.Focus();
             PayementType = EmPaymentType.Cash;
             pnlCash.BringToFront();
         }
@@ -108,14 +134,17 @@ namespace App_UI.UserControls
         private void btnCard_Click(object sender, EventArgs e)
         {
             ChangeColorSelectedButton(btnCard);
-            txtAmount.Text = TotalAmount.ToString("N");
+            txtAmount.Text = "";
+            txtAmount.PlaceholderText = "Code";
+            txtAmount.Focus();
+            //txtAmount.Text = TotalAmount.ToString("N");
             PayementType = EmPaymentType.Card;
-            pnlCard.BringToFront();
+            pnlCash.BringToFront();
         }
 
         public void ChangeColorSelectedButton(Button btn)
         {
-            if(btn != null)
+            if (btn != null)
             {
                 String Name = btn.Name;
                 btnCash.BackColor = btnCard.BackColor = btnWallet.BackColor = Color.White;
@@ -143,22 +172,29 @@ namespace App_UI.UserControls
                         btn.FlatAppearance.MouseOverBackColor = Color.FromArgb(93, 213, 93);
                         btn.FlatAppearance.MouseDownBackColor = Color.FromArgb(93, 213, 93);
                         break;
-                    default :
+                    default:
                         btnCash.BackColor = Color.FromArgb(93, 213, 93);
 
                         rectBtnCard.BackColor = Color.FromArgb(93, 213, 93);
-                        break; 
+                        break;
                 }
-                
+
             }
+            txtAmount.Focus();
         }
 
         private void btnWallet_Click(object sender, EventArgs e)
         {
             ChangeColorSelectedButton(btnWallet); txtAmount.Text = "";
             txtAmount.PlaceholderText = "Transaction Number";
+            txtAmount.Focus();
             PayementType = EmPaymentType.Wallet;
             pnlCash.BringToFront();
+        }
+
+        private void ucPayment_Load(object sender, EventArgs e)
+        {
+            this.txtAmount.Focus();
         }
     }
 }

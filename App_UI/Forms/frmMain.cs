@@ -23,12 +23,13 @@ namespace App_UI.Forms
         public static bool IsClosed = false;
         public int SelectedCategoryID = 0;
         public static bool IsOrder = false;
+        public static EmOrderType CurrentOrderType;
         public frmMain()
         {
             InitializeComponent();
             this.SetStyle(ControlStyles.DoubleBuffer, true);
             this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
-            this.SetStyle(ControlStyles.UserPaint, true);            
+            this.SetStyle(ControlStyles.UserPaint, true);
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
         }
 
@@ -44,10 +45,10 @@ namespace App_UI.Forms
             flyLayout.VerticalScroll.Visible = true;
             flyLayout.VerticalScroll.Enabled = true;
             BindProducts();
-            
+
         }
 
-       
+
         void uc_CategoryMenu1_EventCategoryClicked(object sender, EventArgs e)
         {
             rdbOrder.Checked = rdbDelivery.Checked = false;
@@ -56,9 +57,9 @@ namespace App_UI.Forms
             BindProducts(FoodType.ToLower());
         }
 
-        private void BindProducts(String foodtype="all")
+        private void BindProducts(String foodtype = "all")
         {
-            if(rdbDelivery.Checked != true && rdbOrder.Checked != true)
+            if (rdbDelivery.Checked != true && rdbOrder.Checked != true)
             {
                 string URL = Program.BaseUrl;
                 string ProductURL = String.Empty;
@@ -83,7 +84,7 @@ namespace App_UI.Forms
                         CreateProdButtons(itm.Product);
                     }
                 }
-            }         
+            }
 
         }
 
@@ -192,11 +193,11 @@ namespace App_UI.Forms
                 lblTax.DataBindings.Clear();
                 //if(!IsConnected)
                 //{
-                    var CartTotalBinding = new Binding("Text", Program.cartItems.FirstOrDefault(), "CartTotal", true, DataSourceUpdateMode.Never, "0.00", "N");
-                    lblCartTotal.DataBindings.Add(CartTotalBinding);
-                    var GrandTotalBinding = new Binding("Text", Program.cartItems.FirstOrDefault(), "GrandTotal",true,DataSourceUpdateMode.Never,"0.00","N");
-                    lblGrandTotal.DataBindings.Add(GrandTotalBinding);
-                  //  IsConnected = true;
+                var CartTotalBinding = new Binding("Text", Program.cartItems.FirstOrDefault(), "CartTotal", true, DataSourceUpdateMode.Never, "0.00", "N");
+                lblCartTotal.DataBindings.Add(CartTotalBinding);
+                var GrandTotalBinding = new Binding("Text", Program.cartItems.FirstOrDefault(), "GrandTotal", true, DataSourceUpdateMode.Never, "0.00", "N");
+                lblGrandTotal.DataBindings.Add(GrandTotalBinding);
+                //  IsConnected = true;
                 //}
                 // BindCart(Program.cartItems);
             }
@@ -252,6 +253,9 @@ namespace App_UI.Forms
         {
             if (Program.cartItems.Count > 0)
             {
+                frmOrderType _frrOrder = new frmOrderType();
+                _frrOrder.ShowDialog();
+
                 var TotalAmount = 0.0;  // Total Price
                 TotalAmount = Program.cartItems.Sum(p => p.Price);
                 FrmContainer frm = new FrmContainer();
@@ -269,26 +273,21 @@ namespace App_UI.Forms
 
                     CartCL cart = new CartCL();
                     cart.IsOrderConfirmed = false;
+                    cart.OrderStatus = EmOrderStatus.Pending;
                     cart.OrderID = 0;
                     cart.OrderNo = OrderNumber;
-                    if (rdbDelivery.Checked)
-                    {
-                        cart.OrderType = EmOrderType.Delivery;
-                    }
-                    else
-                    {
-                        cart.OrderType = EmOrderType.TakeAway;
-                    }
+                    cart.OrderType = CurrentOrderType;
                     cart.PaymentType = uc.PayementType;
                     cart.Items = Program.cartItems;
                     cart.OrderTotal = Program.cartItems.First().GrandTotal.ToString("N");
+
                     MessageBox.Show("Order Number : " + OrderNumber + " has been placed successfully", " Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     Program.PlacedOrders.Add(cart);
                     Program.OrderCount();
                     lblOrderCount.DataBindings.Clear();
-                    
+
                     var OrderCount = new Binding("Text", Program.OrderBindings, "OrderCount", true, DataSourceUpdateMode.Never, "0", "");
-                    lblOrderCount.DataBindings.Add(OrderCount);  
+                    lblOrderCount.DataBindings.Add(OrderCount);
                     //Clear the Cart and Total Field
                     ClearList();
                 }
@@ -311,12 +310,12 @@ namespace App_UI.Forms
             lblCartTotal.DataBindings.Clear();
             lblGrandTotal.DataBindings.Clear();
             lblTax.DataBindings.Clear();
-            
+
         }
 
         private void lblOrderCount_Click(object sender, EventArgs e)
         {
-            if(!rdbOrder.Checked)
+            if (!rdbOrder.Checked)
             {
                 rdbOrder.Checked = true;
             }
@@ -364,7 +363,7 @@ namespace App_UI.Forms
 
         private void rdbOrder_CheckedChanged(object sender, EventArgs e)
         {
-            if(rdbOrder.Checked)
+            if (rdbOrder.Checked)
             {
                 uc_CategoryMenu1.SetCurrentControlBtnName("");
                 uc_CategoryMenu1.SelectedControls();
@@ -375,7 +374,7 @@ namespace App_UI.Forms
 
         private void rdbDelivery_CheckedChanged(object sender, EventArgs e)
         {
-            if(rdbDelivery.Checked)
+            if (rdbDelivery.Checked)
             {
                 uc_CategoryMenu1.SetCurrentControlBtnName("");
                 uc_CategoryMenu1.SelectedControls();
@@ -403,16 +402,26 @@ namespace App_UI.Forms
             }
         }
 
+        public void BindReservations()
+        {
+            flyLayout.Controls.Clear();
+            uc_ConfirmOrder uc = new uc_ConfirmOrder();
+            uc.Width = flyLayout.Width - 15;
+            uc.Height = flyLayout.Height - 15;
+            uc.BindReservations();
+            this.flyLayout.Controls.Add(uc);
+        }
+
         private void rdbProducts_CheckedChanged(object sender, EventArgs e)
         {
-            BindProducts();
+            if (rdbProducts.Checked)
+                BindProducts();
         }
 
         private void btnRefresh_Click(object sender, EventArgs e)
         {
-            if(!IsOrder)
+            if (!IsOrder)
             {
-                //Bind Products
                 uc_CategoryMenu1.SetCurrentControlBtnName("All");
                 uc_CategoryMenu1.SelectedControls();
                 BindProducts();
@@ -420,6 +429,17 @@ namespace App_UI.Forms
             else
             {
 
+            }
+        }
+
+        private void rdbReservation_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rdbReservation.Checked)
+            {
+                uc_CategoryMenu1.SetCurrentControlBtnName("");
+                uc_CategoryMenu1.SelectedControls();
+                BindReservations();
+                IsOrder = true;
             }
         }
     }

@@ -14,17 +14,39 @@ namespace App_BAL
 
     }
 
-
+    public enum EmOrderStatus
+    {
+        Pending = 1,
+        Confirmed = 2,
+        Delivered = 3
+    }
     public enum EmOrderType
     {
-        TakeAway = 1,
-        Delivery = 2
+        TakeOut = 1,
+        Delivery = 2,
+        DineIn=3,
+        Reservation=4
     }
     public enum EmPaymentType
     {
         Cash = 1,
         Card = 2,
         Wallet=3
+    }
+
+    public enum EmGridType
+    {
+        Reservation,
+        OrderIn,
+        Delivery
+    }
+    public class ReservationCL
+    {
+        public string DinerName { get; set; }
+        public string MobileNo { get; set; }
+        public string ReservationDate { get; set; }
+        public int GuestCount { get; set; }
+        public EmOrderStatus ReservationStatus { get; set; }
     }
     public class CartCL
     {
@@ -35,13 +57,7 @@ namespace App_BAL
         public EmOrderType OrderType { get; set; }
         public BindingList<CartItemsCL> Items { get; set; }
         public bool IsOrderConfirmed { get; set; }
-        public string OrderStatus { get
-            {
-                if (IsOrderConfirmed)
-                    return "Delivered";
-                else
-                    return "Confirm";
-            } }
+        public EmOrderStatus OrderStatus { get; set; }
         public EmPaymentType PaymentType { get; set; }
         public CartCL()
         {
@@ -361,12 +377,47 @@ namespace App_BAL
         public ProductCL Product { get; set; }
         public RestaurantCL Restaurant { get; set; }
         public List<object> Productimage { get; set; }
+        public Tableorder Tableorder { get; set; }
     }
 
     public class ProductListAPICL
     {
         public bool status { get; set; }
         public List<Datum> data { get; set; }
+        public string message { get; set; }
+    }
+
+    public class Tableorder
+    {
+        public string id { get; set; }
+        public string tanent_id { get; set; }
+        public string restaurent_id { get; set; }
+        public string user_id { get; set; }
+        public string diner_name { get; set; }
+        public string mobile { get; set; }
+        public string email { get; set; }
+        public string date { get; set; }
+        public string from_time { get; set; }
+        public string to_time { get; set; }
+        public string guests { get; set; }
+        public object special_request { get; set; }
+        public string terms_cond { get; set; }
+        public string status { get; set; }
+        public string created { get; set; }
+        public string bookingDate { get {
+                return date + Environment.NewLine + from_time + " - " + to_time;
+            } }
+    }
+
+    public class ReservationListAPICL
+    {
+        public bool status { get; set; }
+        public List<Datum> data { get; set; }
+    }
+
+    public class TransactionAPICL
+    {
+        public bool status { get; set; }
         public string message { get; set; }
     }
 }

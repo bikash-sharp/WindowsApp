@@ -35,6 +35,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.tblMainLayout = new System.Windows.Forms.TableLayoutPanel();
             this.pnlTopMenu = new System.Windows.Forms.Panel();
+            this.rdbReservation = new System.Windows.Forms.RadioButton();
             this.rdbProducts = new System.Windows.Forms.RadioButton();
             this.btnExit = new System.Windows.Forms.Button();
             this.lblOrderCount = new System.Windows.Forms.Label();
@@ -114,6 +115,7 @@
             // 
             this.pnlTopMenu.BackColor = System.Drawing.Color.Black;
             this.tblMainLayout.SetColumnSpan(this.pnlTopMenu, 3);
+            this.pnlTopMenu.Controls.Add(this.rdbReservation);
             this.pnlTopMenu.Controls.Add(this.rdbProducts);
             this.pnlTopMenu.Controls.Add(this.btnExit);
             this.pnlTopMenu.Controls.Add(this.lblOrderCount);
@@ -129,13 +131,28 @@
             this.pnlTopMenu.Size = new System.Drawing.Size(875, 59);
             this.pnlTopMenu.TabIndex = 0;
             // 
+            // rdbReservation
+            // 
+            this.rdbReservation.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.rdbReservation.Checked = true;
+            this.rdbReservation.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.rdbReservation.ForeColor = System.Drawing.Color.White;
+            this.rdbReservation.Location = new System.Drawing.Point(451, 19);
+            this.rdbReservation.Name = "rdbReservation";
+            this.rdbReservation.Size = new System.Drawing.Size(135, 25);
+            this.rdbReservation.TabIndex = 8;
+            this.rdbReservation.TabStop = true;
+            this.rdbReservation.Text = "RESERVATIONS";
+            this.rdbReservation.UseVisualStyleBackColor = true;
+            this.rdbReservation.CheckedChanged += new System.EventHandler(this.rdbReservation_CheckedChanged);
+            // 
             // rdbProducts
             // 
             this.rdbProducts.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.rdbProducts.Checked = true;
             this.rdbProducts.Cursor = System.Windows.Forms.Cursors.Hand;
             this.rdbProducts.ForeColor = System.Drawing.Color.White;
-            this.rdbProducts.Location = new System.Drawing.Point(518, 18);
+            this.rdbProducts.Location = new System.Drawing.Point(398, 18);
             this.rdbProducts.Name = "rdbProducts";
             this.rdbProducts.Size = new System.Drawing.Size(61, 25);
             this.rdbProducts.TabIndex = 7;
@@ -143,6 +160,7 @@
             this.rdbProducts.Text = "ALL";
             this.rdbProducts.UseVisualStyleBackColor = true;
             this.rdbProducts.Visible = false;
+            this.rdbProducts.CheckedChanged += new System.EventHandler(this.rdbProducts_CheckedChanged);
             // 
             // btnExit
             // 
@@ -754,5 +772,6 @@
         private Microsoft.VisualBasic.PowerPacks.LineShape lineShape3;
         private System.Windows.Forms.RadioButton rdbProducts;
         private System.Windows.Forms.Button btnRefresh;
+        private System.Windows.Forms.RadioButton rdbReservation;
     }
 }

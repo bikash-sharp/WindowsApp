@@ -266,7 +266,7 @@
             this.btnCash.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
             this.btnCash.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
             this.btnCash.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCash.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCash.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCash.Location = new System.Drawing.Point(7, 7);
             this.btnCash.Margin = new System.Windows.Forms.Padding(1);
             this.btnCash.Name = "btnCash";
@@ -316,13 +316,13 @@
             this.btnCard.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
             this.btnCard.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
             this.btnCard.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCard.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCard.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCard.Location = new System.Drawing.Point(9, 8);
             this.btnCard.Margin = new System.Windows.Forms.Padding(1);
             this.btnCard.Name = "btnCard";
             this.btnCard.Size = new System.Drawing.Size(119, 33);
             this.btnCard.TabIndex = 4;
-            this.btnCard.Text = "CARD";
+            this.btnCard.Text = "CREDIT CARD";
             this.btnCard.UseVisualStyleBackColor = true;
             this.btnCard.Click += new System.EventHandler(this.btnCard_Click);
             // 
@@ -366,7 +366,7 @@
             this.btnWallet.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
             this.btnWallet.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
             this.btnWallet.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnWallet.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnWallet.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnWallet.Location = new System.Drawing.Point(7, 7);
             this.btnWallet.Margin = new System.Windows.Forms.Padding(0);
             this.btnWallet.Name = "btnWallet";
@@ -408,6 +408,7 @@
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "ucPayment";
             this.Size = new System.Drawing.Size(504, 419);
+            this.Load += new System.EventHandler(this.ucPayment_Load);
             this.tblBase.ResumeLayout(false);
             this.tblBase.PerformLayout();
             this.pnlBase.ResumeLayout(false);

@@ -20,10 +20,16 @@ namespace App_UI.UserControls
             InitializeComponent();
         }
 
+        public void BindReservations()
+        {
+            dataGridView1.Columns.Clear();
+        }
+
         public void BindData(bool? IsOrderConfirmed = null)
         {
             var OrderLst = Program.PlacedOrders.Where(p => IsOrderConfirmed == null ? true : p.IsOrderConfirmed == IsOrderConfirmed.Value).ToList();
 
+            //Clear All DatabBindings and Columns
             lblOrderTotal.DataBindings.Clear();
 
             if (IsOrderConfirmed.Value)
@@ -35,7 +41,6 @@ namespace App_UI.UserControls
                 txtCol.Resizable =  DataGridViewTriState.False;
                 txtCol.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                 dataGridView1.Columns.Add(txtCol);
-
                 var OrderSum = new Binding("Text", Program.OrderBindings, "SumConfirmedAmountTotal", true, DataSourceUpdateMode.Never, "0", "F");
                 lblOrderTotal.DataBindings.Add(OrderSum);
 
@@ -46,6 +51,8 @@ namespace App_UI.UserControls
                 DataGridViewButtonColumn btnCol = new DataGridViewButtonColumn();
                 btnCol.DataPropertyName = "OrderStatus";
                 btnCol.HeaderText = "Status";
+                btnCol.Text = "Click to Complete";
+                btnCol.UseColumnTextForButtonValue = true;
                 btnCol.Resizable = DataGridViewTriState.False;
                 btnCol.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                 dataGridView1.Columns.Add(btnCol);
@@ -58,20 +65,6 @@ namespace App_UI.UserControls
             dataGridView1.AutoGenerateColumns = false;
             dataGridView1.DataSource = source;            
             dataGridView1.ClearSelection();
-
-            
-
-            //if(!IsConnected)
-            //{
-            
-            //var OrderLst = Program.PlacedOrders.Where(p => p.IsOrderConfirmed == false).ToList();
-            //dataGridView1.Width = this.Width-20;
-            //dataGridView1.Height = this.Height - 100;
-            //flyLayout.Controls.Clear();
-            //foreach (var itm in OrderLst)
-            //{
-            //    CreateControl(itm);
-            //}
         }
 
         //private void CreateControl(App_BAL.CartCL itm)
@@ -160,6 +153,7 @@ namespace App_UI.UserControls
                                 JavaScriptSerializer serializer = new JavaScriptSerializer();
                                 var result = serializer.Deserialize<MessageCL>(GetStatus);
                                 itm.IsOrderConfirmed = true;
+                                itm.OrderStatus = EmOrderStatus.Delivered;
                                 BindData(false);
                                 Program.OrderCount();
                             }
@@ -167,6 +161,78 @@ namespace App_UI.UserControls
                     }
                 }
                 
+            }
+        }
+
+        public void UpdateGridColumns(EmGridType type)
+        {
+            //Remove all Columns initially
+            for(int i =0; i < dataGridView1.ColumnCount; i++)
+            {
+                dataGridView1.Columns.RemoveAt(i);
+            }
+            // Create Columns based on Reservations or Order-In
+            //Do the Bindings.
+            if(type == EmGridType.Reservation)
+            {
+                //Columns
+                DataGridViewTextBoxColumn txtDinerName = new DataGridViewTextBoxColumn();
+                txtDinerName.DataPropertyName = "diner_name";
+                txtDinerName.HeaderText = "Diner Name";
+                txtDinerName.Resizable =  DataGridViewTriState.False;
+                txtDinerName.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                dataGridView1.Columns.Add(txtDinerName);
+
+
+                DataGridViewTextBoxColumn txtMobile = new DataGridViewTextBoxColumn();
+                txtMobile.DataPropertyName = "mobile";
+                txtMobile.HeaderText = "Mobile No.";
+                txtMobile.Resizable = DataGridViewTriState.False;
+                txtMobile.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                dataGridView1.Columns.Add(txtMobile);
+
+                DataGridViewTextBoxColumn txtBookingDt = new DataGridViewTextBoxColumn();
+                txtBookingDt.DataPropertyName = "bookingDate";
+                txtBookingDt.HeaderText = "Booking Date";
+                txtBookingDt.Resizable = DataGridViewTriState.False;
+                txtBookingDt.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                dataGridView1.Columns.Add(txtBookingDt);
+
+                DataGridViewTextBoxColumn txtGuestCount = new DataGridViewTextBoxColumn();
+                txtGuestCount.DataPropertyName = "guests";
+                txtGuestCount.HeaderText = "Guest Count";
+                txtGuestCount.Resizable = DataGridViewTriState.False;
+                txtGuestCount.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                dataGridView1.Columns.Add(txtGuestCount);
+
+                DataGridViewButtonColumn btnStatus = new DataGridViewButtonColumn();
+                btnStatus.DataPropertyName = "OrderStatus";
+                btnStatus.HeaderText = "Status";
+                btnStatus.Text = "Click to Complete";
+                btnStatus.UseColumnTextForButtonValue = true;
+                btnStatus.Resizable = DataGridViewTriState.False;
+                btnStatus.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                dataGridView1.Columns.Add(btnStatus);
+
+            }
+            else if(type == EmGridType.OrderIn)
+            {
+
+            }
+            else if(type == EmGridType.Delivery)
+            {
+
+            }
+            foreach(var column in dataGridView1.Columns)
+            {
+                if(column is DataGridTextBoxColumn)
+                {
+
+                    var _currentCol = column as DataGridTextBoxColumn;
+                    _currentCol.HeaderText = "Diner Name";
+                }
+                //this.dataGridView1.Columns[e.ColumnIndex] is DataGridViewButtonColumn
+                    
             }
         }
     }
