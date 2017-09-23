@@ -40,13 +40,37 @@ namespace App_BAL
         OrderIn,
         Delivery
     }
-    public class ReservationCL
+    public class ReservationCL : INotifyPropertyChanged
     {
+        private string ReservationStatusValue;
+        public string TableId { get; set; }
+        public string RestrauntId { get; set; }
         public string DinerName { get; set; }
         public string MobileNo { get; set; }
         public string ReservationDate { get; set; }
-        public int GuestCount { get; set; }
-        public EmOrderStatus ReservationStatus { get; set; }
+        public string GuestCount { get; set; }
+        public string ReservationStatus {
+            get
+            {
+                return this.ReservationStatusValue;
+            }
+            set
+            {
+                if (value != this.ReservationStatusValue)
+                {
+                    this.ReservationStatusValue = value;
+                    this.NotifyPropertyChanged();
+                }
+            }
+        }
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
     }
     public class CartCL
     {

@@ -50,7 +50,7 @@ namespace App_UI.UserControls
             bool IsDone = false;
             if (PayementType == EmPaymentType.Cash)
             {
-                if (RemAmount < 1)
+                if (RemAmount < 0)
                 {
                     MessageBox.Show("Payment not complete", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }

@@ -15,6 +15,7 @@ namespace App_UI.UserControls
 {
     public partial class uc_ConfirmOrder : UserControl
     {
+        public static EmGridType _gridType;
         public uc_ConfirmOrder()
         {
             InitializeComponent();
@@ -22,7 +23,44 @@ namespace App_UI.UserControls
 
         public void BindReservations()
         {
-            dataGridView1.Columns.Clear();
+            // dataGridView1.Columns.Clear();
+            if (_gridType == EmGridType.Reservation)
+            {
+                //Load with Reservations
+                string URL = Program.BaseUrl;
+                string ChangeOrdStatusURL = URL + "/pendingreservations?acess_token=" + Program.Token;
+
+                var GetStatus = DataProviderWrapper.Instance.GetData(ChangeOrdStatusURL, Verbs.GET, "");
+                JavaScriptSerializer serializer = new JavaScriptSerializer();
+                var result = serializer.Deserialize<ReservationListAPICL>(GetStatus);
+
+                if (result.data.Count > 0)
+                {
+                    var dataLst = result.data;
+                    Program.Reservations = dataLst.Select(p => new ReservationCL() {
+
+                        TableId = p.Tableorder.id,
+                        RestrauntId = p.Tableorder.restaurent_id,
+                        DinerName = p.Tableorder.diner_name,
+                        GuestCount = p.Tableorder.guests,
+                        MobileNo = p.Tableorder.mobile,
+                        ReservationDate = p.Tableorder.bookingDate,
+                        ReservationStatus = p.Tableorder.status
+                    }).ToList();
+
+                    
+                    var source = new BindingSource(Program.Reservations, null);
+                    dataGridView1.AutoGenerateColumns = false;
+                    dataGridView1.DataSource = source;
+                    dataGridView1.ClearSelection();
+                    //UpdateGridColumnType(EmGridType.Reservation);
+                }
+            }
+
+            //Clear All DatabBindings and Columns
+            lblOrderTotal.Visible = false;
+            label2.Visible = false;
+            lblOrderTotal.DataBindings.Clear();
         }
 
         public void BindData(bool? IsOrderConfirmed = null)
@@ -31,40 +69,27 @@ namespace App_UI.UserControls
 
             //Clear All DatabBindings and Columns
             lblOrderTotal.DataBindings.Clear();
-
+            lblOrderTotal.Visible = true;
+            label2.Visible = true;
             if (IsOrderConfirmed.Value)
             {
-                dataGridView1.Columns.RemoveAt(3);
-                DataGridViewTextBoxColumn txtCol = new DataGridViewTextBoxColumn();
-                txtCol.DataPropertyName = "OrderStatus";
-                txtCol.HeaderText = "Status";
-                txtCol.Resizable =  DataGridViewTriState.False;
-                txtCol.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-                dataGridView1.Columns.Add(txtCol);
                 var OrderSum = new Binding("Text", Program.OrderBindings, "SumConfirmedAmountTotal", true, DataSourceUpdateMode.Never, "0", "F");
                 lblOrderTotal.DataBindings.Add(OrderSum);
 
             }
             else
             {
-                dataGridView1.Columns.RemoveAt(3);
-                DataGridViewButtonColumn btnCol = new DataGridViewButtonColumn();
-                btnCol.DataPropertyName = "OrderStatus";
-                btnCol.HeaderText = "Status";
-                btnCol.Text = "Click to Complete";
-                btnCol.UseColumnTextForButtonValue = true;
-                btnCol.Resizable = DataGridViewTriState.False;
-                btnCol.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-                dataGridView1.Columns.Add(btnCol);
-
                 var OrderSum = new Binding("Text", Program.OrderBindings, "SumUnconfirmedAmountTotal", true, DataSourceUpdateMode.Never, "0.00", "F");
                 lblOrderTotal.DataBindings.Add(OrderSum);
             }
+            if (_gridType == EmGridType.Delivery || _gridType == EmGridType.OrderIn)
+            {
+                var source = new BindingSource(OrderLst, null);
+                dataGridView1.AutoGenerateColumns = false;
+                dataGridView1.DataSource = source;
+                dataGridView1.ClearSelection();
+            }
 
-            var source = new BindingSource(OrderLst, null);
-            dataGridView1.AutoGenerateColumns = false;
-            dataGridView1.DataSource = source;            
-            dataGridView1.ClearSelection();
         }
 
         //private void CreateControl(App_BAL.CartCL itm)
@@ -135,104 +160,233 @@ namespace App_UI.UserControls
         {
             if (e.RowIndex >= 0)
             {
-                if(this.dataGridView1.Columns[e.ColumnIndex] is DataGridViewButtonColumn)
+                if (this.dataGridView1.Columns[e.ColumnIndex] is DataGridViewButtonColumn)
                 {
                     DataGridViewRow row = this.dataGridView1.Rows[e.RowIndex];
-                    if (row != null)
+                    if (_gridType == EmGridType.OrderIn)
                     {
-                        string OrderNo = row.Cells["OrderNo"].Value.ToString();
-                        if (!string.IsNullOrEmpty(OrderNo))
+                        if (row != null)
                         {
-                            var itm = Program.PlacedOrders.Where(p => p.OrderNo == OrderNo).FirstOrDefault();
-                            if (itm != null)
+                            string OrderNo = row.Cells["OrderNo"].Value.ToString();
+                            if (!string.IsNullOrEmpty(OrderNo))
                             {
-                                string URL = Program.BaseUrl;
-                                string ChangeOrdStatusURL = URL + "/confirmorder?order_id=" + OrderNo + "&order_status=in_progress&acess_token=" + Program.Token;
+                                var itm = Program.PlacedOrders.Where(p => p.OrderNo == OrderNo).FirstOrDefault();
+                                if (itm != null)
+                                {
+                                    string URL = Program.BaseUrl;
+                                    string ChangeOrdStatusURL = URL + "/confirmorder?order_id=" + OrderNo + "&order_status=in_progress&acess_token=" + Program.Token;
 
-                                var GetStatus = DataProviderWrapper.Instance.GetData(ChangeOrdStatusURL, Verbs.GET, "");
-                                JavaScriptSerializer serializer = new JavaScriptSerializer();
-                                var result = serializer.Deserialize<MessageCL>(GetStatus);
-                                itm.IsOrderConfirmed = true;
-                                itm.OrderStatus = EmOrderStatus.Delivered;
-                                BindData(false);
-                                Program.OrderCount();
+                                    var GetStatus = DataProviderWrapper.Instance.GetData(ChangeOrdStatusURL, Verbs.GET, "");
+                                    JavaScriptSerializer serializer = new JavaScriptSerializer();
+                                    var result = serializer.Deserialize<MessageCL>(GetStatus);
+                                    itm.IsOrderConfirmed = true;
+                                    itm.OrderStatus = EmOrderStatus.Delivered;
+                                    BindData(false);
+                                    Program.OrderCount();
+                                }
                             }
                         }
                     }
+                    else if(_gridType == EmGridType.Reservation)
+                    {
+                        if (row != null)
+                        {
+                            string status= row.Cells["ReservationStatus"].Value.ToString();
+                            if(status.ToLower().Trim() == "pending")
+                            {
+                                string TableId = row.Cells["TableId"].Value.ToString();
+                                if (!string.IsNullOrEmpty(TableId))
+                                {
+                                    var itm = Program.Reservations.FirstOrDefault(p => p.TableId == TableId);
+                                    if (itm != null)
+                                    {
+                                        string URL = Program.BaseUrl;
+                                        string ChangeReservationStatusURL = URL + "/changereservationstatus?res_id=" + TableId + "&status=Completed&acess_token=" + Program.Token;
+                                        var GetStatus = DataProviderWrapper.Instance.GetData(ChangeReservationStatusURL, Verbs.GET, "");
+                                        JavaScriptSerializer serializer = new JavaScriptSerializer();
+                                        var result = serializer.Deserialize<MessageCL>(GetStatus);
+                                        if (result.status)
+                                        {
+                                            itm.ReservationStatus = EmOrderStatus.Confirmed.ToString();
+                                        }
+                                    }
+                                }
+                            }
+                            
+                        }
+                    }
+
+
                 }
-                
             }
         }
 
         public void UpdateGridColumns(EmGridType type)
         {
             //Remove all Columns initially
-            for(int i =0; i < dataGridView1.ColumnCount; i++)
-            {
-                dataGridView1.Columns.RemoveAt(i);
-            }
-            // Create Columns based on Reservations or Order-In
+            dataGridView1.Columns.Clear();
+            _gridType = type;
+            // Create Columns based on Reservations or Order-In/Delivery
             //Do the Bindings.
-            if(type == EmGridType.Reservation)
+            if (type == EmGridType.Reservation)
             {
                 //Columns
+                DataGridViewTextBoxColumn txtid = new DataGridViewTextBoxColumn();
+                txtid.DataPropertyName = "TableId";
+                txtid.HeaderText = "ID";
+                txtid.Resizable = DataGridViewTriState.False;
+                txtid.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                dataGridView1.Columns.Add(txtid);
+                dataGridView1.Columns[0].Name = "TableId";
+                dataGridView1.Columns[0].Visible = false;
+
+                DataGridViewTextBoxColumn txtrestrauntId = new DataGridViewTextBoxColumn();
+                txtrestrauntId.DataPropertyName = "RestrauntId";
+                txtrestrauntId.HeaderText = "Restaurent Id";
+                txtrestrauntId.Resizable = DataGridViewTriState.False;
+                txtrestrauntId.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                dataGridView1.Columns.Add(txtrestrauntId);
+                dataGridView1.Columns[1].Name = "RestrauntId";
+                dataGridView1.Columns[1].Visible = false;
+
+
                 DataGridViewTextBoxColumn txtDinerName = new DataGridViewTextBoxColumn();
-                txtDinerName.DataPropertyName = "diner_name";
+                txtDinerName.DataPropertyName = "DinerName";
                 txtDinerName.HeaderText = "Diner Name";
-                txtDinerName.Resizable =  DataGridViewTriState.False;
+                txtDinerName.Resizable = DataGridViewTriState.False;
                 txtDinerName.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                 dataGridView1.Columns.Add(txtDinerName);
 
 
                 DataGridViewTextBoxColumn txtMobile = new DataGridViewTextBoxColumn();
-                txtMobile.DataPropertyName = "mobile";
+                txtMobile.DataPropertyName = "MobileNo";
                 txtMobile.HeaderText = "Mobile No.";
                 txtMobile.Resizable = DataGridViewTriState.False;
                 txtMobile.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                 dataGridView1.Columns.Add(txtMobile);
 
                 DataGridViewTextBoxColumn txtBookingDt = new DataGridViewTextBoxColumn();
-                txtBookingDt.DataPropertyName = "bookingDate";
+                txtBookingDt.DataPropertyName = "ReservationDate";
                 txtBookingDt.HeaderText = "Booking Date";
                 txtBookingDt.Resizable = DataGridViewTriState.False;
                 txtBookingDt.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                 dataGridView1.Columns.Add(txtBookingDt);
 
                 DataGridViewTextBoxColumn txtGuestCount = new DataGridViewTextBoxColumn();
-                txtGuestCount.DataPropertyName = "guests";
+                txtGuestCount.DataPropertyName = "GuestCount";
                 txtGuestCount.HeaderText = "Guest Count";
                 txtGuestCount.Resizable = DataGridViewTriState.False;
                 txtGuestCount.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                 dataGridView1.Columns.Add(txtGuestCount);
 
                 DataGridViewButtonColumn btnStatus = new DataGridViewButtonColumn();
-                btnStatus.DataPropertyName = "OrderStatus";
+                btnStatus.DataPropertyName = "ReservationStatus";
                 btnStatus.HeaderText = "Status";
-                btnStatus.Text = "Click to Complete";
-                btnStatus.UseColumnTextForButtonValue = true;
+                btnStatus.Text = "Pending";
+                btnStatus.UseColumnTextForButtonValue = false;
                 btnStatus.Resizable = DataGridViewTriState.False;
                 btnStatus.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                 dataGridView1.Columns.Add(btnStatus);
+                dataGridView1.Columns[6].Name = "ReservationStatus";
+            }
+            else if (type == EmGridType.OrderIn)
+            {
+                //Columns
+                DataGridViewTextBoxColumn txtOrderNo = new DataGridViewTextBoxColumn();
+                txtOrderNo.DataPropertyName = "OrderNo";
+                txtOrderNo.HeaderText = "Order No";
+                txtOrderNo.Resizable = DataGridViewTriState.False;
+                txtOrderNo.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                dataGridView1.Columns.Add(txtOrderNo);
+                dataGridView1.Columns[0].Name = "OrderNo";
+
+
+                DataGridViewTextBoxColumn txtOrdertype = new DataGridViewTextBoxColumn();
+                txtOrdertype.DataPropertyName = "OrderType";
+                txtOrdertype.HeaderText = "Order Type";
+                txtOrdertype.Resizable = DataGridViewTriState.False;
+                txtOrdertype.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                dataGridView1.Columns.Add(txtOrdertype);
+                dataGridView1.Columns[1].Name = "OrderType";
+
+                DataGridViewTextBoxColumn txtTotal = new DataGridViewTextBoxColumn();
+                txtTotal.DataPropertyName = "OrderTotal";
+                txtTotal.HeaderText = "Total";
+                txtTotal.Resizable = DataGridViewTriState.False;
+                txtTotal.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                dataGridView1.Columns.Add(txtTotal);
+                dataGridView1.Columns[2].Name = "OrderTotal";
+
+                DataGridViewButtonColumn btnCol = new DataGridViewButtonColumn();
+                btnCol.DataPropertyName = "OrderStatus";
+                btnCol.HeaderText = "Status";
+                btnCol.Text = "Pending";
+                btnCol.UseColumnTextForButtonValue = true;
+                btnCol.Resizable = DataGridViewTriState.False;
+                btnCol.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                dataGridView1.Columns.Add(btnCol);
+                dataGridView1.Columns[3].Name = "OrderStatus";
 
             }
-            else if(type == EmGridType.OrderIn)
+            else if (type == EmGridType.Delivery)
             {
+                //Columns
+                DataGridViewTextBoxColumn txtOrderNo = new DataGridViewTextBoxColumn();
+                txtOrderNo.DataPropertyName = "OrderNo";
+                txtOrderNo.HeaderText = "Order No";
+                txtOrderNo.Resizable = DataGridViewTriState.False;
+                txtOrderNo.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                dataGridView1.Columns.Add(txtOrderNo);
+                dataGridView1.Columns[0].Name = "OrderNo";
+
+                DataGridViewTextBoxColumn txtOrdertype = new DataGridViewTextBoxColumn();
+                txtOrdertype.DataPropertyName = "OrderType";
+                txtOrdertype.HeaderText = "Order Type";
+                txtOrdertype.Resizable = DataGridViewTriState.False;
+                txtOrdertype.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                dataGridView1.Columns.Add(txtOrdertype);
+
+                DataGridViewTextBoxColumn txtTotal = new DataGridViewTextBoxColumn();
+                txtTotal.DataPropertyName = "OrderTotal";
+                txtTotal.HeaderText = "Total";
+                txtTotal.Resizable = DataGridViewTriState.False;
+                txtTotal.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                dataGridView1.Columns.Add(txtTotal);
+
+                DataGridViewTextBoxColumn txtCol = new DataGridViewTextBoxColumn();
+                txtCol.DataPropertyName = "OrderStatus";
+                txtCol.HeaderText = "Status";
+                txtCol.Resizable = DataGridViewTriState.False;
+                txtCol.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                dataGridView1.Columns.Add(txtCol);
+
 
             }
-            else if(type == EmGridType.Delivery)
-            {
 
-            }
-            foreach(var column in dataGridView1.Columns)
+        }
+
+        public void UpdateGridColumnType(EmGridType _type)
+        {
+            if(_type == EmGridType.Reservation)
             {
-                if(column is DataGridTextBoxColumn)
+                int i = 0;
+                //this.dataGridView1.Columns.RemoveAt(6);
+                foreach(var item in Program.Reservations)
                 {
-
-                    var _currentCol = column as DataGridTextBoxColumn;
-                    _currentCol.HeaderText = "Diner Name";
+                    if(item.ReservationStatus.ToLower().Trim() == "pending")
+                    {
+                        var hs = this.dataGridView1.Columns[6].CellTemplate;
+                        var celltype = new DataGridViewButtonCell() { Value = item.ReservationStatus };
+                        dataGridView1.Rows[i].Cells[6] = celltype;
+                    }
+                    else
+                    {
+                        var hs = this.dataGridView1.Columns[6].CellTemplate;
+                        var celltype = new DataGridViewTextBoxCell() { Value = item.ReservationStatus };
+                        dataGridView1.Rows[i].Cells[6] = celltype;
+                    }
+                    i += 1;
                 }
-                //this.dataGridView1.Columns[e.ColumnIndex] is DataGridViewButtonColumn
-                    
             }
         }
     }

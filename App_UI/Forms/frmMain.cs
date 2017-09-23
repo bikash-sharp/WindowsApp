@@ -397,6 +397,14 @@ namespace App_UI.Forms
                 uc_ConfirmOrder uc = new uc_ConfirmOrder();
                 uc.Width = flyLayout.Width - 15;
                 uc.Height = flyLayout.Height - 15;
+                if(IsOrderConfirmed == null || IsOrderConfirmed == false)
+                {
+                    uc.UpdateGridColumns(EmGridType.OrderIn);
+                }
+                else
+                {
+                    uc.UpdateGridColumns(EmGridType.Delivery);
+                }
                 uc.BindData(IsOrderConfirmed);
                 this.flyLayout.Controls.Add(uc);
             }
@@ -408,6 +416,7 @@ namespace App_UI.Forms
             uc_ConfirmOrder uc = new uc_ConfirmOrder();
             uc.Width = flyLayout.Width - 15;
             uc.Height = flyLayout.Height - 15;
+            uc.UpdateGridColumns(EmGridType.Reservation);
             uc.BindReservations();
             this.flyLayout.Controls.Add(uc);
         }

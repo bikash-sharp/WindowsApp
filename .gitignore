@@ -1,0 +1,13 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/App_BAL/bin/Debug
+/App_BAL/obj
+/App_UI/bin/Debug
+/App_UI/obj
+/App_UI/Properties
+/App_Wrapper/bin/Debug
+/App_Wrapper/obj
+/CustomServerControls/bin/Debug
+/CustomServerControls/obj
