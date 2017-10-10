@@ -2,6 +2,7 @@
 using App_UI.UserControls;
 using App_Wrapper;
 using CustomServerControls;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -45,6 +46,7 @@ namespace App_UI.Forms
             flyLayout.VerticalScroll.Visible = true;
             flyLayout.VerticalScroll.Enabled = true;
             BindProducts();
+            GetPendingOrders();
 
         }
 
@@ -253,49 +255,85 @@ namespace App_UI.Forms
         {
             if (Program.cartItems.Count > 0)
             {
-                frmOrderType _frrOrder = new frmOrderType();
-                _frrOrder.ShowDialog();
-
-                var TotalAmount = 0.0;  // Total Price
-                TotalAmount = Program.cartItems.Sum(p => p.Price);
-                FrmContainer frm = new FrmContainer();
-                ucPayment uc = new ucPayment();
-                frm.Dock = DockStyle.Fill;
-                uc.BindData(TotalAmount);
-                frm.Width = uc.Width + 20;
-                frm.Height = uc.Height + 40;
-                frm.Controls.Add(uc);
-                frm.StartPosition = FormStartPosition.CenterScreen;
-                var dgRes = frm.ShowDialog();
-                if (dgRes == System.Windows.Forms.DialogResult.OK)
+                frmOrderType _frmOrder = new frmOrderType();                
+                _frmOrder.ShowDialog();
+                if(!frmOrderType.isClosed)
                 {
-                    string OrderNumber = DateTime.UtcNow.Ticks.ToString();
+                    var TotalAmount = 0.0;  // Total Price
+                    TotalAmount = Program.cartItems.Sum(p => p.Price);
+                    FrmContainer frm = new FrmContainer();
+                    ucPayment uc = new ucPayment();
+                    frm.Dock = DockStyle.Fill;
+                    uc.BindData(TotalAmount);
+                    frm.Width = uc.Width + 20;
+                    frm.Height = uc.Height + 40;
+                    frm.Controls.Add(uc);
+                    frm.StartPosition = FormStartPosition.CenterScreen;
+                    var dgRes = frm.ShowDialog();
+                    if (dgRes == System.Windows.Forms.DialogResult.OK)
+                    {
+                        string OrderNumber = DateTime.UtcNow.Ticks.ToString();
 
-                    CartCL cart = new CartCL();
-                    cart.IsOrderConfirmed = false;
-                    cart.OrderStatus = EmOrderStatus.Pending;
-                    cart.OrderID = 0;
-                    cart.OrderNo = OrderNumber;
-                    cart.OrderType = CurrentOrderType;
-                    cart.PaymentType = uc.PayementType;
-                    cart.Items = Program.cartItems;
-                    cart.OrderTotal = Program.cartItems.First().GrandTotal.ToString("N");
+                        CartCL cart = new CartCL();
+                        cart.IsOrderConfirmed = true;
+                        cart.OrderStatus = EmOrderStatus.Delivered;
+                        cart.OrderID = 0;
+                        cart.OrderNo = OrderNumber;
+                        cart.OrderType = CurrentOrderType;
+                        cart.PaymentType = uc.PayementType;
+                        cart.Items = Program.cartItems;
+                        cart.OrderTotal = Program.cartItems.First().GrandTotal.ToString("N");
+                        cart.IsCurrentOrder = true;
+                        cart.TransactionID = uc.LastTransactionID;
+                        MessageBox.Show("Order Number : " + OrderNumber + " has been placed successfully", " Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        Program.PlacedOrders.Add(cart);
+                        Program.OrderCount();
+                        //Update Cart Order Number
+                        foreach(var item in Program.cartItems)
+                        {
+                            item.orderNo = OrderNumber;
+                        }
+                        //Post Order
+                        PostOrder(OrderNumber);
+                        lblOrderCount.DataBindings.Clear();
 
-                    MessageBox.Show("Order Number : " + OrderNumber + " has been placed successfully", " Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    Program.PlacedOrders.Add(cart);
-                    Program.OrderCount();
-                    lblOrderCount.DataBindings.Clear();
-
-                    var OrderCount = new Binding("Text", Program.OrderBindings, "OrderCount", true, DataSourceUpdateMode.Never, "0", "");
-                    lblOrderCount.DataBindings.Add(OrderCount);
-                    //Clear the Cart and Total Field
-                    ClearList();
+                        var OrderCount = new Binding("Text", Program.OrderBindings, "OrderCount", true, DataSourceUpdateMode.Never, "0", "");
+                        lblOrderCount.DataBindings.Add(OrderCount);
+                        //Clear the Cart and Total Field
+                        ClearList();
+                    }
                 }
+
             }
             else
             {
                 MessageBox.Show("Cart is Empty", "Empty Cart", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        public void PostOrder(string OrderNo)
+        {
+            //POST Cart Details
+            List<PostOrder> Orders = new List<PostOrder>();
+            var CurrentOrder = Program.PlacedOrders.FirstOrDefault(p => p.IsCurrentOrder == true && p.OrderNo == OrderNo);
+            var CartItems = Program.cartItems.Where(p => p.orderNo == OrderNo).ToList();
+            foreach (var item in CartItems)
+            {
+                PostOrder _order = new PostOrder();
+                _order.tn_id = CurrentOrder?.TransactionID;
+                _order.product_id = item.ProductID.ToString();
+                _order.quantity = item.Quantity.ToString();
+                _order.total_price = int.Parse(item.Price.ToString());
+                Orders.Add(_order);
+            }
+
+            string URL = Program.BaseUrl;
+            string PostOrderURL = URL + "/processposorderusingbarcode?acess_token=" + Program.Token;
+            var jsonObject = JsonConvert.SerializeObject(Orders);
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            var postData = serializer.Serialize(Orders);
+            var PostResult = DataProviderWrapper.Instance.GetData(PostOrderURL, Verbs.POST, postData);
+            var result = serializer.Deserialize<TransactionAPICL>(PostResult);
         }
 
         private void ClearList()
@@ -391,13 +429,14 @@ namespace App_UI.Forms
         public void BindOrders(bool? IsOrderConfirmed = null)
         {
             flyLayout.Controls.Clear();
+            
             int Count = Program.PlacedOrders.Where(p => IsOrderConfirmed == null ? true : p.IsOrderConfirmed == IsOrderConfirmed.Value).Count();
             if (Count > 0)
             {
                 uc_ConfirmOrder uc = new uc_ConfirmOrder();
                 uc.Width = flyLayout.Width - 15;
                 uc.Height = flyLayout.Height - 15;
-                if(IsOrderConfirmed == null || IsOrderConfirmed == false)
+                if (IsOrderConfirmed == null || IsOrderConfirmed == false)
                 {
                     uc.UpdateGridColumns(EmGridType.OrderIn);
                 }
@@ -429,6 +468,7 @@ namespace App_UI.Forms
 
         private void btnRefresh_Click(object sender, EventArgs e)
         {
+            GetPendingOrders();
             if (!IsOrder)
             {
                 uc_CategoryMenu1.SetCurrentControlBtnName("All");
@@ -437,6 +477,24 @@ namespace App_UI.Forms
             }
             else
             {
+                if (rdbReservation.Checked)
+                {
+                    uc_CategoryMenu1.SetCurrentControlBtnName("");
+                    uc_CategoryMenu1.SelectedControls();
+                    BindReservations();
+                }
+                else if (rdbOrder.Checked)
+                {
+                    uc_CategoryMenu1.SetCurrentControlBtnName("");
+                    uc_CategoryMenu1.SelectedControls();
+                    BindOrders(false);
+                }
+                else if (rdbDelivery.Checked)
+                {
+                    uc_CategoryMenu1.SetCurrentControlBtnName("");
+                    uc_CategoryMenu1.SelectedControls();
+                    BindOrders(true);
+                }
 
             }
         }
@@ -450,6 +508,42 @@ namespace App_UI.Forms
                 BindReservations();
                 IsOrder = true;
             }
+        }
+
+        public void GetPendingOrders()
+        {
+            //Load with Reservations
+            string URL = Program.BaseUrl;
+            string PendingOrdURL = URL + "/pendingorders?acess_token=" + Program.Token;
+
+            var GetStatus = DataProviderWrapper.Instance.GetData(PendingOrdURL, Verbs.GET, "");
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            var result = serializer.Deserialize<PendingOrderAPI>(GetStatus);
+            if (result != null)
+            {
+                foreach (var item in result.data)
+                {
+                    var OrderId = "" + item.Order?.Orderdetail?.order_id;
+                    //var OrderType = EmOrderType.Delivery;
+                    var OrderStatus = "" + item.Order?.Orderdetail?.order_status;
+                    var Total = "" + item.Order?.Orderdetail?.total;
+                    if (!String.IsNullOrEmpty(OrderId) && !String.IsNullOrEmpty(OrderStatus))
+                    {
+                        bool isExist = Program.PlacedOrders.Where(p => p.OrderNo == OrderId).Any();
+                        if (!isExist)
+                        {
+                            Program.PlacedOrders.Add(new CartCL { OrderNo = OrderId.Trim(), OrderStatus = EmOrderStatus.Pending, OrderType = EmOrderType.Delivery, OrderTotal = Total, IsOrderConfirmed = false });
+                        }
+
+                    }
+                }
+            }
+            //Get the Counting
+            Program.OrderCount();
+            //Set the Notification Count
+            lblOrderCount.DataBindings.Clear();
+            var OrderCount = new Binding("Text", Program.OrderBindings, "OrderCount", true, DataSourceUpdateMode.Never, "0", "");
+            lblOrderCount.DataBindings.Add(OrderCount);
         }
     }
 }

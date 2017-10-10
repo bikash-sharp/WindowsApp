@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using App_BAL;
 using App_Wrapper;
 using System.Web.Script.Serialization;
+using Newtonsoft.Json;
 
 namespace App_UI.UserControls
 {
@@ -18,6 +19,7 @@ namespace App_UI.UserControls
         public double TotalAmount = 0;
         public double RemAmount = 0;
         public EmPaymentType PayementType = EmPaymentType.Cash;
+        public string LastTransactionID = string.Empty;
         public ucPayment()
         {
             InitializeComponent();
@@ -70,20 +72,21 @@ namespace App_UI.UserControls
                     //Verify the transaction Id here
                     string URL = Program.BaseUrl;
                     string _transID = txtAmount.Text.Trim();
-                    //http://202.75.42.25/index.php/restwebservices/orderdetailusingtransaction?tn_id=test&acess_token=b358898d9b9a51f43386a1792d39d9a7
                     string TransactionStatusURL = URL + "/orderdetailusingtransaction?tn_id=" + _transID + "&acess_token=" + Program.Token;
 
                     var GetStatus = DataProviderWrapper.Instance.GetData(TransactionStatusURL, Verbs.GET, "");
                     JavaScriptSerializer serializer = new JavaScriptSerializer();
                     var result = serializer.Deserialize<TransactionAPICL>(GetStatus);
                     if (result.status)
+                    {
                         IsDone = true;
+                        LastTransactionID = _transID;
+                    }
                     else
                     {
                         IsDone = false;
                         MessageBox.Show("The transaction not successful or enter a valid transaction id", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
-
                 }
             }
             else if (PayementType == EmPaymentType.Card)

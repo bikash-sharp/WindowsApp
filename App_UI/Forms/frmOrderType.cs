@@ -13,6 +13,7 @@ namespace App_UI.Forms
 {
     public partial class frmOrderType : Form
     {
+        public static bool isClosed = true;
         public frmOrderType()
         {
             InitializeComponent();
@@ -20,17 +21,19 @@ namespace App_UI.Forms
 
         private void frmOrderType_Load(object sender, EventArgs e)
         {
-            frmMain.CurrentOrderType = EmOrderType.DineIn;
+            //frmMain.CurrentOrderType = EmOrderType.DineIn;
         }
 
         private void btnDineIn_Click(object sender, EventArgs e)
         {
+            isClosed = false;
             frmMain.CurrentOrderType = EmOrderType.DineIn;
             this.Close();
         }
 
         private void btnTakeAway_Click(object sender, EventArgs e)
         {
+            isClosed = false;
             frmMain.CurrentOrderType = EmOrderType.TakeOut;
             this.Close();
         }

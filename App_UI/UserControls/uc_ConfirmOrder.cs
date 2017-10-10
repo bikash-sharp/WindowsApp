@@ -10,6 +10,8 @@ using System.Windows.Forms;
 using App_Wrapper;
 using System.Web.Script.Serialization;
 using App_BAL;
+using System.Windows.Forms.VisualStyles;
+using App_UI.Forms;
 
 namespace App_UI.UserControls
 {
@@ -37,9 +39,11 @@ namespace App_UI.UserControls
                 if (result.data.Count > 0)
                 {
                     var dataLst = result.data;
-                    Program.Reservations = dataLst.Select(p => new ReservationCL() {
+                    Program.Reservations = dataLst.Select(p => new ReservationCL()
+                    {
 
                         TableId = p.Tableorder.id,
+                        TableNo ="0",
                         RestrauntId = p.Tableorder.restaurent_id,
                         DinerName = p.Tableorder.diner_name,
                         GuestCount = p.Tableorder.guests,
@@ -48,7 +52,7 @@ namespace App_UI.UserControls
                         ReservationStatus = p.Tableorder.status
                     }).ToList();
 
-                    
+
                     var source = new BindingSource(Program.Reservations, null);
                     dataGridView1.AutoGenerateColumns = false;
                     dataGridView1.DataSource = source;
@@ -65,12 +69,13 @@ namespace App_UI.UserControls
 
         public void BindData(bool? IsOrderConfirmed = null)
         {
+            //GetPendingOrders();
             var OrderLst = Program.PlacedOrders.Where(p => IsOrderConfirmed == null ? true : p.IsOrderConfirmed == IsOrderConfirmed.Value).ToList();
-
             //Clear All DatabBindings and Columns
             lblOrderTotal.DataBindings.Clear();
             lblOrderTotal.Visible = true;
             label2.Visible = true;
+            
             if (IsOrderConfirmed.Value)
             {
                 var OrderSum = new Binding("Text", Program.OrderBindings, "SumConfirmedAmountTotal", true, DataSourceUpdateMode.Never, "0", "F");
@@ -91,6 +96,7 @@ namespace App_UI.UserControls
             }
 
         }
+
 
         //private void CreateControl(App_BAL.CartCL itm)
         //{
@@ -187,32 +193,44 @@ namespace App_UI.UserControls
                             }
                         }
                     }
-                    else if(_gridType == EmGridType.Reservation)
+                    else if (_gridType == EmGridType.Reservation)
                     {
                         if (row != null)
                         {
-                            string status= row.Cells["ReservationStatus"].Value.ToString();
-                            if(status.ToLower().Trim() == "pending")
+                            string status = row.Cells["ReservationStatus"].Value.ToString();
+                            if (status.ToLower().Trim() == "pending")
                             {
+                               
                                 string TableId = row.Cells["TableId"].Value.ToString();
                                 if (!string.IsNullOrEmpty(TableId))
                                 {
+
                                     var itm = Program.Reservations.FirstOrDefault(p => p.TableId == TableId);
                                     if (itm != null)
                                     {
-                                        string URL = Program.BaseUrl;
-                                        string ChangeReservationStatusURL = URL + "/changereservationstatus?res_id=" + TableId + "&status=Completed&acess_token=" + Program.Token;
-                                        var GetStatus = DataProviderWrapper.Instance.GetData(ChangeReservationStatusURL, Verbs.GET, "");
-                                        JavaScriptSerializer serializer = new JavaScriptSerializer();
-                                        var result = serializer.Deserialize<MessageCL>(GetStatus);
-                                        if (result.status)
+                                        frmAssign objAssign = new frmAssign();
+                                        frmAssign.GuestCount = int.Parse(itm.GuestCount);
+                                        objAssign.ShowDialog();
+                                        if (!String.IsNullOrEmpty(frmAssign.TableNo))
                                         {
                                             itm.ReservationStatus = EmOrderStatus.Confirmed.ToString();
+                                            itm.TableNo = frmAssign.TableNo;
+
+                                            string URL = Program.BaseUrl;
+                                            string ChangeReservationStatusURL = URL + "/changereservationstatus?res_id=" + itm.RestrauntId + "&status=Completed&acess_token=" + Program.Token;
+                                            var GetStatus = DataProviderWrapper.Instance.GetData(ChangeReservationStatusURL, Verbs.GET, "");
+                                            JavaScriptSerializer serializer = new JavaScriptSerializer();
+                                            var result = serializer.Deserialize<MessageCL>(GetStatus);
+                                            if (result.status)
+                                            {
+                                                itm.ReservationStatus = EmOrderStatus.Confirmed.ToString();
+                                            }
                                         }
+                                        
                                     }
                                 }
                             }
-                            
+
                         }
                     }
 
@@ -279,6 +297,13 @@ namespace App_UI.UserControls
                 txtGuestCount.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                 dataGridView1.Columns.Add(txtGuestCount);
 
+                DataGridViewTextBoxColumn txtTableNo = new DataGridViewTextBoxColumn();
+                txtTableNo.DataPropertyName = "TableNo";
+                txtTableNo.HeaderText = "Table";
+                txtTableNo.Resizable = DataGridViewTriState.False;
+                txtTableNo.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                dataGridView1.Columns.Add(txtTableNo);
+
                 DataGridViewButtonColumn btnStatus = new DataGridViewButtonColumn();
                 btnStatus.DataPropertyName = "ReservationStatus";
                 btnStatus.HeaderText = "Status";
@@ -287,7 +312,7 @@ namespace App_UI.UserControls
                 btnStatus.Resizable = DataGridViewTriState.False;
                 btnStatus.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                 dataGridView1.Columns.Add(btnStatus);
-                dataGridView1.Columns[6].Name = "ReservationStatus";
+                dataGridView1.Columns[7].Name = "ReservationStatus";
             }
             else if (type == EmGridType.OrderIn)
             {
@@ -367,27 +392,35 @@ namespace App_UI.UserControls
 
         public void UpdateGridColumnType(EmGridType _type)
         {
-            if(_type == EmGridType.Reservation)
+            if (_type == EmGridType.Reservation)
             {
-                int i = 0;
-                //this.dataGridView1.Columns.RemoveAt(6);
-                foreach(var item in Program.Reservations)
-                {
-                    if(item.ReservationStatus.ToLower().Trim() == "pending")
-                    {
-                        var hs = this.dataGridView1.Columns[6].CellTemplate;
-                        var celltype = new DataGridViewButtonCell() { Value = item.ReservationStatus };
-                        dataGridView1.Rows[i].Cells[6] = celltype;
-                    }
-                    else
-                    {
-                        var hs = this.dataGridView1.Columns[6].CellTemplate;
-                        var celltype = new DataGridViewTextBoxCell() { Value = item.ReservationStatus };
-                        dataGridView1.Rows[i].Cells[6] = celltype;
-                    }
-                    i += 1;
-                }
+                //int i = 0;
+                //while (i < dataGridView1.Rows.Count)
+                //{
+                //    var _row = dataGridView1.Rows[i];
+                //    //var _allCells = dataGridView1.Rows[i].Cells;
+                //    //_allCells.RemoveAt(6);
+                //    //DataGridViewCell[] _cellList = null;
+                //    var _cell = _row.Cells[6];
+                //    if (_cell.Value.ToString() == "Pending")
+                //    {
+                //        var TextCell = new DataGridViewTextBoxCell();
+                //        TextCell.Value = _row.Cells[6].Value;
+                //        _cell.Value = TextCell;
+                //        //_allCells.Add(TextCell);
+
+                //        //_allCells.CopyTo(_cellList, 0);
+                //        //dataGridView1.Rows[i].Cells.Clear();
+                //        //dataGridView1.Rows[i].Cells.AddRange(_cellList);
+                //    }
+                //}
+
+                dataGridView1.Rows[0].Cells[6].ReadOnly = true;
+                dataGridView1.Rows[0].Cells.Remove(dataGridView1.Rows[0].Cells[6]);
             }
+
         }
     }
+
+    
 }
