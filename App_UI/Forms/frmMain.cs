@@ -104,7 +104,9 @@ namespace App_UI.Forms
 
             PictureBox pic = new PictureBox();
             pic.Name = "pic_" + itm.id;
-            pic.Image = global::App_UI.Properties.Resources.IMG_NotFound;
+            pic.ImageLocation = itm.product_image;
+            pic.ErrorImage = global::App_UI.Properties.Resources.IMG_NotFound;
+            //pic.Image = global::App_UI.Properties.Resources.IMG_NotFound;
             pic.Width = 200;
             pic.Height = 130;
             pic.BorderStyle = BorderStyle.None;
@@ -294,16 +296,14 @@ namespace App_UI.Forms
                             item.orderNo = OrderNumber;
                         }
                         //Post Order
-                        PostOrder(OrderNumber);
+                        var isPost = PostOrder(OrderNumber);
                         lblOrderCount.DataBindings.Clear();
-
                         var OrderCount = new Binding("Text", Program.OrderBindings, "OrderCount", true, DataSourceUpdateMode.Never, "0", "");
                         lblOrderCount.DataBindings.Add(OrderCount);
                         //Clear the Cart and Total Field
                         ClearList();
                     }
                 }
-
             }
             else
             {
@@ -311,8 +311,9 @@ namespace App_UI.Forms
             }
         }
 
-        public void PostOrder(string OrderNo)
+        public string PostOrder(string OrderNo)
         {
+            string fresult = string.Empty;
             //POST Cart Details
             List<PostOrder> Orders = new List<PostOrder>();
             var CurrentOrder = Program.PlacedOrders.FirstOrDefault(p => p.IsCurrentOrder == true && p.OrderNo == OrderNo);
@@ -329,11 +330,15 @@ namespace App_UI.Forms
 
             string URL = Program.BaseUrl;
             string PostOrderURL = URL + "/processposorderusingbarcode?acess_token=" + Program.Token;
-            var jsonObject = JsonConvert.SerializeObject(Orders);
             JavaScriptSerializer serializer = new JavaScriptSerializer();
             var postData = serializer.Serialize(Orders);
-            var PostResult = DataProviderWrapper.Instance.GetData(PostOrderURL, Verbs.POST, postData);
+            var PostResult = DataProviderWrapper.Instance.PostData(PostOrderURL, postData);
             var result = serializer.Deserialize<TransactionAPICL>(PostResult);
+            if(result != null)
+            {
+                fresult = result.message;
+            }
+            return fresult;
         }
 
         private void ClearList()
