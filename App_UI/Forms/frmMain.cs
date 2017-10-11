@@ -104,7 +104,7 @@ namespace App_UI.Forms
 
             PictureBox pic = new PictureBox();
             pic.Name = "pic_" + itm.id;
-            pic.ImageLocation = itm.product_image;
+            pic.ImageLocation = Program.ProductImagesLoc + itm.product_image;
             pic.ErrorImage = global::App_UI.Properties.Resources.IMG_NotFound;
             //pic.Image = global::App_UI.Properties.Resources.IMG_NotFound;
             pic.Width = 200;

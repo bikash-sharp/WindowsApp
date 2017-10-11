@@ -19,6 +19,7 @@ namespace App_UI
         public static BindingList<CartItemsCL> cartItems = new BindingList<CartItemsCL>();
         public static BindingList<CalculateCart> cartTotal = new BindingList<CalculateCart>();
         public const String BaseUrl = "http://202.75.42.25/index.php/restwebservices/";
+        public const String ProductImagesLoc = "http://202.75.42.25/app/webroot/images/uploads/product_images/";
         public static string Token { get; set; }
         public static int SelectedProductId { get; set;}
         public static PlaceOrderBinding OrderBindings = new PlaceOrderBinding();
