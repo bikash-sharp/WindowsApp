@@ -264,8 +264,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Bestari.ico" />
-    <Content Include="BestariIcon.ico" />
-    <Content Include="icon.ico" />
     <Content Include="POS.ico" />
     <Content Include="Resources\logo.jpg" />
     <None Include="Resources\refresh24.png" />
