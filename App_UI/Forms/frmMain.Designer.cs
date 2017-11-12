@@ -36,12 +36,13 @@
             this.tblMainLayout = new System.Windows.Forms.TableLayoutPanel();
             this.pnlTopMenu = new System.Windows.Forms.Panel();
             this.rdbReservation = new System.Windows.Forms.RadioButton();
+            this.rdbTakeWay = new System.Windows.Forms.RadioButton();
+            this.rdbOrder = new System.Windows.Forms.RadioButton();
             this.rdbProducts = new System.Windows.Forms.RadioButton();
             this.btnExit = new System.Windows.Forms.Button();
             this.lblOrderCount = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pbLogo = new System.Windows.Forms.PictureBox();
-            this.rdbOrder = new System.Windows.Forms.RadioButton();
             this.rdbDelivery = new System.Windows.Forms.RadioButton();
             this.shapeContainer2 = new Microsoft.VisualBasic.PowerPacks.ShapeContainer();
             this.rectangleShape1 = new Microsoft.VisualBasic.PowerPacks.RectangleShape();
@@ -52,10 +53,8 @@
             this.lineShape3 = new Microsoft.VisualBasic.PowerPacks.LineShape();
             this.ovalShape2 = new Microsoft.VisualBasic.PowerPacks.OvalShape();
             this.rectangleShape4 = new Microsoft.VisualBasic.PowerPacks.RectangleShape();
-            this.uc_CategoryMenu1 = new App_UI.UserControls.uc_CategoryMenu();
             this.pnlBase = new System.Windows.Forms.Panel();
             this.btnRefresh = new System.Windows.Forms.Button();
-            this.txtSearch = new CustomServerControls.TxtBox();
             this.btnSearch = new System.Windows.Forms.Button();
             this.flyLayout = new System.Windows.Forms.FlowLayoutPanel();
             this.shapeContainer3 = new Microsoft.VisualBasic.PowerPacks.ShapeContainer();
@@ -76,6 +75,8 @@
             this.shapeContainer4 = new Microsoft.VisualBasic.PowerPacks.ShapeContainer();
             this.lineShape2 = new Microsoft.VisualBasic.PowerPacks.LineShape();
             this.lineShape1 = new Microsoft.VisualBasic.PowerPacks.LineShape();
+            this.txtSearch = new CustomServerControls.TxtBox();
+            this.uc_CategoryMenu1 = new App_UI.UserControls.uc_CategoryMenu();
             this.tblMainLayout.SuspendLayout();
             this.pnlTopMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -97,9 +98,9 @@
             this.tblMainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tblMainLayout.Controls.Add(this.pnlTopMenu, 1, 0);
             this.tblMainLayout.Controls.Add(this.pnlPay, 2, 2);
-            this.tblMainLayout.Controls.Add(this.uc_CategoryMenu1, 1, 2);
             this.tblMainLayout.Controls.Add(this.pnlBase, 1, 1);
             this.tblMainLayout.Controls.Add(this.tblCart, 2, 1);
+            this.tblMainLayout.Controls.Add(this.uc_CategoryMenu1, 1, 2);
             this.tblMainLayout.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tblMainLayout.Location = new System.Drawing.Point(0, 0);
             this.tblMainLayout.Margin = new System.Windows.Forms.Padding(0);
@@ -116,12 +117,13 @@
             this.pnlTopMenu.BackColor = System.Drawing.Color.Black;
             this.tblMainLayout.SetColumnSpan(this.pnlTopMenu, 3);
             this.pnlTopMenu.Controls.Add(this.rdbReservation);
+            this.pnlTopMenu.Controls.Add(this.rdbTakeWay);
+            this.pnlTopMenu.Controls.Add(this.rdbOrder);
             this.pnlTopMenu.Controls.Add(this.rdbProducts);
             this.pnlTopMenu.Controls.Add(this.btnExit);
             this.pnlTopMenu.Controls.Add(this.lblOrderCount);
             this.pnlTopMenu.Controls.Add(this.pictureBox1);
             this.pnlTopMenu.Controls.Add(this.pbLogo);
-            this.pnlTopMenu.Controls.Add(this.rdbOrder);
             this.pnlTopMenu.Controls.Add(this.rdbDelivery);
             this.pnlTopMenu.Controls.Add(this.shapeContainer2);
             this.pnlTopMenu.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -134,17 +136,43 @@
             // rdbReservation
             // 
             this.rdbReservation.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.rdbReservation.Checked = true;
+            this.rdbReservation.BackColor = System.Drawing.Color.Transparent;
             this.rdbReservation.Cursor = System.Windows.Forms.Cursors.Hand;
             this.rdbReservation.ForeColor = System.Drawing.Color.White;
-            this.rdbReservation.Location = new System.Drawing.Point(451, 19);
+            this.rdbReservation.Location = new System.Drawing.Point(333, 18);
             this.rdbReservation.Name = "rdbReservation";
-            this.rdbReservation.Size = new System.Drawing.Size(135, 25);
+            this.rdbReservation.Size = new System.Drawing.Size(140, 25);
             this.rdbReservation.TabIndex = 8;
-            this.rdbReservation.TabStop = true;
             this.rdbReservation.Text = "RESERVATIONS";
-            this.rdbReservation.UseVisualStyleBackColor = true;
+            this.rdbReservation.UseVisualStyleBackColor = false;
             this.rdbReservation.CheckedChanged += new System.EventHandler(this.rdbReservation_CheckedChanged);
+            // 
+            // rdbTakeWay
+            // 
+            this.rdbTakeWay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.rdbTakeWay.BackColor = System.Drawing.Color.Transparent;
+            this.rdbTakeWay.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.rdbTakeWay.ForeColor = System.Drawing.Color.White;
+            this.rdbTakeWay.Location = new System.Drawing.Point(479, 18);
+            this.rdbTakeWay.Name = "rdbTakeWay";
+            this.rdbTakeWay.Size = new System.Drawing.Size(123, 25);
+            this.rdbTakeWay.TabIndex = 9;
+            this.rdbTakeWay.Text = "TAKE-AWAY";
+            this.rdbTakeWay.UseVisualStyleBackColor = false;
+            this.rdbTakeWay.CheckedChanged += new System.EventHandler(this.rdbTakeWay_CheckedChanged);
+            // 
+            // rdbOrder
+            // 
+            this.rdbOrder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.rdbOrder.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.rdbOrder.ForeColor = System.Drawing.Color.White;
+            this.rdbOrder.Location = new System.Drawing.Point(604, 19);
+            this.rdbOrder.Name = "rdbOrder";
+            this.rdbOrder.Size = new System.Drawing.Size(87, 25);
+            this.rdbOrder.TabIndex = 1;
+            this.rdbOrder.Text = "DINE-IN";
+            this.rdbOrder.UseVisualStyleBackColor = true;
+            this.rdbOrder.CheckedChanged += new System.EventHandler(this.rdbOrder_CheckedChanged);
             // 
             // rdbProducts
             // 
@@ -152,7 +180,7 @@
             this.rdbProducts.Checked = true;
             this.rdbProducts.Cursor = System.Windows.Forms.Cursors.Hand;
             this.rdbProducts.ForeColor = System.Drawing.Color.White;
-            this.rdbProducts.Location = new System.Drawing.Point(398, 18);
+            this.rdbProducts.Location = new System.Drawing.Point(380, 18);
             this.rdbProducts.Name = "rdbProducts";
             this.rdbProducts.Size = new System.Drawing.Size(61, 25);
             this.rdbProducts.TabIndex = 7;
@@ -215,19 +243,6 @@
             this.pbLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pbLogo.TabIndex = 2;
             this.pbLogo.TabStop = false;
-            // 
-            // rdbOrder
-            // 
-            this.rdbOrder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.rdbOrder.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.rdbOrder.ForeColor = System.Drawing.Color.White;
-            this.rdbOrder.Location = new System.Drawing.Point(588, 19);
-            this.rdbOrder.Name = "rdbOrder";
-            this.rdbOrder.Size = new System.Drawing.Size(102, 25);
-            this.rdbOrder.TabIndex = 1;
-            this.rdbOrder.Text = "ORDER-IN";
-            this.rdbOrder.UseVisualStyleBackColor = true;
-            this.rdbOrder.CheckedChanged += new System.EventHandler(this.rdbOrder_CheckedChanged);
             // 
             // rdbDelivery
             // 
@@ -304,7 +319,7 @@
             this.btnPay.Name = "btnPay";
             this.btnPay.Size = new System.Drawing.Size(186, 52);
             this.btnPay.TabIndex = 1;
-            this.btnPay.Text = "PAY";
+            this.btnPay.Text = "PLACE ORDER";
             this.btnPay.UseVisualStyleBackColor = true;
             this.btnPay.Click += new System.EventHandler(this.btnPay_Click);
             // 
@@ -358,21 +373,10 @@
             this.rectangleShape4.Name = "rectangleShape4";
             this.rectangleShape4.Size = new System.Drawing.Size(191, 59);
             // 
-            // uc_CategoryMenu1
-            // 
-            this.uc_CategoryMenu1.AutoScroll = true;
-            this.uc_CategoryMenu1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.uc_CategoryMenu1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uc_CategoryMenu1.Location = new System.Drawing.Point(24, 378);
-            this.uc_CategoryMenu1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.uc_CategoryMenu1.Name = "uc_CategoryMenu1";
-            this.uc_CategoryMenu1.Size = new System.Drawing.Size(557, 94);
-            this.uc_CategoryMenu1.TabIndex = 3;
-            // 
             // pnlBase
             // 
-            this.pnlBase.Controls.Add(this.btnRefresh);
             this.pnlBase.Controls.Add(this.txtSearch);
+            this.pnlBase.Controls.Add(this.btnRefresh);
             this.pnlBase.Controls.Add(this.btnSearch);
             this.pnlBase.Controls.Add(this.flyLayout);
             this.pnlBase.Controls.Add(this.shapeContainer3);
@@ -386,7 +390,7 @@
             // btnRefresh
             // 
             this.btnRefresh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRefresh.BackgroundImage = global::App_UI.Properties.Resources.refresh_24;
+            this.btnRefresh.BackgroundImage = global::App_UI.Properties.Resources.refresh24;
             this.btnRefresh.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.btnRefresh.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnRefresh.FlatAppearance.BorderColor = System.Drawing.Color.White;
@@ -402,21 +406,6 @@
             this.btnRefresh.UseVisualStyleBackColor = true;
             this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
             // 
-            // txtSearch
-            // 
-            this.txtSearch.AcceptsReturn = true;
-            this.txtSearch.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtSearch.Font = new System.Drawing.Font("Segoe UI Semilight", 13.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtSearch.ForeColor = System.Drawing.Color.Gray;
-            this.txtSearch.Location = new System.Drawing.Point(11, 14);
-            this.txtSearch.Margin = new System.Windows.Forms.Padding(0);
-            this.txtSearch.Name = "txtSearch";
-            this.txtSearch.PlaceholderText = "Search Item";
-            this.txtSearch.Size = new System.Drawing.Size(280, 24);
-            this.txtSearch.TabIndex = 5;
-            this.txtSearch.Tag = "";
-            this.txtSearch.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtSearch_KeyPress);
-            // 
             // btnSearch
             // 
             this.btnSearch.Cursor = System.Windows.Forms.Cursors.Hand;
@@ -424,7 +413,7 @@
             this.btnSearch.FlatAppearance.BorderSize = 0;
             this.btnSearch.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
             this.btnSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSearch.Image = global::App_UI.Properties.Resources.search_24;
+            this.btnSearch.Image = global::App_UI.Properties.Resources.search24;
             this.btnSearch.Location = new System.Drawing.Point(299, 10);
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(35, 33);
@@ -698,6 +687,26 @@
             this.lineShape1.Y1 = 34;
             this.lineShape1.Y2 = 34;
             // 
+            // txtSearch
+            // 
+            this.txtSearch.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtSearch.Font = new System.Drawing.Font("Segoe UI Semibold", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtSearch.Location = new System.Drawing.Point(7, 13);
+            this.txtSearch.Name = "txtSearch";
+            this.txtSearch.PlaceholderText = "Search";
+            this.txtSearch.Size = new System.Drawing.Size(286, 29);
+            this.txtSearch.TabIndex = 8;
+            // 
+            // uc_CategoryMenu1
+            // 
+            this.uc_CategoryMenu1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.uc_CategoryMenu1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.uc_CategoryMenu1.Location = new System.Drawing.Point(24, 378);
+            this.uc_CategoryMenu1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.uc_CategoryMenu1.Name = "uc_CategoryMenu1";
+            this.uc_CategoryMenu1.Size = new System.Drawing.Size(557, 94);
+            this.uc_CategoryMenu1.TabIndex = 7;
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
@@ -735,7 +744,6 @@
         private Microsoft.VisualBasic.PowerPacks.ShapeContainer shapeContainer1;
         private Microsoft.VisualBasic.PowerPacks.RectangleShape rectangleShape4;
         private System.Windows.Forms.Button btnPay;
-        private UserControls.uc_CategoryMenu uc_CategoryMenu1;
         private System.Windows.Forms.Panel pnlTopMenu;
         private System.Windows.Forms.Label lblOrderCount;
         private System.Windows.Forms.PictureBox pictureBox1;
@@ -749,7 +757,6 @@
         private System.Windows.Forms.FlowLayoutPanel flyLayout;
         private System.Windows.Forms.Panel pnlBase;
         private System.Windows.Forms.Button btnSearch;
-        private CustomServerControls.TxtBox txtSearch;
         private Microsoft.VisualBasic.PowerPacks.ShapeContainer shapeContainer3;
         private Microsoft.VisualBasic.PowerPacks.RectangleShape rectangleShape2;
         private System.Windows.Forms.TableLayoutPanel tblCart;
@@ -773,5 +780,8 @@
         private System.Windows.Forms.RadioButton rdbProducts;
         private System.Windows.Forms.Button btnRefresh;
         private System.Windows.Forms.RadioButton rdbReservation;
+        private System.Windows.Forms.RadioButton rdbTakeWay;
+        private UserControls.uc_CategoryMenu uc_CategoryMenu1;
+        private CustomServerControls.TxtBox txtSearch;
     }
 }

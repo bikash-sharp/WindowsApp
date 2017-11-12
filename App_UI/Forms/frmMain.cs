@@ -9,6 +9,8 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Printing;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -16,6 +18,7 @@ using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using App_UI;
 
 namespace App_UI.Forms
 {
@@ -53,7 +56,7 @@ namespace App_UI.Forms
 
         void uc_CategoryMenu1_EventCategoryClicked(object sender, EventArgs e)
         {
-            rdbOrder.Checked = rdbDelivery.Checked = false;
+            rdbOrder.Checked = rdbDelivery.Checked = rdbReservation.Checked= rdbTakeWay.Checked= false;
             rdbProducts.Checked = true;
             string FoodType = sender.ToString().Trim();
             BindProducts(FoodType.ToLower());
@@ -61,7 +64,7 @@ namespace App_UI.Forms
 
         private void BindProducts(String foodtype = "all")
         {
-            if (rdbDelivery.Checked != true && rdbOrder.Checked != true)
+            if (rdbDelivery.Checked != true && rdbOrder.Checked != true && rdbTakeWay.Checked != true && rdbReservation.Checked !=true)
             {
                 string URL = Program.BaseUrl;
                 string ProductURL = String.Empty;
@@ -257,9 +260,9 @@ namespace App_UI.Forms
         {
             if (Program.cartItems.Count > 0)
             {
-                frmOrderType _frmOrder = new frmOrderType();                
+                frmOrderType _frmOrder = new frmOrderType();
                 _frmOrder.ShowDialog();
-                if(!frmOrderType.isClosed)
+                if (!frmOrderType.isClosed)
                 {
                     var TotalAmount = 0.0;  // Total Price
                     TotalAmount = Program.cartItems.Sum(p => p.Price);
@@ -289,9 +292,9 @@ namespace App_UI.Forms
                         cart.TransactionID = uc.LastTransactionID;
                         MessageBox.Show("Order Number : " + OrderNumber + " has been placed successfully", " Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         Program.PlacedOrders.Add(cart);
-                        Program.OrderCount();
+                        //Program.OrderCount();
                         //Update Cart Order Number
-                        foreach(var item in Program.cartItems)
+                        foreach (var item in Program.cartItems)
                         {
                             item.orderNo = OrderNumber;
                         }
@@ -302,6 +305,22 @@ namespace App_UI.Forms
                         lblOrderCount.DataBindings.Add(OrderCount);
                         //Clear the Cart and Total Field
                         ClearList();
+
+                        //Printing
+                        Up:
+                        try
+                        {
+                            Print(Program.PrinterName, GetDocument(OrderNumber));
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Printer Connectivity Issue", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                        DialogResult reprintMsg = MessageBox.Show("Do you want to print again ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                        if (reprintMsg == DialogResult.Yes)
+                        {
+                            goto Up;
+                        }
                     }
                 }
             }
@@ -309,6 +328,128 @@ namespace App_UI.Forms
             {
                 MessageBox.Show("Cart is Empty", "Empty Cart", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+
+        public static void Print(string printerName, byte[] document)
+        {
+
+            NativeMethods.DOC_INFO_1 documentInfo;
+            IntPtr printerHandle;
+
+            documentInfo = new NativeMethods.DOC_INFO_1();
+            documentInfo.pDataType = "RAW";
+            documentInfo.pDocName = "Receipt";
+
+            printerHandle = new IntPtr(0);
+
+            if (NativeMethods.OpenPrinter(printerName.Normalize(), out printerHandle, IntPtr.Zero))
+            {
+                if (NativeMethods.StartDocPrinter(printerHandle, 1, documentInfo))
+                {
+                    int bytesWritten;
+                    byte[] managedData;
+                    IntPtr unmanagedData;
+
+                    managedData = document;
+                    unmanagedData = Marshal.AllocCoTaskMem(managedData.Length);
+                    Marshal.Copy(managedData, 0, unmanagedData, managedData.Length);
+
+                    if (NativeMethods.StartPagePrinter(printerHandle))
+                    {
+                        NativeMethods.WritePrinter(
+                            printerHandle,
+                            unmanagedData,
+                            managedData.Length,
+                            out bytesWritten);
+                        NativeMethods.EndPagePrinter(printerHandle);
+                    }
+                    else
+                    {
+                        throw new Win32Exception();
+                    }
+
+                    Marshal.FreeCoTaskMem(unmanagedData);
+
+                    NativeMethods.EndDocPrinter(printerHandle);
+                }
+                else
+                {
+                    throw new Win32Exception();
+                }
+
+                NativeMethods.ClosePrinter(printerHandle);
+            }
+            else
+            {
+                throw new Win32Exception();
+            }
+
+        }
+        public static byte[] GetDocument(string OrderNumber)
+        {
+            using (var ms = new MemoryStream())
+            using (var bw = new BinaryWriter(ms))
+            {
+                // Reset the printer bws (NV images are not cleared)
+                bw.Write(AsciiControlChars.Escape);
+                bw.Write('@');
+
+                // Render the logo
+                //RenderLogo(bw);
+                PrintReceipt(bw, OrderNumber);
+
+                // Feed 3 vertical motion units and cut the paper with a 1 point cut
+                bw.Write(AsciiControlChars.GroupSeparator);
+                bw.Write('V');
+                bw.Write((byte)66);
+                bw.Write((byte)3);
+
+                bw.Flush();
+
+                return ms.ToArray();
+            }
+        }
+
+        /// <summary>
+        /// This is the method we print the receipt the way we want. Note the spaces. 
+        /// Wasted a lot of paper on this to get it right.
+        /// </summary>
+        /// <param name="bw"></param>
+        public static void PrintReceipt(BinaryWriter bw, string OrderNumber)
+        {
+            var Order = Program.PlacedOrders.FirstOrDefault(p => p.OrderNo == OrderNumber);
+            bw.BoldON("",false);
+            bw.Center("Bastari Terrace");
+            bw.Center("Contact Address");
+            bw.Center("Contact Number");
+            bw.BoldOFF("", false);
+            bw.LeftJustify("");
+            bw.LeftJustify("------------------------------------------------------");
+            bw.NormalFont("Invoice #: " + OrderNumber);
+            bw.NormalFont("Staff : test User");
+            bw.NormalFont("Date: " + DateTime.UtcNow.ToString("dd-MM-yyyy hh:mm:ss"));
+            bw.NormalFont("-------------------------------------");
+            bw.LeftJustify("");
+            bw.NormalFont("-------------------------------------");
+            bw.NormalFont("Description         Qty         Amount");
+            bw.NormalFont("--------------------------------------");
+            foreach(var item in Order.Items)
+            {
+                string text = "";
+                text += item.ProductID.ToString()+" ";
+                text += item.ProductName;
+                bw.NormalFont(text + " " + item.Quantity.ToString() + " " + item.Price.ToString());
+                //bw.LeftJustify(text,false);
+                //bw.Center(item.Quantity.ToString(), false);
+                //bw.RightJustify(item.Price.ToString());
+            }
+            bw.NormalFont("---------------------------------------");
+            bw.NormalFont("Number of Items : " + Order.Items.Sum(p=>p.Quantity));
+            bw.NormalFont("Discount:" + "0");
+            bw.NormalFont("Sub Total:  " + Order.Items.FirstOrDefault().CartTotal.ToString());
+            bw.NormalFont("---------------------------------------");
+            bw.Finish();
         }
 
         public string PostOrder(string OrderNo)
@@ -324,7 +465,7 @@ namespace App_UI.Forms
                 _order.tn_id = CurrentOrder?.TransactionID;
                 _order.product_id = item.ProductID.ToString();
                 _order.quantity = item.Quantity.ToString();
-                _order.total_price = int.Parse(item.Price.ToString());
+                _order.total_price = Convert.ToInt32(Math.Ceiling(decimal.Parse(item.Price.ToString())));
                 Orders.Add(_order);
             }
 
@@ -334,7 +475,7 @@ namespace App_UI.Forms
             var postData = serializer.Serialize(Orders);
             var PostResult = DataProviderWrapper.Instance.PostData(PostOrderURL, postData);
             var result = serializer.Deserialize<TransactionAPICL>(PostResult);
-            if(result != null)
+            if (result != null)
             {
                 fresult = result.message;
             }
@@ -343,10 +484,11 @@ namespace App_UI.Forms
 
         private void ClearList()
         {
-            Program.cartItems.Clear();
-            Program.TotalCart();
+            //Program.cartItems.Clear();
+            //Program.TotalCart();
 
             dataGridView1.Rows.Clear();
+            dataGridView1.DataBindings.Clear();
             lblTax.Text = "0.00";
             lblCartTotal.Text = "0.00";
             lblGrandTotal.Text = "0.00";
@@ -358,9 +500,9 @@ namespace App_UI.Forms
 
         private void lblOrderCount_Click(object sender, EventArgs e)
         {
-            if (!rdbOrder.Checked)
+            if (!rdbDelivery.Checked)
             {
-                rdbOrder.Checked = true;
+                rdbDelivery.Checked = true;
             }
         }
 
@@ -410,7 +552,7 @@ namespace App_UI.Forms
             {
                 uc_CategoryMenu1.SetCurrentControlBtnName("");
                 uc_CategoryMenu1.SelectedControls();
-                BindOrders(false);
+                BindOrders(false, EmOrderType.DineIn);
                 IsOrder = true;
             }
         }
@@ -421,7 +563,7 @@ namespace App_UI.Forms
             {
                 uc_CategoryMenu1.SetCurrentControlBtnName("");
                 uc_CategoryMenu1.SelectedControls();
-                BindOrders(true);
+                BindOrders(false, EmOrderType.Delivery);
                 IsOrder = true;
             }
         }
@@ -431,25 +573,29 @@ namespace App_UI.Forms
             ClearList();
         }
 
-        public void BindOrders(bool? IsOrderConfirmed = null)
+        public void BindOrders(bool? IsOrderConfirmed = null, EmOrderType OrderType = EmOrderType.DineIn)
         {
             flyLayout.Controls.Clear();
-            
-            int Count = Program.PlacedOrders.Where(p => IsOrderConfirmed == null ? true : p.IsOrderConfirmed == IsOrderConfirmed.Value).Count();
+
+            int Count = Program.PlacedOrders.Where(p => p.OrderType == OrderType).Count();
             if (Count > 0)
             {
                 uc_ConfirmOrder uc = new uc_ConfirmOrder();
                 uc.Width = flyLayout.Width - 15;
                 uc.Height = flyLayout.Height - 15;
-                if (IsOrderConfirmed == null || IsOrderConfirmed == false)
-                {
-                    uc.UpdateGridColumns(EmGridType.OrderIn);
-                }
-                else
+                if(OrderType == EmOrderType.Delivery)
                 {
                     uc.UpdateGridColumns(EmGridType.Delivery);
                 }
-                uc.BindData(IsOrderConfirmed);
+                else if(OrderType == EmOrderType.DineIn)
+                {
+                    uc.UpdateGridColumns(EmGridType.OrderIn);
+                }
+                else if(OrderType == EmOrderType.TakeOut)
+                {
+                    uc.UpdateGridColumns(EmGridType.TakeAway);
+                }
+                uc.BindData(IsOrderConfirmed,OrderType);
                 this.flyLayout.Controls.Add(uc);
             }
         }
@@ -464,7 +610,6 @@ namespace App_UI.Forms
             uc.BindReservations();
             this.flyLayout.Controls.Add(uc);
         }
-
         private void rdbProducts_CheckedChanged(object sender, EventArgs e)
         {
             if (rdbProducts.Checked)
@@ -492,15 +637,20 @@ namespace App_UI.Forms
                 {
                     uc_CategoryMenu1.SetCurrentControlBtnName("");
                     uc_CategoryMenu1.SelectedControls();
-                    BindOrders(false);
+                    BindOrders(false, EmOrderType.DineIn);
                 }
                 else if (rdbDelivery.Checked)
                 {
                     uc_CategoryMenu1.SetCurrentControlBtnName("");
                     uc_CategoryMenu1.SelectedControls();
-                    BindOrders(true);
+                    BindOrders(false, EmOrderType.Delivery);
                 }
-
+                else if(rdbTakeWay.Checked)
+                {
+                    uc_CategoryMenu1.SetCurrentControlBtnName("");
+                    uc_CategoryMenu1.SelectedControls();
+                    BindOrders(false, EmOrderType.TakeOut);
+                }
             }
         }
 
@@ -537,18 +687,28 @@ namespace App_UI.Forms
                         bool isExist = Program.PlacedOrders.Where(p => p.OrderNo == OrderId).Any();
                         if (!isExist)
                         {
-                            Program.PlacedOrders.Add(new CartCL { OrderNo = OrderId.Trim(), OrderStatus = EmOrderStatus.Pending, OrderType = EmOrderType.Delivery, OrderTotal = Total, IsOrderConfirmed = false });
+                            Program.PlacedOrders.Add(new CartCL { OrderNo = OrderId.Trim(), OrderStatus = EmOrderStatus.Pending, OrderType = EmOrderType.Delivery, OrderTotal = Total, IsOrderConfirmed = false, BtnActionStatus="Update Status" });
                         }
-
                     }
                 }
             }
             //Get the Counting
-            Program.OrderCount();
+            Program.OrderCount(EmOrderType.Delivery);
             //Set the Notification Count
             lblOrderCount.DataBindings.Clear();
-            var OrderCount = new Binding("Text", Program.OrderBindings, "OrderCount", true, DataSourceUpdateMode.Never, "0", "");
+            var OrderCount = new Binding("Text", Program.OrderBindings, "OrderCount", true, DataSourceUpdateMode.OnPropertyChanged, "0", "");
             lblOrderCount.DataBindings.Add(OrderCount);
+        }
+
+        private void rdbTakeWay_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rdbTakeWay.Checked)
+            {
+                uc_CategoryMenu1.SetCurrentControlBtnName("");
+                uc_CategoryMenu1.SelectedControls();
+                BindOrders(true, EmOrderType.TakeOut);
+                IsOrder = true;
+            }
         }
     }
 }

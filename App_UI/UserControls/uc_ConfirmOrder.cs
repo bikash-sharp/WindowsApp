@@ -43,17 +43,19 @@ namespace App_UI.UserControls
                     {
 
                         TableId = p.Tableorder.id,
-                        TableNo ="0",
+                        TableNo = "0",
                         RestrauntId = p.Tableorder.restaurent_id,
                         DinerName = p.Tableorder.diner_name,
                         GuestCount = p.Tableorder.guests,
                         MobileNo = p.Tableorder.mobile,
-                        ReservationDate = p.Tableorder.bookingDate,
-                        ReservationStatus = p.Tableorder.status
+                        ReservationDate = p.Tableorder.date,
+                        ReservationTime = p.Tableorder.from_time + "-" + p.Tableorder.to_time,
+                        ReservationStatus = p.Tableorder.status,
+                        ActionText = "Unassigned"
                     }).ToList();
 
 
-                    var source = new BindingSource(Program.Reservations, null);
+                    var source = new BindingSource(Program.Reservations.OrderByDescending(p => p.PlaceDate).ThenByDescending(p => p.ReservationStatus).ToList(), null);
                     dataGridView1.AutoGenerateColumns = false;
                     dataGridView1.DataSource = source;
                     dataGridView1.ClearSelection();
@@ -67,27 +69,47 @@ namespace App_UI.UserControls
             lblOrderTotal.DataBindings.Clear();
         }
 
-        public void BindData(bool? IsOrderConfirmed = null)
+        public void BindData(bool? IsOrderConfirmed = null, EmOrderType OrderType = EmOrderType.DineIn)
         {
             //GetPendingOrders();
-            var OrderLst = Program.PlacedOrders.Where(p => IsOrderConfirmed == null ? true : p.IsOrderConfirmed == IsOrderConfirmed.Value).ToList();
+            var OrderLst = Program.PlacedOrders.Where(p => p.OrderType == OrderType).ToList();
             //Clear All DatabBindings and Columns
             lblOrderTotal.DataBindings.Clear();
             lblOrderTotal.Visible = true;
             label2.Visible = true;
-            
-            if (IsOrderConfirmed.Value)
+            Program.OrderCount(OrderType);
+            if (OrderType == EmOrderType.Delivery)
             {
-                var OrderSum = new Binding("Text", Program.OrderBindings, "SumConfirmedAmountTotal", true, DataSourceUpdateMode.Never, "0", "F");
+                var OrderSum = new Binding("Text", Program.OrderBindings, "SumDeliveryConfirmedAmountTotal", true, DataSourceUpdateMode.Never, "0.00", "F");
                 lblOrderTotal.DataBindings.Add(OrderSum);
+            }
+            else if (OrderType == EmOrderType.DineIn)
+            {
+                var OrderSum = new Binding("Text", Program.OrderBindings, "SumDineInConfirmedAmountTotal", true, DataSourceUpdateMode.Never, "0.00", "F");
+                lblOrderTotal.DataBindings.Add(OrderSum);
+            }
+            else if (OrderType == EmOrderType.Reservation)
+            {
+                var OrderSum = new Binding("Text", Program.OrderBindings, "SumReservationConfirmedAmountTotal", true, DataSourceUpdateMode.Never, "0.00", "F");
+                lblOrderTotal.DataBindings.Add(OrderSum);
+            }
+            else if (OrderType == EmOrderType.TakeOut)
+            {
+                var OrderSum = new Binding("Text", Program.OrderBindings, "SumTakeAwayConfirmedAmountTotal", true, DataSourceUpdateMode.Never, "0.00", "F");
+                lblOrderTotal.DataBindings.Add(OrderSum);
+            }
+            //if (IsOrderConfirmed.Value)
+            //{
+            //    var OrderSum = new Binding("Text", Program.OrderBindings, "SumConfirmedAmountTotal", true, DataSourceUpdateMode.Never, "0.00", "F");
+            //    lblOrderTotal.DataBindings.Add(OrderSum);
 
-            }
-            else
-            {
-                var OrderSum = new Binding("Text", Program.OrderBindings, "SumUnconfirmedAmountTotal", true, DataSourceUpdateMode.Never, "0.00", "F");
-                lblOrderTotal.DataBindings.Add(OrderSum);
-            }
-            if (_gridType == EmGridType.Delivery || _gridType == EmGridType.OrderIn)
+            //}
+            //else
+            //{
+            //    var OrderSum = new Binding("Text", Program.OrderBindings, "SumUnconfirmedAmountTotal", true, DataSourceUpdateMode.Never, "0.00", "F");
+            //    lblOrderTotal.DataBindings.Add(OrderSum);
+            //}
+            if (_gridType == EmGridType.Delivery || _gridType == EmGridType.OrderIn || _gridType == EmGridType.TakeAway)
             {
                 var source = new BindingSource(OrderLst, null);
                 dataGridView1.AutoGenerateColumns = false;
@@ -169,38 +191,58 @@ namespace App_UI.UserControls
                 if (this.dataGridView1.Columns[e.ColumnIndex] is DataGridViewButtonColumn)
                 {
                     DataGridViewRow row = this.dataGridView1.Rows[e.RowIndex];
-                    if (_gridType == EmGridType.OrderIn)
+                    if (_gridType == EmGridType.OrderIn || _gridType == EmGridType.TakeAway)
                     {
                         if (row != null)
                         {
                             string OrderNo = row.Cells["OrderNo"].Value.ToString();
-                            if (!string.IsNullOrEmpty(OrderNo))
+                            if (e.ColumnIndex == 5)
                             {
-                                var itm = Program.PlacedOrders.Where(p => p.OrderNo == OrderNo).FirstOrDefault();
-                                if (itm != null)
+                                if (!string.IsNullOrEmpty(OrderNo))
                                 {
-                                    string URL = Program.BaseUrl;
-                                    string ChangeOrdStatusURL = URL + "/confirmorder?order_id=" + OrderNo + "&order_status=in_progress&acess_token=" + Program.Token;
+                                    //var SelectedOrder = Program.PlacedOrders.Where(p => p.OrderNo == OrderNo).FirstOrDefault();
+                                    try
+                                    {
+                                        frmMain.Print(Program.PrinterName, frmMain.GetDocument(OrderNo));
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        MessageBox.Show("Printer Connectivity Issue", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    }
+                                    //if (itm != null)
+                                    //{
+                                    //    string URL = Program.BaseUrl;
+                                    //    string ChangeOrdStatusURL = URL + "/confirmorder?order_id=" + OrderNo + "&order_status=completed&acess_token=" + Program.Token;
 
-                                    var GetStatus = DataProviderWrapper.Instance.GetData(ChangeOrdStatusURL, Verbs.GET, "");
-                                    JavaScriptSerializer serializer = new JavaScriptSerializer();
-                                    var result = serializer.Deserialize<MessageCL>(GetStatus);
-                                    itm.IsOrderConfirmed = true;
-                                    itm.OrderStatus = EmOrderStatus.Delivered;
-                                    BindData(false);
-                                    Program.OrderCount();
+                                    //    var GetStatus = DataProviderWrapper.Instance.GetData(ChangeOrdStatusURL, Verbs.GET, "");
+                                    //    JavaScriptSerializer serializer = new JavaScriptSerializer();
+                                    //    var result = serializer.Deserialize<MessageCL>(GetStatus);
+                                    //    if (result.status)
+                                    //    {
+                                    //        itm.IsOrderConfirmed = true;
+                                    //        itm.OrderStatus = EmOrderStatus.Delivered;
+                                    //        BindData(false, EmOrderType.Delivery);
+                                    //        
+                                    //    }
+                                    //}
+                                    //Program.OrderCount();
                                 }
                             }
+                            else if (e.ColumnIndex == 4)
+                            {
+
+                            }
+
                         }
                     }
                     else if (_gridType == EmGridType.Reservation)
                     {
                         if (row != null)
                         {
-                            string status = row.Cells["ReservationStatus"].Value.ToString();
-                            if (status.ToLower().Trim() == "pending")
+                            string status = row.Cells["Assign"].Value.ToString();
+                            if (status.ToLower().Trim() == "unassigned")
                             {
-                               
+
                                 string TableId = row.Cells["TableId"].Value.ToString();
                                 if (!string.IsNullOrEmpty(TableId))
                                 {
@@ -217,24 +259,54 @@ namespace App_UI.UserControls
                                             itm.TableNo = frmAssign.TableNo;
 
                                             string URL = Program.BaseUrl;
-                                            string ChangeReservationStatusURL = URL + "/changereservationstatus?res_id=" + itm.RestrauntId + "&status=Completed&acess_token=" + Program.Token;
+                                            string ChangeReservationStatusURL = URL + "/changereservationstatus?res_id=" + itm.RestrauntId + "&status=completed&acess_token=" + Program.Token;
                                             var GetStatus = DataProviderWrapper.Instance.GetData(ChangeReservationStatusURL, Verbs.GET, "");
                                             JavaScriptSerializer serializer = new JavaScriptSerializer();
                                             var result = serializer.Deserialize<MessageCL>(GetStatus);
                                             if (result.status)
                                             {
                                                 itm.ReservationStatus = EmOrderStatus.Confirmed.ToString();
+                                                itm.ActionText = "Assigned";
                                             }
                                         }
-                                        
                                     }
                                 }
                             }
+                        }
+                    }
+                    else if (_gridType == EmGridType.Delivery)
+                    {
+                        string OrderNo = row.Cells["OrderNo"].Value.ToString();
+                        if (e.ColumnIndex == 4)
+                        {
+                            if (!string.IsNullOrEmpty(OrderNo))
+                            {
+                                var SelectedOrder = Program.PlacedOrders.Where(p => p.OrderNo == OrderNo).FirstOrDefault();
+                                if (SelectedOrder != null)
+                                {
+                                    string URL = Program.BaseUrl;
+                                    string ChangeOrdStatusURL = URL + "/confirmorder?order_id=" + OrderNo + "&order_status=completed&acess_token=" + Program.Token;
+
+                                    var GetStatus = DataProviderWrapper.Instance.GetData(ChangeOrdStatusURL, Verbs.GET, "");
+                                    JavaScriptSerializer serializer = new JavaScriptSerializer();
+                                    var result = serializer.Deserialize<MessageCL>(GetStatus);
+                                    if (result.status)
+                                    {
+                                        SelectedOrder.IsOrderConfirmed = true;
+                                        SelectedOrder.OrderStatus = EmOrderStatus.Delivered;
+                                        SelectedOrder.BtnActionStatus = "Done";
+                                        BindData(false, EmOrderType.Delivery);
+
+                                    }
+                                }
+                                Program.OrderCount(EmOrderType.Delivery);
+                            }
+                        }
+                        else if (e.ColumnIndex == 4)
+                        {
 
                         }
                     }
-
-
                 }
             }
         }
@@ -290,6 +362,13 @@ namespace App_UI.UserControls
                 txtBookingDt.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                 dataGridView1.Columns.Add(txtBookingDt);
 
+                DataGridViewTextBoxColumn txtBookingTime = new DataGridViewTextBoxColumn();
+                txtBookingTime.DataPropertyName = "ReservationTime";
+                txtBookingTime.HeaderText = "Booking Time";
+                txtBookingTime.Resizable = DataGridViewTriState.False;
+                txtBookingTime.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                dataGridView1.Columns.Add(txtBookingTime);
+
                 DataGridViewTextBoxColumn txtGuestCount = new DataGridViewTextBoxColumn();
                 txtGuestCount.DataPropertyName = "GuestCount";
                 txtGuestCount.HeaderText = "Guest Count";
@@ -304,15 +383,24 @@ namespace App_UI.UserControls
                 txtTableNo.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                 dataGridView1.Columns.Add(txtTableNo);
 
-                DataGridViewButtonColumn btnStatus = new DataGridViewButtonColumn();
-                btnStatus.DataPropertyName = "ReservationStatus";
-                btnStatus.HeaderText = "Status";
-                btnStatus.Text = "Pending";
-                btnStatus.UseColumnTextForButtonValue = false;
-                btnStatus.Resizable = DataGridViewTriState.False;
-                btnStatus.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-                dataGridView1.Columns.Add(btnStatus);
-                dataGridView1.Columns[7].Name = "ReservationStatus";
+                DataGridViewTextBoxColumn txtStatus = new DataGridViewTextBoxColumn();
+                txtStatus.DataPropertyName = "ReservationStatus";
+                txtStatus.HeaderText = "Status";
+                txtStatus.Resizable = DataGridViewTriState.False;
+                txtStatus.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                dataGridView1.Columns.Add(txtStatus);
+                dataGridView1.Columns[8].Name = "ReservationStatus";
+
+                DataGridViewButtonColumn btnAction = new DataGridViewButtonColumn();
+                btnAction.DataPropertyName = "ActionText";
+                btnAction.HeaderText = "Action";
+                btnAction.Text = "Assign Table";
+                btnAction.UseColumnTextForButtonValue = true;
+                btnAction.Resizable = DataGridViewTriState.False;
+                btnAction.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                dataGridView1.Columns.Add(btnAction);
+                dataGridView1.Columns[9].Name = "Assign";
+
             }
             else if (type == EmGridType.OrderIn)
             {
@@ -342,15 +430,40 @@ namespace App_UI.UserControls
                 dataGridView1.Columns.Add(txtTotal);
                 dataGridView1.Columns[2].Name = "OrderTotal";
 
-                DataGridViewButtonColumn btnCol = new DataGridViewButtonColumn();
-                btnCol.DataPropertyName = "OrderStatus";
-                btnCol.HeaderText = "Status";
-                btnCol.Text = "Pending";
-                btnCol.UseColumnTextForButtonValue = true;
-                btnCol.Resizable = DataGridViewTriState.False;
-                btnCol.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-                dataGridView1.Columns.Add(btnCol);
-                dataGridView1.Columns[3].Name = "OrderStatus";
+                DataGridViewTextBoxColumn txtCol = new DataGridViewTextBoxColumn();
+                txtCol.DataPropertyName = "OrderStatus";
+                txtCol.HeaderText = "Status";
+                txtCol.Resizable = DataGridViewTriState.False;
+                txtCol.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                dataGridView1.Columns.Add(txtCol);
+
+                DataGridViewButtonColumn btnDelete = new DataGridViewButtonColumn();
+                btnDelete.DataPropertyName = "Action";
+                btnDelete.Text = "Delete";
+                btnDelete.UseColumnTextForButtonValue = true;
+                btnDelete.Resizable = DataGridViewTriState.False;
+                btnDelete.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                dataGridView1.Columns.Add(btnDelete);
+                dataGridView1.Columns[4].Name = "Delete";
+
+                DataGridViewButtonColumn btnPrint = new DataGridViewButtonColumn();
+                btnPrint.DataPropertyName = "Action";
+                btnPrint.Text = "RePrint";
+                btnPrint.UseColumnTextForButtonValue = true;
+                btnPrint.Resizable = DataGridViewTriState.False;
+                btnPrint.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                dataGridView1.Columns.Add(btnPrint);
+                dataGridView1.Columns[5].Name = "Print";
+
+                //DataGridViewButtonColumn btnCol = new DataGridViewButtonColumn();
+                //btnCol.DataPropertyName = "OrderStatus";
+                //btnCol.HeaderText = "Status";
+                //btnCol.Text = "Pending";
+                //btnCol.UseColumnTextForButtonValue = true;
+                //btnCol.Resizable = DataGridViewTriState.False;
+                //btnCol.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                //dataGridView1.Columns.Add(btnCol);
+                //dataGridView1.Columns[3].Name = "OrderStatus";
 
             }
             else if (type == EmGridType.Delivery)
@@ -385,6 +498,68 @@ namespace App_UI.UserControls
                 txtCol.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                 dataGridView1.Columns.Add(txtCol);
 
+                DataGridViewButtonColumn btnCol = new DataGridViewButtonColumn();
+                btnCol.DataPropertyName = "BtnActionStatus";
+                btnCol.HeaderText = "Action";
+                btnCol.Text = "Update Status";
+                btnCol.UseColumnTextForButtonValue = false;
+                btnCol.Resizable = DataGridViewTriState.False;
+                btnCol.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                dataGridView1.Columns.Add(btnCol);
+            }
+            else if (type == EmGridType.TakeAway)
+            {
+                //this is work for if order type is dinein and takeout
+                DataGridViewTextBoxColumn txtOrderNo = new DataGridViewTextBoxColumn();
+                txtOrderNo.DataPropertyName = "OrderNo";
+                txtOrderNo.HeaderText = "Order No";
+                txtOrderNo.Resizable = DataGridViewTriState.False;
+                txtOrderNo.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                dataGridView1.Columns.Add(txtOrderNo);
+                dataGridView1.Columns[0].Name = "OrderNo";
+
+
+                DataGridViewTextBoxColumn txtOrdertype = new DataGridViewTextBoxColumn();
+                txtOrdertype.DataPropertyName = "OrderType";
+                txtOrdertype.HeaderText = "Order Type";
+                txtOrdertype.Resizable = DataGridViewTriState.False;
+                txtOrdertype.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                dataGridView1.Columns.Add(txtOrdertype);
+                dataGridView1.Columns[1].Name = "OrderType";
+
+                DataGridViewTextBoxColumn txtTotal = new DataGridViewTextBoxColumn();
+                txtTotal.DataPropertyName = "OrderTotal";
+                txtTotal.HeaderText = "Total";
+                txtTotal.Resizable = DataGridViewTriState.False;
+                txtTotal.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                dataGridView1.Columns.Add(txtTotal);
+                dataGridView1.Columns[2].Name = "OrderTotal";
+
+                DataGridViewTextBoxColumn txtCol = new DataGridViewTextBoxColumn();
+                txtCol.DataPropertyName = "OrderStatus";
+                txtCol.HeaderText = "Status";
+                txtCol.Resizable = DataGridViewTriState.False;
+                txtCol.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                dataGridView1.Columns.Add(txtCol);
+
+                DataGridViewButtonColumn btnDelete = new DataGridViewButtonColumn();
+                btnDelete.DataPropertyName = "Action";
+                btnDelete.Text = "Delete";
+                btnDelete.UseColumnTextForButtonValue = true;
+                btnDelete.Resizable = DataGridViewTriState.False;
+                btnDelete.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                dataGridView1.Columns.Add(btnDelete);
+                dataGridView1.Columns[4].Name = "Delete";
+
+                DataGridViewButtonColumn btnPrint = new DataGridViewButtonColumn();
+                btnPrint.DataPropertyName = "Print";
+                btnPrint.Text = "Re-Print";
+                btnPrint.UseColumnTextForButtonValue = true;
+                btnPrint.Resizable = DataGridViewTriState.False;
+                btnPrint.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                dataGridView1.Columns.Add(btnPrint);
+                dataGridView1.Columns[5].Name = "Print";
+
 
             }
 
@@ -392,35 +567,35 @@ namespace App_UI.UserControls
 
         public void UpdateGridColumnType(EmGridType _type)
         {
-            if (_type == EmGridType.Reservation)
-            {
-                //int i = 0;
-                //while (i < dataGridView1.Rows.Count)
-                //{
-                //    var _row = dataGridView1.Rows[i];
-                //    //var _allCells = dataGridView1.Rows[i].Cells;
-                //    //_allCells.RemoveAt(6);
-                //    //DataGridViewCell[] _cellList = null;
-                //    var _cell = _row.Cells[6];
-                //    if (_cell.Value.ToString() == "Pending")
-                //    {
-                //        var TextCell = new DataGridViewTextBoxCell();
-                //        TextCell.Value = _row.Cells[6].Value;
-                //        _cell.Value = TextCell;
-                //        //_allCells.Add(TextCell);
+            //if (_type == EmGridType.Reservation)
+            //{
+            //    //int i = 0;
+            //    //while (i < dataGridView1.Rows.Count)
+            //    //{
+            //    //    var _row = dataGridView1.Rows[i];
+            //    //    //var _allCells = dataGridView1.Rows[i].Cells;
+            //    //    //_allCells.RemoveAt(6);
+            //    //    //DataGridViewCell[] _cellList = null;
+            //    //    var _cell = _row.Cells[6];
+            //    //    if (_cell.Value.ToString() == "Pending")
+            //    //    {
+            //    //        var TextCell = new DataGridViewTextBoxCell();
+            //    //        TextCell.Value = _row.Cells[6].Value;
+            //    //        _cell.Value = TextCell;
+            //    //        //_allCells.Add(TextCell);
 
-                //        //_allCells.CopyTo(_cellList, 0);
-                //        //dataGridView1.Rows[i].Cells.Clear();
-                //        //dataGridView1.Rows[i].Cells.AddRange(_cellList);
-                //    }
-                //}
+            //    //        //_allCells.CopyTo(_cellList, 0);
+            //    //        //dataGridView1.Rows[i].Cells.Clear();
+            //    //        //dataGridView1.Rows[i].Cells.AddRange(_cellList);
+            //    //    }
+            //    //}
 
-                dataGridView1.Rows[0].Cells[6].ReadOnly = true;
-                dataGridView1.Rows[0].Cells.Remove(dataGridView1.Rows[0].Cells[6]);
-            }
+            //    dataGridView1.Rows[0].Cells[6].ReadOnly = true;
+            //    dataGridView1.Rows[0].Cells.Remove(dataGridView1.Rows[0].Cells[6]);
+            //}
 
         }
     }
 
-    
+
 }

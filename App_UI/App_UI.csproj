@@ -8,11 +8,11 @@
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>App_UI</RootNamespace>
-    <AssemblyName>App_UI</AssemblyName>
+    <AssemblyName>BestariTerrace</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <IsWebBootstrapper>false</IsWebBootstrapper>
-    <PublishUrl>C:\Users\Maverick\Desktop\APPUI\</PublishUrl>
+    <PublishUrl>C:\Users\admin\Desktop\MyAPP\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>false</UpdateEnabled>
@@ -22,7 +22,7 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>7</ApplicationRevision>
+    <ApplicationRevision>13</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -48,7 +48,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>POS.ico</ApplicationIcon>
+    <ApplicationIcon>Bestari.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>29FA87A8798479ABEEC3638CFC323C9C9B777B22</ManifestCertificateThumbprint>
@@ -85,6 +85,7 @@
   <PropertyGroup>
     <TargetZone>LocalIntranet</TargetZone>
   </PropertyGroup>
+  <PropertyGroup />
   <PropertyGroup>
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
@@ -111,6 +112,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AsciiControlChars.cs" />
     <Compile Include="Forms\CommonForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -156,8 +158,15 @@
     <Compile Include="Forms\frmProductQty.Designer.cs">
       <DependentUpon>frmProductQty.cs</DependentUpon>
     </Compile>
+    <Compile Include="NativeMethods.cs" />
+    <Compile Include="PosExtensions.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\ucPayment.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -199,14 +208,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <EmbeddedResource Include="UserControls\ucPayment.resx">
       <DependentUpon>ucPayment.cs</DependentUpon>
     </EmbeddedResource>
@@ -233,9 +237,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\logo.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\downlogo.jpg" />
   </ItemGroup>
   <ItemGroup>
@@ -259,11 +260,15 @@
     <None Include="Resources\IMG_NotFound.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\search-24.png" />
+    <None Include="Resources\search24.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Bestari.ico" />
+    <Content Include="BestariIcon.ico" />
+    <Content Include="icon.ico" />
     <Content Include="POS.ico" />
-    <None Include="Resources\refresh-24.png" />
+    <Content Include="Resources\logo.jpg" />
+    <None Include="Resources\refresh24.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">

@@ -71,6 +71,16 @@ namespace App_UI.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon icon {
+            get {
+                object obj = ResourceManager.GetObject("icon", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap IMG_NotFound {
@@ -103,9 +113,9 @@ namespace App_UI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap refresh_24 {
+        internal static System.Drawing.Bitmap refresh24 {
             get {
-                object obj = ResourceManager.GetObject("refresh-24", resourceCulture);
+                object obj = ResourceManager.GetObject("refresh24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -113,9 +123,9 @@ namespace App_UI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap search_24 {
+        internal static System.Drawing.Bitmap search24 {
             get {
-                object obj = ResourceManager.GetObject("search_24", resourceCulture);
+                object obj = ResourceManager.GetObject("search24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -38,18 +38,25 @@ namespace App_BAL
     {
         Reservation,
         OrderIn,
+        TakeAway,
         Delivery
     }
     public class ReservationCL : INotifyPropertyChanged
     {
         private string ReservationStatusValue;
         private string TableNoValue;
+        private string BtnText;
         public string TableId { get; set; }
         public string RestrauntId { get; set; }
         public string DinerName { get; set; }
         public string MobileNo { get; set; }
-        public string ReservationDate { get; set; }
+        public string ReservationDate { get;set;}
+        public string ReservationTime { get;set;}
         public string GuestCount { get; set; }
+        public DateTime PlaceDate
+        {
+            get;set;
+        }
         public string ReservationStatus
         {
             get
@@ -61,6 +68,22 @@ namespace App_BAL
                 if (value != this.ReservationStatusValue)
                 {
                     this.ReservationStatusValue = value;
+                    this.NotifyPropertyChanged();
+                }
+            }
+        }
+
+        public string ActionText
+        {
+            get
+            {
+                return this.BtnText;
+            }
+            set
+            {
+                if (value != this.BtnText)
+                {
+                    this.BtnText = value;
                     this.NotifyPropertyChanged();
                 }
             }
@@ -91,6 +114,7 @@ namespace App_BAL
     }
     public class CartCL
     {
+        public string BtnActionStatus { get; set; }
         public int SrNo { get; set; }
         public int OrderID { get; set; }
         public string OrderNo { get; set; }
@@ -102,6 +126,7 @@ namespace App_BAL
         public EmPaymentType PaymentType { get; set; }
         public bool IsCurrentOrder { get; set; }
         public string TransactionID { get; set; }
+        
         public CartCL()
         {
             Items = new BindingList<CartItemsCL>();
@@ -111,8 +136,14 @@ namespace App_BAL
     public class PlaceOrderBinding : INotifyPropertyChanged
     {
         private int _orderCount = 0;
-        private double _sumConfirmedAmountTotal = 0.00;
-        private double _sumUnconfirmedAmountTotal = 0.00;
+        private double _sumDineInConfirmedAmountTotal = 0.00;
+        private double _sumDineInUnconfirmedAmountTotal = 0.00;
+        private double _sumTakeAwayConfirmedAmountTotal = 0.00;
+        private double _sumTakeAWayUnconfirmedAmountTotal = 0.00;
+        private double _sumDeliveryConfirmedAmountTotal = 0.00;
+        private double _sumDeliveryUnconfirmedAmountTotal = 0.00;
+        private double _sumReservationConfirmedAmountTotal = 0.00;
+        private double _sumReservationDeliveryUnconfirmedAmountTotal = 0.00;
         public int OrderCount
         {
             get
@@ -129,33 +160,129 @@ namespace App_BAL
             }
         }
 
-        public double SumConfirmedAmountTotal
+        public double SumDineInConfirmedAmountTotal
         {
             get
             {
-                return this._sumConfirmedAmountTotal;
+                return this._sumDineInConfirmedAmountTotal;
             }
             set
             {
-                if (value != this._sumConfirmedAmountTotal)
+                if (value != this._sumDineInConfirmedAmountTotal)
                 {
-                    this._sumConfirmedAmountTotal = value;
+                    this._sumDineInConfirmedAmountTotal = value;
                     this.NotifyPropertyChanged();
                 }
             }
         }
 
-        public double SumUnconfirmedAmountTotal
+        public double SumDineInUnconfirmedAmountTotal
         {
             get
             {
-                return this._sumUnconfirmedAmountTotal;
+                return this._sumDineInUnconfirmedAmountTotal;
             }
             set
             {
-                if (value != this._sumUnconfirmedAmountTotal)
+                if (value != this._sumDineInUnconfirmedAmountTotal)
                 {
-                    this._sumUnconfirmedAmountTotal = value;
+                    this._sumDineInUnconfirmedAmountTotal = value;
+                    this.NotifyPropertyChanged();
+                }
+            }
+        }
+
+        public double SumTakeAwayConfirmedAmountTotal
+        {
+            get
+            {
+                return this._sumTakeAwayConfirmedAmountTotal;
+            }
+            set
+            {
+                if (value != this._sumTakeAwayConfirmedAmountTotal)
+                {
+                    this._sumTakeAwayConfirmedAmountTotal = value;
+                    this.NotifyPropertyChanged();
+                }
+            }
+        }
+
+        public double SumTakeAwayUnconfirmedAmountTotal
+        {
+            get
+            {
+                return this._sumTakeAWayUnconfirmedAmountTotal;
+            }
+            set
+            {
+                if (value != this._sumTakeAWayUnconfirmedAmountTotal)
+                {
+                    this._sumTakeAWayUnconfirmedAmountTotal = value;
+                    this.NotifyPropertyChanged();
+                }
+            }
+        }
+
+        public double SumDeliveryConfirmedAmountTotal
+        {
+            get
+            {
+                return this._sumDeliveryConfirmedAmountTotal;
+            }
+            set
+            {
+                if (value != this._sumDeliveryConfirmedAmountTotal)
+                {
+                    this._sumDeliveryConfirmedAmountTotal = value;
+                    this.NotifyPropertyChanged();
+                }
+            }
+        }
+
+        public double SumDeliveryUnconfirmedAmountTotal
+        {
+            get
+            {
+                return this._sumDeliveryUnconfirmedAmountTotal;
+            }
+            set
+            {
+                if (value != this._sumDeliveryUnconfirmedAmountTotal)
+                {
+                    this._sumDeliveryUnconfirmedAmountTotal = value;
+                    this.NotifyPropertyChanged();
+                }
+            }
+        }
+
+        public double SumReservationConfirmedAmountTotal
+        {
+            get
+            {
+                return this._sumReservationConfirmedAmountTotal;
+            }
+            set
+            {
+                if (value != this._sumReservationConfirmedAmountTotal)
+                {
+                    this._sumReservationConfirmedAmountTotal = value;
+                    this.NotifyPropertyChanged();
+                }
+            }
+        }
+
+        public double SumReservationUnconfirmedAmountTotal
+        {
+            get
+            {
+                return this._sumReservationDeliveryUnconfirmedAmountTotal;
+            }
+            set
+            {
+                if (value != this._sumReservationDeliveryUnconfirmedAmountTotal)
+                {
+                    this._sumReservationDeliveryUnconfirmedAmountTotal = value;
                     this.NotifyPropertyChanged();
                 }
             }

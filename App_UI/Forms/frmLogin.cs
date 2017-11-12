@@ -107,8 +107,8 @@ namespace App_UI.Forms
 
         private void frmLogin_Load(object sender, EventArgs e)
         {
-            txtUserName.Text = "tanent_admin_1";
-            txtPassword.Text = "welcome2sw";
+            //txtUserName.Text = "tanent_admin_1";
+            //txtPassword.Text = "welcome2sw";
         }
     }
 }

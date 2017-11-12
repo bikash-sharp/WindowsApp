@@ -7,11 +7,18 @@ using App_UI.Forms;
 using App_BAL;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Drawing.Printing;
 
 namespace App_UI
 {
     static class Program
     {
+        public static string PrinterName
+        {
+            get {
+                PrinterSettings _printerSettings = new PrinterSettings();
+                return String.Format(@"\\{0}\{1}",Environment.MachineName, _printerSettings.PrinterName); }
+        }
         public static List<CategoryListCL> Categories = new List<CategoryListCL>();
         public static List<ProductListCL> Products = new List<ProductListCL>();
         public static List<CartCL> PlacedOrders = new List<CartCL>();
@@ -41,16 +48,34 @@ namespace App_UI
                 item.CartTotal = Program.cartItems.Sum(p => p.Price);
                 item.GrandTotal = Program.cartItems.Sum(p => p.Price);
             }
-
         }
 
-        public static void OrderCount()
+        public static void OrderCount(EmOrderType _OrderType)
         {
-            OrderBindings.OrderCount = PlacedOrders.Where(p => p.IsOrderConfirmed == false).Count();
-            var SumConfirmed = PlacedOrders.Where(p => p.IsOrderConfirmed == true).Sum(p => double.Parse(p.OrderTotal));
-            var SumUncofirmed = PlacedOrders.Where(p => p.IsOrderConfirmed == false).Sum(p => double.Parse(p.OrderTotal));
-            OrderBindings.SumConfirmedAmountTotal = double.Parse(SumConfirmed.ToString());
-            OrderBindings.SumUnconfirmedAmountTotal = double.Parse(SumUncofirmed.ToString());
+            OrderBindings.OrderCount = PlacedOrders.Where(p => p.IsOrderConfirmed == false && p.OrderType == EmOrderType.Delivery ).Count();
+            var SumConfirmed = PlacedOrders.Where(p => p.IsOrderConfirmed == true && p.OrderType == _OrderType).Sum(p => double.Parse(p.OrderTotal));
+            var SumUncofirmed = PlacedOrders.Where(p => p.IsOrderConfirmed == false && p.OrderType == _OrderType).Sum(p => double.Parse(p.OrderTotal));
+            if(_OrderType == EmOrderType.Delivery)
+            {
+                OrderBindings.SumDeliveryConfirmedAmountTotal = double.Parse(SumConfirmed.ToString());
+                OrderBindings.SumDeliveryUnconfirmedAmountTotal = double.Parse(SumUncofirmed.ToString());
+            }
+            else if(_OrderType == EmOrderType.DineIn)
+            {
+                OrderBindings.SumDineInConfirmedAmountTotal = double.Parse(SumConfirmed.ToString());
+                OrderBindings.SumDineInUnconfirmedAmountTotal = double.Parse(SumUncofirmed.ToString());
+            }
+            else if(_OrderType == EmOrderType.Reservation)
+            {
+                OrderBindings.SumReservationConfirmedAmountTotal = double.Parse(SumConfirmed.ToString());
+                OrderBindings.SumReservationUnconfirmedAmountTotal = double.Parse(SumUncofirmed.ToString());
+            }
+            else if(_OrderType == EmOrderType.TakeOut)
+            {
+                OrderBindings.SumTakeAwayConfirmedAmountTotal = double.Parse(SumConfirmed.ToString());
+                OrderBindings.SumTakeAwayUnconfirmedAmountTotal = double.Parse(SumUncofirmed.ToString());
+            }
+            
         }
         
     }
