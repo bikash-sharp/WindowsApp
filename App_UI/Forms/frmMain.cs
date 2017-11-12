@@ -81,9 +81,11 @@ namespace App_UI.Forms
                 JavaScriptSerializer serializer = new JavaScriptSerializer();
                 var result = serializer.Deserialize<ProductListAPICL>(ProductList);
 
+                this.flyLayout.Controls.Clear();
+                this.flyLayout.VerticalScroll.Enabled = true;
+                this.flyLayout.VerticalScroll.Visible = true;
                 if (result.status)
                 {
-                    flyLayout.Controls.Clear();
                     foreach (var itm in result.data)
                     {
                         CreateProdButtons(itm.Product);
@@ -136,7 +138,7 @@ namespace App_UI.Forms
 
             pnl.Click += pnl_Click;
             pnl.Margin = new Padding(0, 0, 10, 20);
-            flyLayout.Controls.Add(pnl);
+            this.flyLayout.Controls.Add(pnl);
         }
 
         void pnl_Click(object sender, EventArgs e)
@@ -575,7 +577,10 @@ namespace App_UI.Forms
 
         public void BindOrders(bool? IsOrderConfirmed = null, EmOrderType OrderType = EmOrderType.DineIn)
         {
-            flyLayout.Controls.Clear();
+            this.flyLayout.Controls.Clear();
+            //this.flyLayout.AutoScroll = false;
+            this.flyLayout.VerticalScroll.Visible = false;
+            this.flyLayout.VerticalScroll.Enabled = false;
 
             int Count = Program.PlacedOrders.Where(p => p.OrderType == OrderType).Count();
             if (Count > 0)
@@ -583,6 +588,9 @@ namespace App_UI.Forms
                 uc_ConfirmOrder uc = new uc_ConfirmOrder();
                 uc.Width = flyLayout.Width - 15;
                 uc.Height = flyLayout.Height - 15;
+                uc.AutoScroll = true;
+                uc.VerticalScroll.Visible = true;
+                uc.VerticalScroll.Enabled = true;
                 if(OrderType == EmOrderType.Delivery)
                 {
                     uc.UpdateGridColumns(EmGridType.Delivery);
@@ -602,10 +610,16 @@ namespace App_UI.Forms
 
         public void BindReservations()
         {
-            flyLayout.Controls.Clear();
+            this.flyLayout.Controls.Clear();
+            //this.flyLayout.AutoScroll = false;
+            this.flyLayout.VerticalScroll.Enabled = false;
+            this.flyLayout.VerticalScroll.Visible = false;
             uc_ConfirmOrder uc = new uc_ConfirmOrder();
             uc.Width = flyLayout.Width - 15;
             uc.Height = flyLayout.Height - 15;
+            uc.AutoScroll = true;
+            uc.VerticalScroll.Visible = true;
+            uc.VerticalScroll.Enabled = true;
             uc.UpdateGridColumns(EmGridType.Reservation);
             uc.BindReservations();
             this.flyLayout.Controls.Add(uc);
@@ -706,7 +720,7 @@ namespace App_UI.Forms
             {
                 uc_CategoryMenu1.SetCurrentControlBtnName("");
                 uc_CategoryMenu1.SelectedControls();
-                BindOrders(true, EmOrderType.TakeOut);
+                BindOrders(true, EmOrderType.TakeOut);                  
                 IsOrder = true;
             }
         }
