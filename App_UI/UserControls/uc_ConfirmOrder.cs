@@ -196,11 +196,12 @@ namespace App_UI.UserControls
                         if (row != null)
                         {
                             string OrderNo = row.Cells["OrderNo"].Value.ToString();
+                            var SelectedOrder = Program.PlacedOrders.Where(p => p.OrderNo == OrderNo).FirstOrDefault();
                             if (e.ColumnIndex == 5)
                             {
                                 if (!string.IsNullOrEmpty(OrderNo))
                                 {
-                                    //var SelectedOrder = Program.PlacedOrders.Where(p => p.OrderNo == OrderNo).FirstOrDefault();
+                                    
                                     try
                                     {
                                         frmMain.Print(Program.PrinterName, frmMain.GetDocument(OrderNo));
@@ -230,7 +231,18 @@ namespace App_UI.UserControls
                             }
                             else if (e.ColumnIndex == 4)
                             {
-
+                                string URL = Program.BaseUrl;
+                                string DeleteOrderUrl = URL + "/deleteDineInOrder?order_id=" + OrderNo + "&acess_token=" + Program.Token;
+                                var GetStatus = DataProviderWrapper.Instance.GetData(DeleteOrderUrl, Verbs.GET, "");
+                                JavaScriptSerializer serializer = new JavaScriptSerializer();
+                                var result = serializer.Deserialize<MessageCL>(GetStatus);
+                                if (result.status)
+                                {
+                                    if(SelectedOrder != null)
+                                    {
+                                        Program.PlacedOrders.Remove(SelectedOrder);
+                                    }
+                                }
                             }
 
                         }
@@ -240,7 +252,7 @@ namespace App_UI.UserControls
                         if (row != null)
                         {
                             string status = row.Cells["Assign"].Value.ToString();
-                            if (status.ToLower().Trim() == "unassigned")
+                            if (status.ToLower().Trim() == "assign table")
                             {
 
                                 string TableId = row.Cells["TableId"].Value.ToString();
@@ -259,7 +271,7 @@ namespace App_UI.UserControls
                                             itm.TableNo = frmAssign.TableNo;
 
                                             string URL = Program.BaseUrl;
-                                            string ChangeReservationStatusURL = URL + "/changereservationstatus?res_id=" + itm.RestrauntId + "&status=completed&acess_token=" + Program.Token;
+                                            string ChangeReservationStatusURL = URL + "/changereservationstatus?res_id=" + itm.TableId + "&status=Completed&acess_token=" + Program.Token;
                                             var GetStatus = DataProviderWrapper.Instance.GetData(ChangeReservationStatusURL, Verbs.GET, "");
                                             JavaScriptSerializer serializer = new JavaScriptSerializer();
                                             var result = serializer.Deserialize<MessageCL>(GetStatus);
@@ -277,6 +289,7 @@ namespace App_UI.UserControls
                     else if (_gridType == EmGridType.Delivery)
                     {
                         string OrderNo = row.Cells["OrderNo"].Value.ToString();
+                        string OrderStatus = row.Cells["OrderStatus"].Value.ToString();
                         if (e.ColumnIndex == 4)
                         {
                             if (!string.IsNullOrEmpty(OrderNo))
@@ -284,20 +297,47 @@ namespace App_UI.UserControls
                                 var SelectedOrder = Program.PlacedOrders.Where(p => p.OrderNo == OrderNo).FirstOrDefault();
                                 if (SelectedOrder != null)
                                 {
-                                    string URL = Program.BaseUrl;
-                                    string ChangeOrdStatusURL = URL + "/confirmorder?order_id=" + OrderNo + "&order_status=completed&acess_token=" + Program.Token;
-
-                                    var GetStatus = DataProviderWrapper.Instance.GetData(ChangeOrdStatusURL, Verbs.GET, "");
-                                    JavaScriptSerializer serializer = new JavaScriptSerializer();
-                                    var result = serializer.Deserialize<MessageCL>(GetStatus);
-                                    if (result.status)
+                                    bool isAllowed = false;
+                                    string statusUpdated = "";
+                                    var _status = EmOrderStatus.Pending;
+                                    string btnText = "";
+                                    if( OrderStatus == "Pending")
                                     {
-                                        SelectedOrder.IsOrderConfirmed = true;
-                                        SelectedOrder.OrderStatus = EmOrderStatus.Delivered;
-                                        SelectedOrder.BtnActionStatus = "Done";
-                                        BindData(false, EmOrderType.Delivery);
-
+                                        statusUpdated = "in_progress";
+                                        isAllowed = true;
+                                        _status = EmOrderStatus.Confirmed;
+                                        btnText = "In-Progress Status";
                                     }
+                                    else if(OrderStatus == "Confirmed")
+                                    {
+                                        statusUpdated = "Completed";
+                                        _status = EmOrderStatus.Delivered;
+                                        btnText = "Delivered";
+                                        isAllowed = true;
+                                    }
+                                    else if(OrderStatus == "Delivered")
+                                    {
+                                        statusUpdated = "Completed";
+                                        isAllowed = false;
+                                    }
+
+                                    if(isAllowed)
+                                    {
+                                        string URL = Program.BaseUrl;
+                                        string ChangeOrdStatusURL = URL + "confirmorder?order_id=" + OrderNo + "&order_status=" + statusUpdated + "&acess_token=" + Program.Token;
+
+                                        var GetStatus = DataProviderWrapper.Instance.GetData(ChangeOrdStatusURL, Verbs.GET, "");
+                                        JavaScriptSerializer serializer = new JavaScriptSerializer();
+                                        var result = serializer.Deserialize<MessageCL>(GetStatus);
+                                        if (result.status)
+                                        {
+                                            SelectedOrder.IsOrderConfirmed = true;
+                                            SelectedOrder.OrderStatus = _status;
+                                            SelectedOrder.BtnActionStatus = btnText;
+                                            //BindData(false, EmOrderType.Delivery);
+                                        }
+                                    }
+                                    
                                 }
                                 Program.OrderCount(EmOrderType.Delivery);
                             }
@@ -497,6 +537,7 @@ namespace App_UI.UserControls
                 txtCol.Resizable = DataGridViewTriState.False;
                 txtCol.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                 dataGridView1.Columns.Add(txtCol);
+                dataGridView1.Columns[3].Name = "OrderStatus";
 
                 DataGridViewButtonColumn btnCol = new DataGridViewButtonColumn();
                 btnCol.DataPropertyName = "BtnActionStatus";

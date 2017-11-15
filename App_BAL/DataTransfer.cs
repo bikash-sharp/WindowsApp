@@ -17,6 +17,7 @@ namespace App_BAL
     public enum EmOrderStatus
     {
         Pending = 1,
+        InProgress=4,
         Confirmed = 2,
         Delivered = 3
     }
@@ -112,8 +113,9 @@ namespace App_BAL
             }
         }
     }
-    public class CartCL
+    public class CartCL : INotifyPropertyChanged
     {
+        private EmOrderStatus _OrderStatus { get; set; }
         public string BtnActionStatus { get; set; }
         public int SrNo { get; set; }
         public int OrderID { get; set; }
@@ -122,14 +124,35 @@ namespace App_BAL
         public EmOrderType OrderType { get; set; }
         public BindingList<CartItemsCL> Items { get; set; }
         public bool IsOrderConfirmed { get; set; }
-        public EmOrderStatus OrderStatus { get; set; }
+        public EmOrderStatus OrderStatus
+        {
+            get
+            {
+                return this._OrderStatus;
+            }
+
+            set
+            {
+                this._OrderStatus = value;
+                this.NotifyPropertyChanged();
+            }
+        }
         public EmPaymentType PaymentType { get; set; }
         public bool IsCurrentOrder { get; set; }
         public string TransactionID { get; set; }
-        
         public CartCL()
         {
             Items = new BindingList<CartItemsCL>();
+        }
+
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
         }
     }
 
@@ -492,6 +515,7 @@ namespace App_BAL
     {
         public bool status { get; set; }
         public string message { get; set; }
+        public string order_status { get; set; }
     }
 
     public class LoginCL
@@ -601,6 +625,7 @@ namespace App_BAL
     {
         public bool status { get; set; }
         public string message { get; set; }
+        public string orderid { get; set; }
     }
 
     #region PendingOrders
@@ -747,6 +772,14 @@ namespace App_BAL
         public string product_id { get; set; }
         public string quantity { get; set; }
         public int total_price { get; set; }
+    }
+
+    public class NewOrder
+    {
+        public string product_id { get; set; }
+        public string quantity { get; set; }
+        public int price { get; set; }
+        public string delivery_type { get; set; }
     }
     #endregion
 }

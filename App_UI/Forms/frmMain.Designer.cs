@@ -54,6 +54,7 @@
             this.ovalShape2 = new Microsoft.VisualBasic.PowerPacks.OvalShape();
             this.rectangleShape4 = new Microsoft.VisualBasic.PowerPacks.RectangleShape();
             this.pnlBase = new System.Windows.Forms.Panel();
+            this.txtSearch = new CustomServerControls.TxtBox();
             this.btnRefresh = new System.Windows.Forms.Button();
             this.btnSearch = new System.Windows.Forms.Button();
             this.flyLayout = new System.Windows.Forms.FlowLayoutPanel();
@@ -75,7 +76,6 @@
             this.shapeContainer4 = new Microsoft.VisualBasic.PowerPacks.ShapeContainer();
             this.lineShape2 = new Microsoft.VisualBasic.PowerPacks.LineShape();
             this.lineShape1 = new Microsoft.VisualBasic.PowerPacks.LineShape();
-            this.txtSearch = new CustomServerControls.TxtBox();
             this.uc_CategoryMenu1 = new App_UI.UserControls.uc_CategoryMenu();
             this.tblMainLayout.SuspendLayout();
             this.pnlTopMenu.SuspendLayout();
@@ -216,9 +216,10 @@
             this.lblOrderCount.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
             this.lblOrderCount.Cursor = System.Windows.Forms.Cursors.Hand;
             this.lblOrderCount.ForeColor = System.Drawing.Color.White;
-            this.lblOrderCount.Location = new System.Drawing.Point(344, 16);
+            this.lblOrderCount.Location = new System.Drawing.Point(330, 9);
             this.lblOrderCount.Name = "lblOrderCount";
-            this.lblOrderCount.Size = new System.Drawing.Size(19, 21);
+            this.lblOrderCount.Padding = new System.Windows.Forms.Padding(10);
+            this.lblOrderCount.Size = new System.Drawing.Size(39, 41);
             this.lblOrderCount.TabIndex = 5;
             this.lblOrderCount.Text = "0";
             this.lblOrderCount.Click += new System.EventHandler(this.lblOrderCount_Click);
@@ -292,6 +293,7 @@
             this.ovalShape1.Location = new System.Drawing.Point(333, 11);
             this.ovalShape1.Name = "ovalShape1";
             this.ovalShape1.Size = new System.Drawing.Size(38, 33);
+            this.ovalShape1.Visible = false;
             this.ovalShape1.Click += new System.EventHandler(this.lblOrderCount_Click);
             // 
             // pnlPay
@@ -386,6 +388,16 @@
             this.pnlBase.Name = "pnlBase";
             this.pnlBase.Size = new System.Drawing.Size(565, 314);
             this.pnlBase.TabIndex = 5;
+            // 
+            // txtSearch
+            // 
+            this.txtSearch.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtSearch.Font = new System.Drawing.Font("Segoe UI Semibold", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtSearch.Location = new System.Drawing.Point(7, 13);
+            this.txtSearch.Name = "txtSearch";
+            this.txtSearch.PlaceholderText = "Search";
+            this.txtSearch.Size = new System.Drawing.Size(286, 29);
+            this.txtSearch.TabIndex = 8;
             // 
             // btnRefresh
             // 
@@ -686,16 +698,6 @@
             this.lineShape1.X2 = 290;
             this.lineShape1.Y1 = 34;
             this.lineShape1.Y2 = 34;
-            // 
-            // txtSearch
-            // 
-            this.txtSearch.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtSearch.Font = new System.Drawing.Font("Segoe UI Semibold", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtSearch.Location = new System.Drawing.Point(7, 13);
-            this.txtSearch.Name = "txtSearch";
-            this.txtSearch.PlaceholderText = "Search";
-            this.txtSearch.Size = new System.Drawing.Size(286, 29);
-            this.txtSearch.TabIndex = 8;
             // 
             // uc_CategoryMenu1
             // 

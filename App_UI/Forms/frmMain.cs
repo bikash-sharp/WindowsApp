@@ -51,12 +51,16 @@ namespace App_UI.Forms
             BindProducts();
             GetPendingOrders();
 
+            var path = new System.Drawing.Drawing2D.GraphicsPath();
+            path.AddEllipse(0, 0, lblOrderCount.Width, lblOrderCount.Height);
+            this.lblOrderCount.Region = new Region(path);
+
         }
 
 
         void uc_CategoryMenu1_EventCategoryClicked(object sender, EventArgs e)
         {
-            rdbOrder.Checked = rdbDelivery.Checked = rdbReservation.Checked= rdbTakeWay.Checked= false;
+            rdbOrder.Checked = rdbDelivery.Checked = rdbReservation.Checked = rdbTakeWay.Checked = false;
             rdbProducts.Checked = true;
             string FoodType = sender.ToString().Trim();
             BindProducts(FoodType.ToLower());
@@ -64,7 +68,7 @@ namespace App_UI.Forms
 
         private void BindProducts(String foodtype = "all")
         {
-            if (rdbDelivery.Checked != true && rdbOrder.Checked != true && rdbTakeWay.Checked != true && rdbReservation.Checked !=true)
+            if (rdbDelivery.Checked != true && rdbOrder.Checked != true && rdbTakeWay.Checked != true && rdbReservation.Checked != true)
             {
                 string URL = Program.BaseUrl;
                 string ProductURL = String.Empty;
@@ -292,7 +296,7 @@ namespace App_UI.Forms
                         cart.OrderTotal = Program.cartItems.First().GrandTotal.ToString("N");
                         cart.IsCurrentOrder = true;
                         cart.TransactionID = uc.LastTransactionID;
-                        MessageBox.Show("Order Number : " + OrderNumber + " has been placed successfully", " Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("Order has been placed successfully", " Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         Program.PlacedOrders.Add(cart);
                         //Program.OrderCount();
                         //Update Cart Order Number
@@ -301,7 +305,7 @@ namespace App_UI.Forms
                             item.orderNo = OrderNumber;
                         }
                         //Post Order
-                        var isPost = PostOrder(OrderNumber);
+                        var NewOrderId = PostOrder(OrderNumber);
                         lblOrderCount.DataBindings.Clear();
                         var OrderCount = new Binding("Text", Program.OrderBindings, "OrderCount", true, DataSourceUpdateMode.Never, "0", "");
                         lblOrderCount.DataBindings.Add(OrderCount);
@@ -312,7 +316,7 @@ namespace App_UI.Forms
                         Up:
                         try
                         {
-                            Print(Program.PrinterName, GetDocument(OrderNumber));
+                            Print(Program.PrinterName, GetDocument(NewOrderId));
                         }
                         catch (Exception ex)
                         {
@@ -421,7 +425,7 @@ namespace App_UI.Forms
         public static void PrintReceipt(BinaryWriter bw, string OrderNumber)
         {
             var Order = Program.PlacedOrders.FirstOrDefault(p => p.OrderNo == OrderNumber);
-            bw.BoldON("",false);
+            bw.BoldON("", false);
             bw.Center("Bastari Terrace");
             bw.Center("Contact Address");
             bw.Center("Contact Number");
@@ -436,10 +440,10 @@ namespace App_UI.Forms
             bw.NormalFont("-------------------------------------");
             bw.NormalFont("Description         Qty         Amount");
             bw.NormalFont("--------------------------------------");
-            foreach(var item in Order.Items)
+            foreach (var item in Order.Items)
             {
                 string text = "";
-                text += item.ProductID.ToString()+" ";
+                text += item.ProductID.ToString() + " ";
                 text += item.ProductName;
                 bw.NormalFont(text + " " + item.Quantity.ToString() + " " + item.Price.ToString());
                 //bw.LeftJustify(text,false);
@@ -447,7 +451,7 @@ namespace App_UI.Forms
                 //bw.RightJustify(item.Price.ToString());
             }
             bw.NormalFont("---------------------------------------");
-            bw.NormalFont("Number of Items : " + Order.Items.Sum(p=>p.Quantity));
+            bw.NormalFont("Number of Items : " + Order.Items.Sum(p => p.Quantity));
             bw.NormalFont("Discount:" + "0");
             bw.NormalFont("Sub Total:  " + Order.Items.FirstOrDefault().CartTotal.ToString());
             bw.NormalFont("---------------------------------------");
@@ -456,30 +460,54 @@ namespace App_UI.Forms
 
         public string PostOrder(string OrderNo)
         {
-            string fresult = string.Empty;
-            //POST Cart Details
-            List<PostOrder> Orders = new List<PostOrder>();
-            var CurrentOrder = Program.PlacedOrders.FirstOrDefault(p => p.IsCurrentOrder == true && p.OrderNo == OrderNo);
-            var CartItems = Program.cartItems.Where(p => p.orderNo == OrderNo).ToList();
-            foreach (var item in CartItems)
+            string fresult = OrderNo;
+            try
             {
-                PostOrder _order = new PostOrder();
-                _order.tn_id = CurrentOrder?.TransactionID;
-                _order.product_id = item.ProductID.ToString();
-                _order.quantity = item.Quantity.ToString();
-                _order.total_price = Convert.ToInt32(Math.Ceiling(decimal.Parse(item.Price.ToString())));
-                Orders.Add(_order);
-            }
+                //POST Cart Details
+                List<NewOrder> Orders = new List<NewOrder>();
+                var CurrentOrder = Program.PlacedOrders.FirstOrDefault(p => p.IsCurrentOrder == true && p.OrderNo == OrderNo);
+                var CartItems = Program.cartItems.Where(p => p.orderNo == OrderNo).ToList();
+                foreach (var item in CartItems)
+                {
+                    NewOrder _order = new NewOrder();
+                    _order.product_id = item.ProductID.ToString();
+                    _order.quantity = item.Quantity.ToString();
+                    _order.price = Convert.ToInt32(Math.Ceiling(decimal.Parse(item.Price.ToString())));
+                    if (CurrentOrder.OrderType == EmOrderType.TakeOut)
+                    {
+                        _order.delivery_type = "take_away";
+                    }
+                    else if (CurrentOrder.OrderType == EmOrderType.DineIn)
+                    {
+                        _order.delivery_type = "dine_in";
+                    }
+                    Orders.Add(_order);
+                }
 
-            string URL = Program.BaseUrl;
-            string PostOrderURL = URL + "/processposorderusingbarcode?acess_token=" + Program.Token;
-            JavaScriptSerializer serializer = new JavaScriptSerializer();
-            var postData = serializer.Serialize(Orders);
-            var PostResult = DataProviderWrapper.Instance.PostData(PostOrderURL, postData);
-            var result = serializer.Deserialize<TransactionAPICL>(PostResult);
-            if (result != null)
+                string URL = Program.BaseUrl;
+                string PostOrderURL = URL + "/makedineinorder?acess_token=" + Program.Token;
+                JavaScriptSerializer serializer = new JavaScriptSerializer();
+                var postData = serializer.Serialize(Orders);
+                var PostResult = DataProviderWrapper.Instance.PostData(PostOrderURL, postData);
+                var result = serializer.Deserialize<TransactionAPICL>(PostResult);
+                if (result != null)
+                {
+                    fresult = result.message;
+                }
+                if (fresult == "Success.")
+                {
+                    CurrentOrder.OrderNo = result.orderid;
+                    foreach (var item in CartItems)
+                    {
+                        item.orderNo = result.orderid;
+                    }
+
+                    fresult = result.orderid;
+                }
+            }
+            catch(Exception ex)
             {
-                fresult = result.message;
+
             }
             return fresult;
         }
@@ -581,7 +609,7 @@ namespace App_UI.Forms
             //this.flyLayout.AutoScroll = false;
             this.flyLayout.VerticalScroll.Visible = false;
             this.flyLayout.VerticalScroll.Enabled = false;
-
+            this.flyLayout.Refresh();
             int Count = Program.PlacedOrders.Where(p => p.OrderType == OrderType).Count();
             if (Count > 0)
             {
@@ -591,19 +619,19 @@ namespace App_UI.Forms
                 uc.AutoScroll = true;
                 uc.VerticalScroll.Visible = true;
                 uc.VerticalScroll.Enabled = true;
-                if(OrderType == EmOrderType.Delivery)
+                if (OrderType == EmOrderType.Delivery)
                 {
                     uc.UpdateGridColumns(EmGridType.Delivery);
                 }
-                else if(OrderType == EmOrderType.DineIn)
+                else if (OrderType == EmOrderType.DineIn)
                 {
                     uc.UpdateGridColumns(EmGridType.OrderIn);
                 }
-                else if(OrderType == EmOrderType.TakeOut)
+                else if (OrderType == EmOrderType.TakeOut)
                 {
                     uc.UpdateGridColumns(EmGridType.TakeAway);
                 }
-                uc.BindData(IsOrderConfirmed,OrderType);
+                uc.BindData(IsOrderConfirmed, OrderType);
                 this.flyLayout.Controls.Add(uc);
             }
         }
@@ -614,6 +642,7 @@ namespace App_UI.Forms
             //this.flyLayout.AutoScroll = false;
             this.flyLayout.VerticalScroll.Enabled = false;
             this.flyLayout.VerticalScroll.Visible = false;
+            this.flyLayout.Refresh();
             uc_ConfirmOrder uc = new uc_ConfirmOrder();
             uc.Width = flyLayout.Width - 15;
             uc.Height = flyLayout.Height - 15;
@@ -622,7 +651,7 @@ namespace App_UI.Forms
             uc.VerticalScroll.Enabled = true;
             uc.UpdateGridColumns(EmGridType.Reservation);
             uc.BindReservations();
-            this.flyLayout.Controls.Add(uc);
+            flyLayout.Controls.Add(uc);
         }
         private void rdbProducts_CheckedChanged(object sender, EventArgs e)
         {
@@ -659,7 +688,7 @@ namespace App_UI.Forms
                     uc_CategoryMenu1.SelectedControls();
                     BindOrders(false, EmOrderType.Delivery);
                 }
-                else if(rdbTakeWay.Checked)
+                else if (rdbTakeWay.Checked)
                 {
                     uc_CategoryMenu1.SetCurrentControlBtnName("");
                     uc_CategoryMenu1.SelectedControls();
@@ -694,14 +723,31 @@ namespace App_UI.Forms
                 {
                     var OrderId = "" + item.Order?.Orderdetail?.order_id;
                     //var OrderType = EmOrderType.Delivery;
+                    var ordStatus = EmOrderStatus.Pending;
+                    var btnActionText = "Update Status";
                     var OrderStatus = "" + item.Order?.Orderdetail?.order_status;
+                    if(OrderStatus.ToLower().Trim() == "pending")
+                    {
+                        ordStatus = EmOrderStatus.Pending;
+                        btnActionText = "Pending Status";
+                    }
+                    else if(OrderStatus.ToLower().Trim() == "in_progress")
+                    {
+                        ordStatus = EmOrderStatus.Confirmed;
+                        btnActionText = "In-Progress Status";
+                    }
+                    else if(OrderStatus.ToLower().Trim() == "completed")
+                    {
+                        ordStatus = EmOrderStatus.Delivered;
+                        btnActionText = "Delivered";
+                    }
                     var Total = "" + item.Order?.Orderdetail?.total;
                     if (!String.IsNullOrEmpty(OrderId) && !String.IsNullOrEmpty(OrderStatus))
                     {
                         bool isExist = Program.PlacedOrders.Where(p => p.OrderNo == OrderId).Any();
                         if (!isExist)
                         {
-                            Program.PlacedOrders.Add(new CartCL { OrderNo = OrderId.Trim(), OrderStatus = EmOrderStatus.Pending, OrderType = EmOrderType.Delivery, OrderTotal = Total, IsOrderConfirmed = false, BtnActionStatus="Update Status" });
+                            Program.PlacedOrders.Add(new CartCL { OrderNo = OrderId.Trim(), OrderStatus = ordStatus, OrderType = EmOrderType.Delivery, OrderTotal = Total, IsOrderConfirmed = false, BtnActionStatus = btnActionText });
                         }
                     }
                 }
@@ -720,7 +766,7 @@ namespace App_UI.Forms
             {
                 uc_CategoryMenu1.SetCurrentControlBtnName("");
                 uc_CategoryMenu1.SelectedControls();
-                BindOrders(true, EmOrderType.TakeOut);                  
+                BindOrders(true, EmOrderType.TakeOut);
                 IsOrder = true;
             }
         }

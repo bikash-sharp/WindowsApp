@@ -87,7 +87,7 @@ namespace App_Wrapper
                 {
                     using (var multipartFormDataContent = new MultipartFormDataContent())
                     {
-                        var values = new[]{ new KeyValuePair<string, string>("product_data", postData)};                        
+                        var values = new[]{ new KeyValuePair<string, string>("products", postData)};                        
                         foreach (var keyValuePair in values)
                         {
                             multipartFormDataContent.Add(new StringContent(keyValuePair.Value),String.Format("\"{0}\"", keyValuePair.Key));
