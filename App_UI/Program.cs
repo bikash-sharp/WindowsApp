@@ -3,30 +3,43 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using App_UI.Forms;
+using BestariTerrace.Forms;
 using App_BAL;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Drawing.Printing;
+using System.Management;
 
-namespace App_UI
+namespace BestariTerrace
 {
     static class Program
     {
-        public static string PrinterName
-        {
-            get {
-                PrinterSettings _printerSettings = new PrinterSettings();
-                return String.Format(@"\\{0}\{1}",Environment.MachineName, _printerSettings.PrinterName); }
-        }
+        //public static string PrinterName
+        //{
+        //    get {
+        //        PrinterSettings _printerSettings = new PrinterSettings();
+        //        return String.Format(@"\\{0}\{1}",Environment.MachineName, _printerSettings.PrinterName); }
+        //}
+
+        //public static string[] Printers
+        //{
+        //    get
+        //    {
+        //        return new string[] { "192.168.20.5", "192.168.1.200" };
+        //    }
+        //}
+        public static StoreDetails StoreInfo = new StoreDetails();
         public static List<CategoryListCL> Categories = new List<CategoryListCL>();
         public static List<ProductListCL> Products = new List<ProductListCL>();
+
         public static List<CartCL> PlacedOrders = new List<CartCL>();
         public static List<ReservationCL> Reservations = new List<ReservationCL>();
         public static BindingList<CartItemsCL> cartItems = new BindingList<CartItemsCL>();
+        public static List<CartItemsCL> PlacedCartItems = new List<CartItemsCL>();
         public static BindingList<CalculateCart> cartTotal = new BindingList<CalculateCart>();
         public const String BaseUrl = "http://202.75.42.25/index.php/restwebservices/";
         public const String ProductImagesLoc = "http://202.75.42.25/app/webroot/images/uploads/product_images/";
+        public const String StoreImagesLoc = "http://202.75.42.25/app/webroot/images/uploads/restaurants_images/";
         public static string Token { get; set; }
         public static int SelectedProductId { get; set;}
         public static PlaceOrderBinding OrderBindings = new PlaceOrderBinding();

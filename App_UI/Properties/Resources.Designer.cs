@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace App_UI.Properties {
+namespace BestariTerrace.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace App_UI.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("App_UI.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("BestariTerrace.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -116,6 +116,16 @@ namespace App_UI.Properties {
         internal static System.Drawing.Bitmap refresh24 {
             get {
                 object obj = ResourceManager.GetObject("refresh24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap sc {
+            get {
+                object obj = ResourceManager.GetObject("sc", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

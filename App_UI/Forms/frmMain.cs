@@ -1,5 +1,5 @@
 ﻿using App_BAL;
-using App_UI.UserControls;
+using BestariTerrace.UserControls;
 using App_Wrapper;
 using CustomServerControls;
 using Newtonsoft.Json;
@@ -18,9 +18,13 @@ using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-using App_UI;
+using BestariTerrace;
+using System.Net.Sockets;
+using System.Net;
+using System.Collections;
+using System.Globalization;
 
-namespace App_UI.Forms
+namespace BestariTerrace.Forms
 {
     public partial class frmMain : Form
     {
@@ -37,6 +41,30 @@ namespace App_UI.Forms
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
         }
 
+
+        private void GetStoreInfo()
+        {
+            //Load with StoreInfo
+            try
+            {
+                string URL = Program.BaseUrl;
+                JavaScriptSerializer serializer = new JavaScriptSerializer();
+                string StoreInfoUrl = URL + "/storeDetails?acess_token=" + Program.Token;
+                var GetStatus = DataProviderWrapper.Instance.GetData(StoreInfoUrl, Verbs.GET, "");
+                var result = serializer.Deserialize<StoreDetails>(GetStatus);
+                if (result != null)
+                {
+                    Program.StoreInfo = result;
+                }
+                string StoreLogo = Program.StoreInfo.message.Restaurant.restaurant_image;
+                StoreLogo = Program.StoreImagesLoc + StoreLogo;
+                GetImage(StoreLogo);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "StoreInfo", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+            }
+        }
         private void frmMain_Load(object sender, EventArgs e)
         {
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -50,6 +78,7 @@ namespace App_UI.Forms
             flyLayout.VerticalScroll.Enabled = true;
             BindProducts();
             GetPendingOrders();
+            GetStoreInfo();
 
             var path = new System.Drawing.Drawing2D.GraphicsPath();
             path.AddEllipse(0, 0, lblOrderCount.Width, lblOrderCount.Height);
@@ -82,9 +111,25 @@ namespace App_UI.Forms
                 }
 
                 var ProductList = DataProviderWrapper.Instance.GetData(ProductURL, Verbs.GET, "");
+                
                 JavaScriptSerializer serializer = new JavaScriptSerializer();
                 var result = serializer.Deserialize<ProductListAPICL>(ProductList);
-
+                if(foodtype == "all")
+                {
+                    foreach(var item in result.data)
+                    {
+                        var prd = item.Product;
+                        if(prd != null)
+                        {
+                            int productId = int.Parse(prd.id);
+                            var IsExists = Program.Products.Where(p => p.ProductID == productId).Any();
+                            if(!IsExists)
+                            {
+                                Program.Products.Add(new ProductListCL { ProductID = productId,ProductName=prd.product_name,ProductNumber = prd.product_code, Price= double.Parse(prd.product_price) });
+                            }
+                        }
+                    }
+                }
                 this.flyLayout.Controls.Clear();
                 this.flyLayout.VerticalScroll.Enabled = true;
                 this.flyLayout.VerticalScroll.Visible = true;
@@ -114,8 +159,8 @@ namespace App_UI.Forms
             PictureBox pic = new PictureBox();
             pic.Name = "pic_" + itm.id;
             pic.ImageLocation = Program.ProductImagesLoc + itm.product_image;
-            pic.ErrorImage = global::App_UI.Properties.Resources.IMG_NotFound;
-            //pic.Image = global::App_UI.Properties.Resources.IMG_NotFound;
+            pic.ErrorImage = global::BestariTerrace.Properties.Resources.IMG_NotFound;
+            //pic.Image = global::BestariTerrace.Properties.Resources.IMG_NotFound;
             pic.Width = 200;
             pic.Height = 130;
             pic.BorderStyle = BorderStyle.None;
@@ -303,6 +348,7 @@ namespace App_UI.Forms
                         foreach (var item in Program.cartItems)
                         {
                             item.orderNo = OrderNumber;
+                            Program.PlacedCartItems.Add(item);
                         }
                         //Post Order
                         var NewOrderId = PostOrder(OrderNumber);
@@ -311,22 +357,54 @@ namespace App_UI.Forms
                         lblOrderCount.DataBindings.Add(OrderCount);
                         //Clear the Cart and Total Field
                         ClearList();
+                        bool isCash = false;
+                        bool ReprintMsg = true;
 
                         //Printing
                         Up:
                         try
                         {
-                            Print(Program.PrinterName, GetDocument(NewOrderId));
+                            string filePath = Path.Combine(Environment.CurrentDirectory, "Printer.txt");
+                            FileInfo _fileinfo = new FileInfo(filePath);
+                            if (_fileinfo.Exists)
+                            {
+                                string[] lines = File.ReadAllLines(filePath);
+                                if (lines.Length > 0)
+                                {
+                                    string Kitchen = lines[0].Split('$')[1];
+                                    string Cashier = lines[1].Split('$')[1];
+                                    if (!String.IsNullOrEmpty(Cashier))
+                                    {
+                                        Print(PrinterSetup.GetPrinterName(EmPrinterType.CashCounter), GetLogo("StoreLogo.bmp"));
+                                        Print(PrinterSetup.GetPrinterName(EmPrinterType.CashCounter), GetDocument(NewOrderId, EmPrinterType.CashCounter));
+                                    }
+                                    if (!string.IsNullOrEmpty(Kitchen))
+                                    {
+                                        if (!isCash)
+                                            Print(PrinterSetup.GetPrinterName(EmPrinterType.Kitchen), GetDocument(NewOrderId, EmPrinterType.Kitchen));
+                                    }
+                                }
+                                else
+                                {
+                                    ReprintMsg = false;
+                                    MessageBox.Show("No Printer installed", "Information", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                }
+                            }
                         }
                         catch (Exception ex)
                         {
-                            MessageBox.Show("Printer Connectivity Issue", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
-                        DialogResult reprintMsg = MessageBox.Show("Do you want to print again ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
-                        if (reprintMsg == DialogResult.Yes)
+                        if (ReprintMsg)
                         {
-                            goto Up;
+                            DialogResult reprintMsg = MessageBox.Show("Do you want to print again ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                            if (reprintMsg == DialogResult.Yes)
+                            {
+                                isCash = true;
+                                goto Up;
+                            }
                         }
+
                     }
                 }
             }
@@ -340,76 +418,81 @@ namespace App_UI.Forms
         public static void Print(string printerName, byte[] document)
         {
 
-            NativeMethods.DOC_INFO_1 documentInfo;
-            IntPtr printerHandle;
+            TcpClient client = new TcpClient();
+            client.Connect(printerName, 9100);
+            NetworkStream stream = client.GetStream();
+            stream.Write(document, 0, document.Length);
+            System.Threading.Thread.Sleep(20);
+            //stream.Close(5000); //Wait 5 seconds to ensure that the data is sent.
+            client.Close();
 
-            documentInfo = new NativeMethods.DOC_INFO_1();
-            documentInfo.pDataType = "RAW";
-            documentInfo.pDocName = "Receipt";
+            //Socket clientSock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            //clientSock.NoDelay = true;
+            //IPAddress ip = IPAddress.Parse(printerName);
+            //IPEndPoint remoteEP = new IPEndPoint(ip, 9100);
+            //clientSock.Connect(remoteEP);
+            //Encoding enc = Encoding.ASCII;
+            //// Send the bytes over 
+            //clientSock.Send(document);
+            //clientSock.Close();
 
-            printerHandle = new IntPtr(0);
-
-            if (NativeMethods.OpenPrinter(printerName.Normalize(), out printerHandle, IntPtr.Zero))
-            {
-                if (NativeMethods.StartDocPrinter(printerHandle, 1, documentInfo))
-                {
-                    int bytesWritten;
-                    byte[] managedData;
-                    IntPtr unmanagedData;
-
-                    managedData = document;
-                    unmanagedData = Marshal.AllocCoTaskMem(managedData.Length);
-                    Marshal.Copy(managedData, 0, unmanagedData, managedData.Length);
-
-                    if (NativeMethods.StartPagePrinter(printerHandle))
-                    {
-                        NativeMethods.WritePrinter(
-                            printerHandle,
-                            unmanagedData,
-                            managedData.Length,
-                            out bytesWritten);
-                        NativeMethods.EndPagePrinter(printerHandle);
-                    }
-                    else
-                    {
-                        throw new Win32Exception();
-                    }
-
-                    Marshal.FreeCoTaskMem(unmanagedData);
-
-                    NativeMethods.EndDocPrinter(printerHandle);
-                }
-                else
-                {
-                    throw new Win32Exception();
-                }
-
-                NativeMethods.ClosePrinter(printerHandle);
-            }
-            else
-            {
-                throw new Win32Exception();
-            }
-
+            //NativeMethods.DOC_INFO_1 documentInfo;
+            //IntPtr printerHandle;
+            //documentInfo = new NativeMethods.DOC_INFO_1();
+            //documentInfo.pDataType = "RAW";
+            //documentInfo.pDocName = "Receipt";
+            //printerHandle = new IntPtr(0);
+            //if (NativeMethods.OpenPrinter(printerName.Normalize(), out printerHandle, IntPtr.Zero))
+            //{
+            //    if (NativeMethods.StartDocPrinter(printerHandle, 1, documentInfo))
+            //    {
+            //        int bytesWritten;
+            //        byte[] managedData;
+            //        IntPtr unmanagedData;
+            //        managedData = document;
+            //        unmanagedData = Marshal.AllocCoTaskMem(managedData.Length);
+            //        Marshal.Copy(managedData, 0, unmanagedData, managedData.Length);
+            //        if (NativeMethods.StartPagePrinter(printerHandle))
+            //        {
+            //            NativeMethods.WritePrinter(
+            //                printerHandle,
+            //                unmanagedData,
+            //                managedData.Length,
+            //                out bytesWritten);
+            //            NativeMethods.EndPagePrinter(printerHandle);
+            //        }
+            //        else
+            //        {
+            //            throw new Win32Exception();
+            //        }
+            //        Marshal.FreeCoTaskMem(unmanagedData);
+            //        NativeMethods.EndDocPrinter(printerHandle);
+            //    }
+            //    else
+            //    {
+            //        throw new Win32Exception();
+            //    }
+            //    NativeMethods.ClosePrinter(printerHandle);
+            //}
+            //else
+            //{
+            //    throw new Win32Exception();
+            //}
         }
-        public static byte[] GetDocument(string OrderNumber)
+
+        public static byte[] GetDocument(string OrderNumber, EmPrinterType printerType)
         {
             using (var ms = new MemoryStream())
             using (var bw = new BinaryWriter(ms))
             {
                 // Reset the printer bws (NV images are not cleared)
-                bw.Write(AsciiControlChars.Escape);
-                bw.Write('@');
+                PrintReceipt(bw, OrderNumber, printerType);
 
-                // Render the logo
-                //RenderLogo(bw);
-                PrintReceipt(bw, OrderNumber);
-
-                // Feed 3 vertical motion units and cut the paper with a 1 point cut
-                bw.Write(AsciiControlChars.GroupSeparator);
-                bw.Write('V');
-                bw.Write((byte)66);
-                bw.Write((byte)3);
+                //// Feed 3 vertical motion units and cut the paper with a 1 point cut
+                //bw.Write(AsciiControlChars.GroupSeparator);
+                //bw.Write('V');
+                //bw.Write((byte)66);
+                //bw.Write((byte)3);
 
                 bw.Flush();
 
@@ -417,45 +500,174 @@ namespace App_UI.Forms
             }
         }
 
+        private void GetImage(string imgPath)
+        {
+            try
+            {
+                FileInfo _imgInfo = new FileInfo("StoreLogo.bmp");
+                if (_imgInfo.Exists)
+                    _imgInfo.Delete();
+
+                using (WebClient client = new WebClient())
+                {
+                    byte[] pic = client.DownloadData(imgPath);
+                    //string checkPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) +@"\1.png";
+                    //File.WriteAllBytes(checkPath, pic);
+                    File.WriteAllBytes("StoreLogo.bmp", pic);
+                }
+
+                //using (WebClient webClient = new WebClient())
+                //{
+                //    using (Stream stream = webClient.OpenRead(imgPath))
+                //    {
+                //        using (Bitmap bitmap = new Bitmap(stream))
+                //        {
+                //            stream.Flush();
+                //            stream.Close();
+                //            bitmap.Save("StoreLogo.bmp");
+                //        }
+                //    }
+                //}
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Store Logo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+
+
+        }
+
         /// <summary>
         /// This is the method we print the receipt the way we want. Note the spaces. 
         /// Wasted a lot of paper on this to get it right.
         /// </summary>
         /// <param name="bw"></param>
-        public static void PrintReceipt(BinaryWriter bw, string OrderNumber)
+        public static void PrintReceipt(BinaryWriter bw, string OrderNumber, EmPrinterType printerType)
         {
             var Order = Program.PlacedOrders.FirstOrDefault(p => p.OrderNo == OrderNumber);
-            bw.BoldON("", false);
-            bw.Center("Bastari Terrace");
-            bw.Center("Contact Address");
-            bw.Center("Contact Number");
-            bw.BoldOFF("", false);
-            bw.LeftJustify("");
-            bw.LeftJustify("------------------------------------------------------");
-            bw.NormalFont("Invoice #: " + OrderNumber);
-            bw.NormalFont("Staff : test User");
-            bw.NormalFont("Date: " + DateTime.UtcNow.ToString("dd-MM-yyyy hh:mm:ss"));
-            bw.NormalFont("-------------------------------------");
-            bw.LeftJustify("");
-            bw.NormalFont("-------------------------------------");
-            bw.NormalFont("Description         Qty         Amount");
-            bw.NormalFont("--------------------------------------");
-            foreach (var item in Order.Items)
+            var cartItems = Program.PlacedCartItems.Where(p => p.orderNo == OrderNumber).ToList();
+            if (printerType == EmPrinterType.CashCounter)
             {
-                string text = "";
-                text += item.ProductID.ToString() + " ";
-                text += item.ProductName;
-                bw.NormalFont(text + " " + item.Quantity.ToString() + " " + item.Price.ToString());
-                //bw.LeftJustify(text,false);
-                //bw.Center(item.Quantity.ToString(), false);
-                //bw.RightJustify(item.Price.ToString());
+                try
+                {
+                    if (Program.StoreInfo.message.Restaurant.restaurant_name != null)
+                        bw.Center(Program.StoreInfo.message.Restaurant.restaurant_name);
+                    if (Program.StoreInfo.message.Restaurant.address != null)
+                        bw.Center(Program.StoreInfo.message.Restaurant.address);
+                    if (Program.StoreInfo.message.Restaurant.contact_no != null)
+                        bw.Center(Program.StoreInfo.message.Restaurant.contact_no);
+                    if (Program.StoreInfo.message.Restaurant.gst_no != null)
+                        bw.Center("GST NO:" + Program.StoreInfo.message.Restaurant.gst_no);
+                }
+                catch
+                {
+                    bw.Center("Bestari");
+                    bw.Center("[Address]");
+                    bw.Center("[ContactNumber]");
+                    bw.Center("[GSTNumber]");
+                }
+                
+                bw.LeftJustify("------------------------------------------------");
+                bw.NormalFont("Invoice #: " + OrderNumber);
+                bw.NormalFont("Staff : test User");
+                bw.NormalFont("Date: " + DateTime.UtcNow.ToString("dd/MM/yyyy hh:mm:ss tt", new CultureInfo("en-SG")));
+                bw.NormalFont("------------------------------------------------");
+                bw.FeedLines(1);
+                bw.NormalFont("------------------------------------------------");
+
+                bw.NormalFont(("Description").PadRight(35) + ("Qty.").PadRight(5) + ("Amt.").PadLeft(8));
+                bw.NormalFont("------------------------------------------------");
+                var FormatCartItems = FormatLine(cartItems, 33, printerType);
+                foreach (var item in FormatCartItems)
+                {
+                    bw.NormalFont(item.LineText);
+                    bw.FeedLines(1);
+                }
+                bw.NormalFont("------------------------------------------------");
+
+                bw.NormalFont("Number of Items : " + cartItems.Sum(p => p.Quantity));
+
+                try
+                {
+                    if (Program.StoreInfo.message.Restaurant.gst_status != null)
+                    {
+                        bw.NormalFont("GST : 6.00 %");
+                        var Amount = decimal.Parse(cartItems.FirstOrDefault().CartTotal.ToString("N2"));
+                        var GST = decimal.Parse("6");
+                        var Tax = Math.Round(((Convert.ToDecimal(Amount) * GST) / 100), 2);
+                        bw.NormalFont("GST Price : " + Tax);
+                        bw.NormalFont("Amount : " + (Amount - Tax).ToString());
+                        bw.NormalFont("Grand Total : " + Amount);
+                    }
+                    else
+                    {
+                        bw.NormalFont("Grand Total :  " + String.Format("{0:n2}", cartItems.FirstOrDefault().CartTotal.ToString("N2")));
+                    }
+                }
+                catch
+                {
+                    bw.NormalFont("Grand Total :  " + String.Format("{0:n2}", cartItems.FirstOrDefault().CartTotal.ToString("N2")));
+                }
+
+                bw.NormalFont("------------------------------------------------");
+                bw.FinishLines();
+                bw.CutPaper();
             }
-            bw.NormalFont("---------------------------------------");
-            bw.NormalFont("Number of Items : " + Order.Items.Sum(p => p.Quantity));
-            bw.NormalFont("Discount:" + "0");
-            bw.NormalFont("Sub Total:  " + Order.Items.FirstOrDefault().CartTotal.ToString());
-            bw.NormalFont("---------------------------------------");
-            bw.Finish();
+            else
+            {
+                var FormatCartItems = FormatLine(cartItems, 40, printerType);
+                foreach (var item in FormatCartItems)
+                {
+                    bw.NormalFont(("Description").PadRight(43) + ("Qty.").PadRight(5));
+                    bw.NormalFont("------------------------------------------------");
+                    bw.NormalFont(item.LineText);
+                    bw.FeedLines(3);
+                    bw.CutPaper();
+                }
+            }
+            
+
+            //bw.Center(Program.StoreInfo.message.Restaurant.restaurant_name);
+            //bw.Center(Program.StoreInfo.message.Restaurant.address);
+            //bw.Center(Program.StoreInfo.message.Restaurant.contact_no);
+            //bw.LeftJustify("------------------------------------------------");
+            //bw.NormalFont("Invoice #: " + OrderNumber);
+            //bw.NormalFont("Staff : test User");
+            //bw.NormalFont("Date: " + DateTime.UtcNow.ToString("dd-MM-yyyy hh:mm:ss"));
+            //bw.NormalFont("------------------------------------------------");
+            //bw.FeedLines(2);
+            //bw.NormalFont("------------------------------------------------");
+            //if (printerType == EmPrinterType.CashCounter)
+            //{
+            //    bw.NormalFont(("Description").PadRight(35) + ("Qty.").PadRight(5) + ("Amt.").PadLeft(8));
+            //    bw.NormalFont("------------------------------------------------");
+            //    var FormatCartItems = FormatLine(cartItems, 33, printerType);
+            //    foreach (var item in FormatCartItems)
+            //    {
+            //        bw.NormalFont(item.LineText);
+            //    }
+            //    bw.NormalFont("------------------------------------------------");
+
+            //    bw.NormalFont("Number of Items : " + cartItems.Sum(p => p.Quantity));
+            //    if (Program.StoreInfo.message.Restaurant.gst_no != "0")
+            //    {
+            //        bw.NormalFont("Discount:" + Program.StoreInfo.message.Restaurant.gst);
+            //    }
+            //    bw.NormalFont("Sub Total:  " + String.Format("{0:n2}", cartItems.FirstOrDefault().CartTotal.ToString("N2")));
+            //    bw.NormalFont("------------------------------------------------");
+            //}
+            //else
+            //{
+            //    bw.NormalFont(("Description").PadRight(43) + ("Qty.").PadRight(5));
+            //    bw.NormalFont("------------------------------------------------");
+            //    var FormatCartItems = FormatLine(cartItems, 40, printerType);
+            //    foreach (var item in FormatCartItems)
+            //    {
+            //        bw.NormalFont(item.LineText);
+            //    }
+            //}
+            //bw.Finish();
         }
 
         public string PostOrder(string OrderNo)
@@ -501,15 +713,51 @@ namespace App_UI.Forms
                     {
                         item.orderNo = result.orderid;
                     }
-
                     fresult = result.orderid;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
 
             }
             return fresult;
+        }
+
+        public static List<PrintLine> FormatLine(List<CartItemsCL> cartItems, int splitInt, EmPrinterType printerType)
+        {
+            int globalLen = 48;
+            List<PrintLine> result = new List<PrintLine>();
+            foreach (var item in cartItems)
+            {
+                string ProductCode = Program.Products.FirstOrDefault(p => p.ProductID == item.ProductID)?.ProductNumber + "";
+                string DescText = ProductCode + " " + item.ProductName;
+                string Quantity = item.Quantity.ToString();
+                string Price = item.Price.ToString("N2");
+                var DescSplit = SplitInParts(DescText, splitInt).ToList();
+                for (int i = 0; i < DescSplit.Count(); i++)
+                {
+                    PrintLine lineitem = new PrintLine();
+                    lineitem.LineNo = i;
+                    if (i == 0)
+                    {
+                        if (printerType == EmPrinterType.CashCounter)
+                            lineitem.LineText = DescSplit[i].PadRight(35) + Quantity.PadRight(5) + String.Format("{0:n2}", Price.PadLeft(8));
+                        else
+                            lineitem.LineText = DescSplit[i].PadRight(43) + Quantity.PadRight(5);
+                    }
+                    else
+                    {
+                        lineitem.LineText = DescSplit[i].PadRight(35);
+                    }
+                    result.Add(lineitem);
+                }
+            }
+            return result;
+        }
+        public static IEnumerable<String> SplitInParts(string txt, Int32 partLength)
+        {
+            for (var i = 0; i < txt.Length; i += partLength)
+                yield return txt.Substring(i, Math.Min(partLength, txt.Length - i));
         }
 
         private void ClearList()
@@ -712,42 +960,56 @@ namespace App_UI.Forms
         {
             //Load with Reservations
             string URL = Program.BaseUrl;
-            string PendingOrdURL = URL + "/pendingorders?acess_token=" + Program.Token;
-
-            var GetStatus = DataProviderWrapper.Instance.GetData(PendingOrdURL, Verbs.GET, "");
             JavaScriptSerializer serializer = new JavaScriptSerializer();
+            #region PendingOrder
+            string PendingOrdURL = URL + "/pendingorders?acess_token=" + Program.Token;
+            var GetStatus = DataProviderWrapper.Instance.GetData(PendingOrdURL, Verbs.GET, "");
+
             var result = serializer.Deserialize<PendingOrderAPI>(GetStatus);
             if (result != null)
             {
                 foreach (var item in result.data)
                 {
                     var OrderId = "" + item.Order?.Orderdetail?.order_id;
-                    //var OrderType = EmOrderType.Delivery;
+                    var _OrderType = EmOrderType.Delivery;
+                    var ordType = "" + item.Order?.Orderdetail?.order_type;
+                    if (ordType.ToLower() == "dine_in")
+                    {
+                        _OrderType = EmOrderType.DineIn;
+                    }
+                    else if (ordType.ToLower() == "takeout" || ordType.ToLower() == "take_away")
+                    {
+                        _OrderType = EmOrderType.TakeOut;
+                    }
+                    else
+                    {
+                        _OrderType = EmOrderType.Delivery;
+                    }
                     var ordStatus = EmOrderStatus.Pending;
                     var btnActionText = "Update Status";
                     var OrderStatus = "" + item.Order?.Orderdetail?.order_status;
-                    if(OrderStatus.ToLower().Trim() == "pending")
+                    if (OrderStatus.ToLower().Trim() == "pending")
                     {
                         ordStatus = EmOrderStatus.Pending;
                         btnActionText = "Pending Status";
                     }
-                    else if(OrderStatus.ToLower().Trim() == "in_progress")
+                    else if (OrderStatus.ToLower().Trim() == "in_progress")
                     {
                         ordStatus = EmOrderStatus.Confirmed;
                         btnActionText = "In-Progress Status";
                     }
-                    else if(OrderStatus.ToLower().Trim() == "completed")
+                    else if (OrderStatus.ToLower().Trim() == "completed")
                     {
                         ordStatus = EmOrderStatus.Delivered;
                         btnActionText = "Delivered";
                     }
                     var Total = "" + item.Order?.Orderdetail?.total;
-                    if (!String.IsNullOrEmpty(OrderId) && !String.IsNullOrEmpty(OrderStatus))
+                    if (!String.IsNullOrEmpty(OrderId) && !String.IsNullOrEmpty(OrderStatus) && _OrderType == EmOrderType.Delivery)
                     {
                         bool isExist = Program.PlacedOrders.Where(p => p.OrderNo == OrderId).Any();
                         if (!isExist)
                         {
-                            Program.PlacedOrders.Add(new CartCL { OrderNo = OrderId.Trim(), OrderStatus = ordStatus, OrderType = EmOrderType.Delivery, OrderTotal = Total, IsOrderConfirmed = false, BtnActionStatus = btnActionText });
+                            Program.PlacedOrders.Add(new CartCL { OrderNo = OrderId.Trim(), OrderStatus = ordStatus, OrderType = _OrderType, OrderTotal = Total, IsOrderConfirmed = false, BtnActionStatus = btnActionText });
                         }
                     }
                 }
@@ -758,6 +1020,72 @@ namespace App_UI.Forms
             lblOrderCount.DataBindings.Clear();
             var OrderCount = new Binding("Text", Program.OrderBindings, "OrderCount", true, DataSourceUpdateMode.OnPropertyChanged, "0", "");
             lblOrderCount.DataBindings.Add(OrderCount);
+            #endregion
+
+            #region DineInOrder & TakeAwayOrders
+            string DineInOrderURL = URL + "/dineinorders?acess_token=" + Program.Token;
+            var DineInOrderStatus = DataProviderWrapper.Instance.GetData(DineInOrderURL, Verbs.GET, "");
+            var dineResult = serializer.Deserialize<PendingOrderAPI>(DineInOrderStatus);
+            List<CartCL> _PlacedOrder = new List<CartCL>();
+            List<CartItemsCL> CartItemList = new List<CartItemsCL>();
+            if (dineResult != null)
+            {
+                foreach (var item in dineResult.data)
+                {
+                    var OrderId = "" + item.Orderdetail?.order_id;
+                    var _OrderType = item.Orderdetail?.order_type;
+                    var OrdStatus = EmOrderStatus.Delivered;
+                    var OrdType = EmOrderType.DineIn;
+                    if (_OrderType == "dine_in")
+                    {
+                        OrdType = EmOrderType.DineIn;
+                    }
+                    else
+                    {
+                        OrdType = EmOrderType.TakeOut;
+                    }
+                    CartCL newOrder = new CartCL();
+                    newOrder.OrderNo = OrderId.ToString();
+                    newOrder.OrderStatus = OrdStatus;
+                    newOrder.OrderType = OrdType;
+                    newOrder.OrderTotal = item.Orderdetail.total;
+
+                    
+                    var orderCart = item.Orderdetail.cart;
+                    if (orderCart.Count > 0)
+                    {
+                        foreach(var cItem in orderCart)
+                        {
+                            if(cItem.cart != null)
+                            {
+                                CartItemsCL newCartItem = new CartItemsCL();
+                                newCartItem.orderNo = OrderId.ToString();
+                                newCartItem.ProductID = int.Parse(cItem.cart.product_id);
+                                newCartItem.ProductName = cItem.Product.product_name;
+                                newCartItem.OriginalPrice = double.Parse(cItem.Product.product_price);//cItem.cart.product_price 
+                                newCartItem.GrandTotal = double.Parse(cItem.cart.total_price);
+                                newCartItem.Quantity = int.Parse(cItem.cart.quantity);
+                                CartItemList.Add(newCartItem);
+                            }
+                        }
+                    }
+
+                    _PlacedOrder.Add(newOrder);
+                }
+                //Add the Order in the Programs
+                foreach(var _plOrder in _PlacedOrder)
+                {
+                    var isExists = Program.PlacedOrders.Where(p => p.OrderNo == _plOrder.OrderNo).Any();
+                    if(!isExists)
+                    {
+                        Program.PlacedOrders.Add(_plOrder);
+                        var CartItems = CartItemList.Where(p => p.orderNo == _plOrder.OrderID.ToString()).ToList();
+                        Program.PlacedCartItems.AddRange(CartItems);
+                    }
+                }
+                //Program.PlacedOrders.Add(new CartCL { OrderNo = OrderId.Trim(), OrderStatus = OrdStatus, OrderType = EmOrderType.Delivery, OrderTotal = Total, IsOrderConfirmed = false, BtnActionStatus = btnActionText });
+            }
+            #endregion
         }
 
         private void rdbTakeWay_CheckedChanged(object sender, EventArgs e)
@@ -770,5 +1098,141 @@ namespace App_UI.Forms
                 IsOrder = true;
             }
         }
+
+        private void lblSettings_Click(object sender, EventArgs e)
+        {
+            PrinterSetup _prntSet = new PrinterSetup();
+            _prntSet.ShowDialog();
+        }
+
+        #region LogoPrint
+        public byte[] GetLogo(string LogoFileName)
+        {
+            if (!File.Exists(LogoFileName))
+                return null;
+
+            BitmapData data = GetBitmapData(LogoFileName);
+            BitArray dots = data.Dots;
+
+            byte[] width = BitConverter.GetBytes(data.Width);
+
+            int offset = 0;
+            MemoryStream stream = new MemoryStream();
+            BinaryWriter bw = new BinaryWriter(stream);
+
+            bw.Write((char)0x1B);
+            bw.Write('@');
+
+            bw.Write((char)0x1B);
+            bw.Write((byte)97);
+            bw.Write((byte)1);
+            //bw.Write('3');
+            //bw.Write((byte)24);
+
+            while (offset < data.Height)
+            {
+                bw.Write((char)0x1B);
+                bw.Write('*');         // bit-image mode
+                bw.Write((byte)33);    // 24-dot double-density
+                bw.Write(width[0]);  // width low byte
+                bw.Write(width[1]);  // width high byte
+
+                for (int x = 0; x < data.Width; ++x)
+                {
+                    for (int k = 0; k < 3; ++k)
+                    {
+                        byte slice = 0;
+                        for (int b = 0; b < 8; ++b)
+                        {
+                            int y = (((offset / 8) + k) * 8) + b;
+                            // Calculate the location of the pixel we want in the bit array.
+                            // It'll be at (y * width) + x.
+                            int i = (y * data.Width) + x;
+
+                            // If the image is shorter than 24 dots, pad with zero.
+                            bool v = false;
+                            if (i < dots.Length)
+                            {
+                                v = dots[i];
+                            }
+                            slice |= (byte)((v ? 1 : 0) << (7 - b));
+                        }
+
+                        bw.Write(slice);
+                    }
+                }
+                offset += 24;
+                bw.Write((char)0x0A);
+            }
+            // Restore the line spacing to the default of 30 dots.
+            bw.Write((char)0x1B);
+            bw.Write('3');
+            bw.Write((byte)30);
+
+            bw.Flush();
+            byte[] bytes = stream.ToArray();
+            return bytes;
+        }
+
+        public static BitmapData GetBitmapData(string bmpFileName)
+        {
+            using (var bitmap = (Bitmap)Bitmap.FromFile(bmpFileName))
+            {
+                var threshold = 127;
+                var index = 0;
+                double multiplier = 200; // this depends on your printer model. for Beiyang you should use 1000
+                double scale = (double)(multiplier / (double)bitmap.Width);
+                int xheight = (int)(bitmap.Height * scale);
+                int xwidth = (int)(bitmap.Width * scale);
+                var dimensions = xwidth * xheight;
+                var dots = new BitArray(dimensions);
+
+                for (var y = 0; y < xheight; y++)
+                {
+                    for (var x = 0; x < xwidth; x++)
+                    {
+                        var _x = (int)(x / scale);
+                        var _y = (int)(y / scale);
+                        var color = bitmap.GetPixel(_x, _y);
+                        var luminance = (int)(color.R * 0.3 + color.G * 0.59 + color.B * 0.11);
+                        dots[index] = (luminance < threshold);
+                        index++;
+                    }
+                }
+
+                return new BitmapData()
+                {
+                    Dots = dots,
+                    Height = (int)(bitmap.Height * scale),
+                    Width = (int)(bitmap.Width * scale)
+                };
+            }
+        }
+
+
+        #endregion
     }
+
+    public class BitmapData
+    {
+        public BitArray Dots
+        {
+            get;
+            set;
+        }
+
+        public int Height
+        {
+            get;
+            set;
+        }
+
+        public int Width
+        {
+            get;
+            set;
+        }
+    }
+
+
 }

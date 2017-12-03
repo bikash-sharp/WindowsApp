@@ -12,7 +12,7 @@ using App_BAL;
 using System.Web.Script.Serialization;
 using System.Collections;
 
-namespace App_UI.UserControls
+namespace BestariTerrace.UserControls
 {
     public partial class uc_CategoryMenu : UserControl
     {

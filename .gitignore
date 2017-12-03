@@ -17,3 +17,7 @@
 /packages/Newtonsoft.Json.10.0.3
 /App_BAL/bin/x86/Debug
 /POSInstaller/Debug
+/App_BAL/bin/Release
+/App_UI/bin/Release
+/App_Wrapper/bin/Release
+/CustomServerControls/bin/Release

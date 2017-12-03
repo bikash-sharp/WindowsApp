@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace App_UI.Forms
+namespace BestariTerrace.Forms
 {
     public class CommonForm : Form
     {
@@ -45,7 +45,7 @@ namespace App_UI.Forms
             // button1
             // 
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Image = global::App_UI.Properties.Resources.downlogo;
+            this.button1.Image = global::BestariTerrace.Properties.Resources.downlogo;
             this.button1.Location = new System.Drawing.Point(58, 68);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(214, 79);

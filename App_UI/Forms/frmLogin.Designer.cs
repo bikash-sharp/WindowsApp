@@ -1,4 +1,4 @@
-﻿namespace App_UI.Forms
+﻿namespace BestariTerrace.Forms
 {
     partial class frmLogin
     {
@@ -124,8 +124,7 @@
             // 
             this.pictureBox2.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox2.ErrorImage = null;
-            this.pictureBox2.Image = global::App_UI.Properties.Resources.downlogo;
-            this.pictureBox2.InitialImage = global::App_UI.Properties.Resources.downlogo;
+            this.pictureBox2.Image = global::BestariTerrace.Properties.Resources.downlogo;
             this.pictureBox2.Location = new System.Drawing.Point(107, 528);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(173, 40);
@@ -134,13 +133,13 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.BackgroundImage = global::App_UI.Properties.Resources.logo;
             this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pictureBox1.ErrorImage = null;
-            this.pictureBox1.InitialImage = global::App_UI.Properties.Resources.logo;
+            this.pictureBox1.Image = global::BestariTerrace.Properties.Resources.logo;
             this.pictureBox1.Location = new System.Drawing.Point(73, 48);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(272, 55);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
@@ -182,6 +181,7 @@
             this.lblForgotPassword.Size = new System.Drawing.Size(94, 13);
             this.lblForgotPassword.TabIndex = 3;
             this.lblForgotPassword.Text = "Forgot Password?";
+            this.lblForgotPassword.Visible = false;
             this.lblForgotPassword.Click += new System.EventHandler(this.lblForgotPassword_Click);
             // 
             // txtUserName
@@ -192,6 +192,7 @@
             this.txtUserName.Location = new System.Drawing.Point(48, 154);
             this.txtUserName.Name = "txtUserName";
             this.txtUserName.PlaceholderText = "User Name";
+            this.txtUserName.SelectionHighlightEnabled = false;
             this.txtUserName.Size = new System.Drawing.Size(315, 26);
             this.txtUserName.TabIndex = 1;
             this.txtUserName.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -205,6 +206,7 @@
             this.txtPassword.Location = new System.Drawing.Point(49, 215);
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.PlaceholderText = "Password";
+            this.txtPassword.SelectionHighlightEnabled = false;
             this.txtPassword.Size = new System.Drawing.Size(315, 26);
             this.txtPassword.TabIndex = 2;
             this.txtPassword.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;

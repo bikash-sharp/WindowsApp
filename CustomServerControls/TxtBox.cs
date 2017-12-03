@@ -11,11 +11,13 @@ namespace CustomServerControls
 {
     public class TxtBox : TextBox
     {
+
         #region Properties
 
         string _placeholderText = DEFAULT_PLACEHOLDER;
         bool _isPlaceholderActive;
-
+        [DefaultValue(true)]
+        public bool SelectionHighlightEnabled { get; set; }
 
         /// <summary>
         /// Gets a value indicating whether the Placeholder is active.
@@ -118,6 +120,9 @@ namespace CustomServerControls
         /// </summary>
         bool avoidTextChanged;
 
+        const int WM_SETFOCUS = 0x0007;
+        const int WM_KILLFOCUS = 0x0008;
+
         #endregion
 
 
@@ -130,9 +135,7 @@ namespace CustomServerControls
         {
             // Through this line the default placeholder gets displayed in designer
             base.Text = this.PlaceholderText;
-
             SubscribeEvents();
-
             // Set Default
             this.IsPlaceholderActive = true;
         }
@@ -141,6 +144,13 @@ namespace CustomServerControls
 
 
         #region Functions
+        protected override void WndProc(ref Message m)
+        {
+            //if (m.Msg == WM_SETFOCUS && !SelectionHighlightEnabled)
+            //    m.Msg = WM_KILLFOCUS;
+
+            base.WndProc(ref m);
+        }
 
         /// <summary>
         /// Inserts placeholder, assigns placeholder style and sets cursor to first position.
@@ -215,6 +225,13 @@ namespace CustomServerControls
             // Without this line it would highlight the placeholder when getting focus
             this.Select(0, 0);
             base.OnGotFocus(e);
+            
+        }
+
+        protected override void OnMouseMove(MouseEventArgs e)
+        {
+            this.SelectionLength = 0;
+            base.OnMouseMove(e);
         }
 
         protected override void OnMouseDown(MouseEventArgs e)

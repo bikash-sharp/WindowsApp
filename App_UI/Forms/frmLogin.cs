@@ -10,8 +10,9 @@ using System.Windows.Forms;
 using App_BAL;
 using App_Wrapper;
 using System.Web.Script.Serialization;
+using CustomServerControls;
 
-namespace App_UI.Forms
+namespace BestariTerrace.Forms
 {
     public partial class frmLogin : CommonForm
     {
@@ -94,6 +95,15 @@ namespace App_UI.Forms
         }
         private void txtUserName_TextChanged(object sender, EventArgs e)
         {
+            var txt = ((TxtBox)sender).Text;
+
+            if (this.txtUserName.SelectionLength > 1)
+            {
+                this.txtUserName.Text = "";
+            }
+
+            this.txtUserName.Text = txt;
+            
             if (this.txtUserName.Text == "" && this.txtUserName.TextLength > 0)
             {
                 this.txtUserName.Text = "User Name";
@@ -107,8 +117,22 @@ namespace App_UI.Forms
 
         private void frmLogin_Load(object sender, EventArgs e)
         {
+            //var datetime = DateTime.UtcNow.ToString("dd-MM-yyyy hh:mm:ss tt", new System.Globalization.CultureInfo("en-US"));
+            //var datetime2 = DateTime.UtcNow.ToString("dd-MM-yyyy hh:mm:ss tt", new System.Globalization.CultureInfo("en-CA"));
             //txtUserName.Text = "tanent_admin_1";
             //txtPassword.Text = "welcome2sw";
+            //txtUserName.se
+            
+        }
+
+        private void txtUserName_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void txtUserName_MouseMove(object sender, MouseEventArgs e)
+        {
+            txtUserName.SelectionLength = 0;
         }
     }
 }

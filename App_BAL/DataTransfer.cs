@@ -14,6 +14,12 @@ namespace App_BAL
 
     }
 
+    public enum EmPrinterType
+    {
+        Kitchen,
+        CashCounter
+    }
+
     public enum EmOrderStatus
     {
         Pending = 1,
@@ -41,6 +47,12 @@ namespace App_BAL
         OrderIn,
         TakeAway,
         Delivery
+    }
+
+    public class PrintLine
+    {
+        public int LineNo { get; set; }
+        public string LineText { get; set; }
     }
     public class ReservationCL : INotifyPropertyChanged
     {
@@ -502,6 +514,7 @@ namespace App_BAL
         public double Price { get; set; }
         public int CategoryID { get; set; }
         public string ImageName { get; set; }
+        public string ProductNumber { get; set; }
     }
 
     public enum Verbs
@@ -580,6 +593,12 @@ namespace App_BAL
         public Tableorder Tableorder { get; set; }
         public Order Order { get; set; }
         public List<CartProduct> Cart_products { get; set; }
+        public Orderdetail Orderdetail { get; set; }
+        public Datum()
+        {
+            Cart_products = new List<CartProduct>();
+            Orderdetail = new Orderdetail();
+        }
     }
 
     public class ProductListAPICL
@@ -635,7 +654,31 @@ namespace App_BAL
         public string order_id { get; set; }
         public string total { get; set; }
         public string order_status { get; set; }
+        public string order_type { get; set; }
         public string product_id { get; set; }
+        public string id { get; set; }
+        public object transaction_id { get; set; }
+        public string restaurant_id { get; set; }
+        public string tanent_id { get; set; }
+        public string user_id { get; set; }
+        public string first_name { get; set; }
+        public string last_name { get; set; }
+        public string company_name { get; set; }
+        public string adress { get; set; }
+        public object payment_type { get; set; }
+        public string city { get; set; }
+        public string postal_code { get; set; }
+        public string email { get; set; }
+        public string contact_number { get; set; }
+        public string cart_subtotal { get; set; }
+        public string country { get; set; }
+        public string shipping { get; set; }
+        public string payment_mode { get; set; }
+        public string payment_status { get; set; }
+        public object bar_code { get; set; }
+        public string created { get; set; }
+        public object currency { get; set; }
+        public List<Cart> cart { get; set; }
     }
 
     public class Order
@@ -647,9 +690,31 @@ namespace App_BAL
         }
     }
 
+    public class Cart2
+    {
+        public string id { get; set; }
+        public string tanent_id { get; set; }
+        public string restaurent_id { get; set; }
+        public string product_id { get; set; }
+        public object product_price { get; set; }
+        public string user_id { get; set; }
+        public string ip_adress { get; set; }
+        public string quantity { get; set; }
+        public string delivery_type { get; set; }
+        public string total_price { get; set; }
+        public string status { get; set; }
+        public string created { get; set; }
+    }
+
     public class Cart
     {
-        public Cart() { }
+        public Cart()
+        {
+            cart = new Cart2();
+            Restaurant = new Restaurant();
+            Product = new Product();
+            User = new User();
+        }
         public string id { get; set; }
         public string tanent_id { get; set; }
         public string restaurent_id { get; set; }
@@ -661,6 +726,10 @@ namespace App_BAL
         public string delivery_type { get; set; }
         public string status { get; set; }
         public string created { get; set; }
+        public Cart2 cart { get; set; }
+        public Restaurant Restaurant { get; set; }
+        public Product Product { get;set;}
+        public User User { get; set; }       
     }
 
     public class Restaurant
@@ -671,7 +740,9 @@ namespace App_BAL
         public string restaurant_name { get; set; }
         public string main_category { get; set; }
         public string restaurant_type { get; set; }
+        public string gst_status { get; set; }
         public string location { get; set; }
+        public string contact_no { get; set; }
         public string latitude { get; set; }
         public string longitude { get; set; }
         public string min_item_price { get; set; }
@@ -688,6 +759,8 @@ namespace App_BAL
         public string closing_day { get; set; }
         public object supported_payment_types { get; set; }
         public object ref_url { get; set; }
+        public string gst_no { get; set; }
+        public string address { get; set; }
     }
 
     public class Product
@@ -780,6 +853,42 @@ namespace App_BAL
         public string quantity { get; set; }
         public int price { get; set; }
         public string delivery_type { get; set; }
+    }
+    #endregion
+
+    #region Store Details
+    public class Employee
+    {
+        public string id { get; set; }
+        public string restaurant_id { get; set; }
+        public string tanent_id { get; set; }
+        public string employee_name { get; set; }
+        public string username { get; set; }
+        public string password { get; set; }
+        public string access_type { get; set; }
+        public string acess_token { get; set; }
+        public string position { get; set; }
+        public string created { get; set; }
+        public string daily_cash_limit { get; set; }
+    }
+
+
+
+    public class Message
+    {
+        public Employee Employee { get; set; }
+        public Restaurant Restaurant { get; set; }
+        public Message()
+        {
+            Employee = new Employee();
+            Restaurant = new Restaurant();
+        }
+    }
+
+    public class StoreDetails
+    {
+        public bool status { get; set; }
+        public Message message { get; set; }
     }
     #endregion
 }

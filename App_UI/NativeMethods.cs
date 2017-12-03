@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace App_UI
+namespace BestariTerrace
 {
     /// <summary>
     /// Contains native methods invoked via P/Invoke to the underlying Windows

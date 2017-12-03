@@ -1,4 +1,4 @@
-﻿namespace App_UI.Forms
+﻿namespace BestariTerrace.Forms
 {
     partial class frmMain
     {
@@ -54,7 +54,6 @@
             this.ovalShape2 = new Microsoft.VisualBasic.PowerPacks.OvalShape();
             this.rectangleShape4 = new Microsoft.VisualBasic.PowerPacks.RectangleShape();
             this.pnlBase = new System.Windows.Forms.Panel();
-            this.txtSearch = new CustomServerControls.TxtBox();
             this.btnRefresh = new System.Windows.Forms.Button();
             this.btnSearch = new System.Windows.Forms.Button();
             this.flyLayout = new System.Windows.Forms.FlowLayoutPanel();
@@ -76,7 +75,9 @@
             this.shapeContainer4 = new Microsoft.VisualBasic.PowerPacks.ShapeContainer();
             this.lineShape2 = new Microsoft.VisualBasic.PowerPacks.LineShape();
             this.lineShape1 = new Microsoft.VisualBasic.PowerPacks.LineShape();
-            this.uc_CategoryMenu1 = new App_UI.UserControls.uc_CategoryMenu();
+            this.txtSearch = new CustomServerControls.TxtBox();
+            this.lblSettings = new System.Windows.Forms.Label();
+            this.uc_CategoryMenu1 = new BestariTerrace.UserControls.uc_CategoryMenu();
             this.tblMainLayout.SuspendLayout();
             this.pnlTopMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -116,6 +117,7 @@
             // 
             this.pnlTopMenu.BackColor = System.Drawing.Color.Black;
             this.tblMainLayout.SetColumnSpan(this.pnlTopMenu, 3);
+            this.pnlTopMenu.Controls.Add(this.lblSettings);
             this.pnlTopMenu.Controls.Add(this.rdbReservation);
             this.pnlTopMenu.Controls.Add(this.rdbTakeWay);
             this.pnlTopMenu.Controls.Add(this.rdbOrder);
@@ -226,7 +228,7 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Image = global::App_UI.Properties.Resources.downlogo;
+            this.pictureBox1.Image = global::BestariTerrace.Properties.Resources.downlogo;
             this.pictureBox1.Location = new System.Drawing.Point(149, 7);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(176, 45);
@@ -236,7 +238,7 @@
             // 
             // pbLogo
             // 
-            this.pbLogo.Image = global::App_UI.Properties.Resources.logoblack;
+            this.pbLogo.Image = global::BestariTerrace.Properties.Resources.logoblack;
             this.pbLogo.Location = new System.Drawing.Point(7, 13);
             this.pbLogo.Margin = new System.Windows.Forms.Padding(0);
             this.pbLogo.Name = "pbLogo";
@@ -389,20 +391,10 @@
             this.pnlBase.Size = new System.Drawing.Size(565, 314);
             this.pnlBase.TabIndex = 5;
             // 
-            // txtSearch
-            // 
-            this.txtSearch.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtSearch.Font = new System.Drawing.Font("Segoe UI Semibold", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtSearch.Location = new System.Drawing.Point(7, 13);
-            this.txtSearch.Name = "txtSearch";
-            this.txtSearch.PlaceholderText = "Search";
-            this.txtSearch.Size = new System.Drawing.Size(286, 29);
-            this.txtSearch.TabIndex = 8;
-            // 
             // btnRefresh
             // 
             this.btnRefresh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRefresh.BackgroundImage = global::App_UI.Properties.Resources.refresh24;
+            this.btnRefresh.BackgroundImage = global::BestariTerrace.Properties.Resources.refresh24;
             this.btnRefresh.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.btnRefresh.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnRefresh.FlatAppearance.BorderColor = System.Drawing.Color.White;
@@ -425,7 +417,7 @@
             this.btnSearch.FlatAppearance.BorderSize = 0;
             this.btnSearch.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
             this.btnSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSearch.Image = global::App_UI.Properties.Resources.search24;
+            this.btnSearch.Image = global::BestariTerrace.Properties.Resources.search24;
             this.btnSearch.Location = new System.Drawing.Point(299, 10);
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(35, 33);
@@ -699,6 +691,28 @@
             this.lineShape1.Y1 = 34;
             this.lineShape1.Y2 = 34;
             // 
+            // txtSearch
+            // 
+            this.txtSearch.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtSearch.Font = new System.Drawing.Font("Segoe UI Semibold", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtSearch.Location = new System.Drawing.Point(7, 13);
+            this.txtSearch.Name = "txtSearch";
+            this.txtSearch.PlaceholderText = "Search";
+            this.txtSearch.Size = new System.Drawing.Size(286, 29);
+            this.txtSearch.TabIndex = 8;
+            // 
+            // lblSettings
+            // 
+            this.lblSettings.AutoSize = true;
+            this.lblSettings.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lblSettings.ForeColor = System.Drawing.Color.White;
+            this.lblSettings.Location = new System.Drawing.Point(393, 19);
+            this.lblSettings.Name = "lblSettings";
+            this.lblSettings.Size = new System.Drawing.Size(82, 21);
+            this.lblSettings.TabIndex = 10;
+            this.lblSettings.Text = "SETTINGS";
+            this.lblSettings.Click += new System.EventHandler(this.lblSettings_Click);
+            // 
             // uc_CategoryMenu1
             // 
             this.uc_CategoryMenu1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -785,5 +799,6 @@
         private System.Windows.Forms.RadioButton rdbTakeWay;
         private UserControls.uc_CategoryMenu uc_CategoryMenu1;
         private CustomServerControls.TxtBox txtSearch;
+        private System.Windows.Forms.Label lblSettings;
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace App_UI.Forms
+﻿namespace BestariTerrace.Forms
 {
     partial class frmForgotPassword
     {

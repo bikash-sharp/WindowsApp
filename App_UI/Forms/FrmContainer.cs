@@ -1,4 +1,4 @@
-﻿using App_UI.UserControls;
+﻿using BestariTerrace.UserControls;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace App_UI.Forms
+namespace BestariTerrace.Forms
 {
     public partial class FrmContainer : Form
     {

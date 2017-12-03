@@ -1,4 +1,4 @@
-﻿namespace App_UI.UserControls
+﻿namespace BestariTerrace.UserControls
 {
     partial class uc_CategoryMenu
     {

@@ -12,7 +12,7 @@ using App_Wrapper;
 using System.Web.Script.Serialization;
 using Newtonsoft.Json;
 
-namespace App_UI.UserControls
+namespace BestariTerrace.UserControls
 {
     public partial class ucPayment : UserControl
     {
@@ -198,6 +198,36 @@ namespace App_UI.UserControls
         private void ucPayment_Load(object sender, EventArgs e)
         {
             this.txtAmount.Focus();
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            Button btn = sender as Button;
+            if(btn.Text == "clear")
+            {
+                txtAmount.Clear();
+            }
+            else if(btn.Text =="<-")
+            {
+                if(!String.IsNullOrEmpty(txtAmount.Text))
+                {
+                    string val = txtAmount.Text.TrimEnd().Substring(0, txtAmount.Text.Length - 1);
+                    txtAmount.Text = val;
+                    txtAmount_TextChanged(txtAmount, null);
+                }
+            }
+            else
+            {
+                if(txtAmount.Text  == "0" && btn.Text  == "0")
+                {
+                    txtAmount.Text = btn.Text;
+                }
+                else
+                {
+                    txtAmount.Text += btn.Text;
+                }
+                txtAmount_TextChanged(txtAmount, null);
+            }
         }
     }
 }

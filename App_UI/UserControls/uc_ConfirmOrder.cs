@@ -11,9 +11,9 @@ using App_Wrapper;
 using System.Web.Script.Serialization;
 using App_BAL;
 using System.Windows.Forms.VisualStyles;
-using App_UI.Forms;
+using BestariTerrace.Forms;
 
-namespace App_UI.UserControls
+namespace BestariTerrace.UserControls
 {
     public partial class uc_ConfirmOrder : UserControl
     {
@@ -39,21 +39,24 @@ namespace App_UI.UserControls
                 if (result.data.Count > 0)
                 {
                     var dataLst = result.data;
-                    Program.Reservations = dataLst.Select(p => new ReservationCL()
+                    foreach (var item in dataLst)
                     {
-
-                        TableId = p.Tableorder.id,
-                        TableNo = "0",
-                        RestrauntId = p.Tableorder.restaurent_id,
-                        DinerName = p.Tableorder.diner_name,
-                        GuestCount = p.Tableorder.guests,
-                        MobileNo = p.Tableorder.mobile,
-                        ReservationDate = p.Tableorder.date,
-                        ReservationTime = p.Tableorder.from_time + "-" + p.Tableorder.to_time,
-                        ReservationStatus = p.Tableorder.status,
-                        ActionText = "Unassigned"
-                    }).ToList();
-
+                        ReservationCL reserve = new ReservationCL();
+                        reserve.TableId = item.Tableorder.id;
+                        reserve.TableNo = "0"; //item.TableNo
+                        reserve.RestrauntId = item.Tableorder.restaurent_id;
+                        reserve.DinerName = item.Tableorder.diner_name;
+                        reserve.GuestCount = item.Tableorder.guests;
+                        reserve.MobileNo = item.Tableorder.mobile;
+                        reserve.ReservationDate = item.Tableorder.date;
+                        reserve.ReservationTime = item.Tableorder.from_time + "-" + item.Tableorder.to_time;
+                        reserve.ReservationStatus = item.Tableorder.status;
+                        if (item.Tableorder.status.ToLower() == "completed")
+                            reserve.ActionText = "Assigned";
+                        else
+                            reserve.ActionText = "Assign Table";
+                        Program.Reservations.Add(reserve);
+                    }
 
                     var source = new BindingSource(Program.Reservations.OrderByDescending(p => p.PlaceDate).ThenByDescending(p => p.ReservationStatus).ToList(), null);
                     dataGridView1.AutoGenerateColumns = false;
@@ -201,14 +204,14 @@ namespace App_UI.UserControls
                             {
                                 if (!string.IsNullOrEmpty(OrderNo))
                                 {
-                                    
+
                                     try
                                     {
-                                        frmMain.Print(Program.PrinterName, frmMain.GetDocument(OrderNo));
+                                        frmMain.Print(PrinterSetup.GetPrinterName(EmPrinterType.CashCounter), frmMain.GetDocument(OrderNo, EmPrinterType.CashCounter));
                                     }
                                     catch (Exception ex)
                                     {
-                                        MessageBox.Show("Printer Connectivity Issue", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                        MessageBox.Show(ex.Message, "Reprint Issue", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                     }
                                     //if (itm != null)
                                     //{
@@ -238,7 +241,7 @@ namespace App_UI.UserControls
                                 var result = serializer.Deserialize<MessageCL>(GetStatus);
                                 if (result.status)
                                 {
-                                    if(SelectedOrder != null)
+                                    if (SelectedOrder != null)
                                     {
                                         Program.PlacedOrders.Remove(SelectedOrder);
                                     }
@@ -254,7 +257,6 @@ namespace App_UI.UserControls
                             string status = row.Cells["Assign"].Value.ToString();
                             if (status.ToLower().Trim() == "assign table")
                             {
-
                                 string TableId = row.Cells["TableId"].Value.ToString();
                                 if (!string.IsNullOrEmpty(TableId))
                                 {
@@ -301,27 +303,27 @@ namespace App_UI.UserControls
                                     string statusUpdated = "";
                                     var _status = EmOrderStatus.Pending;
                                     string btnText = "";
-                                    if( OrderStatus == "Pending")
+                                    if (OrderStatus == "Pending")
                                     {
                                         statusUpdated = "in_progress";
                                         isAllowed = true;
                                         _status = EmOrderStatus.Confirmed;
                                         btnText = "In-Progress Status";
                                     }
-                                    else if(OrderStatus == "Confirmed")
+                                    else if (OrderStatus == "Confirmed")
                                     {
                                         statusUpdated = "Completed";
                                         _status = EmOrderStatus.Delivered;
                                         btnText = "Delivered";
                                         isAllowed = true;
                                     }
-                                    else if(OrderStatus == "Delivered")
+                                    else if (OrderStatus == "Delivered")
                                     {
                                         statusUpdated = "Completed";
                                         isAllowed = false;
                                     }
 
-                                    if(isAllowed)
+                                    if (isAllowed)
                                     {
                                         string URL = Program.BaseUrl;
                                         string ChangeOrdStatusURL = URL + "confirmorder?order_id=" + OrderNo + "&order_status=" + statusUpdated + "&acess_token=" + Program.Token;
@@ -337,7 +339,7 @@ namespace App_UI.UserControls
                                             //BindData(false, EmOrderType.Delivery);
                                         }
                                     }
-                                    
+
                                 }
                                 Program.OrderCount(EmOrderType.Delivery);
                             }
@@ -349,6 +351,12 @@ namespace App_UI.UserControls
                     }
                 }
             }
+
+
+            if (_gridType == EmGridType.OrderIn)
+                BindData(null, EmOrderType.DineIn);
+            else if (_gridType == EmGridType.TakeAway)
+                BindData(null, EmOrderType.TakeOut);
         }
 
         public void UpdateGridColumns(EmGridType type)
@@ -435,7 +443,7 @@ namespace App_UI.UserControls
                 btnAction.DataPropertyName = "ActionText";
                 btnAction.HeaderText = "Action";
                 btnAction.Text = "Assign Table";
-                btnAction.UseColumnTextForButtonValue = true;
+                btnAction.UseColumnTextForButtonValue = false;
                 btnAction.Resizable = DataGridViewTriState.False;
                 btnAction.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                 dataGridView1.Columns.Add(btnAction);

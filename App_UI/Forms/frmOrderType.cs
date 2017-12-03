@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace App_UI.Forms
+namespace BestariTerrace.Forms
 {
     public partial class frmOrderType : Form
     {
