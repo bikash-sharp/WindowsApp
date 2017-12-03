@@ -41,21 +41,25 @@ namespace BestariTerrace.UserControls
                     var dataLst = result.data;
                     foreach (var item in dataLst)
                     {
-                        ReservationCL reserve = new ReservationCL();
-                        reserve.TableId = item.Tableorder.id;
-                        reserve.TableNo = "0"; //item.TableNo
-                        reserve.RestrauntId = item.Tableorder.restaurent_id;
-                        reserve.DinerName = item.Tableorder.diner_name;
-                        reserve.GuestCount = item.Tableorder.guests;
-                        reserve.MobileNo = item.Tableorder.mobile;
-                        reserve.ReservationDate = item.Tableorder.date;
-                        reserve.ReservationTime = item.Tableorder.from_time + "-" + item.Tableorder.to_time;
-                        reserve.ReservationStatus = item.Tableorder.status;
-                        if (item.Tableorder.status.ToLower() == "completed")
-                            reserve.ActionText = "Assigned";
-                        else
-                            reserve.ActionText = "Assign Table";
-                        Program.Reservations.Add(reserve);
+                        var isExist = Program.Reservations.Where(p => p.TableId == item.Tableorder.id).Any();
+                        if(!isExist)
+                        {
+                            ReservationCL reserve = new ReservationCL();
+                            reserve.TableId = item.Tableorder.id;
+                            reserve.TableNo = "0"; //item.TableNo
+                            reserve.RestrauntId = item.Tableorder.restaurent_id;
+                            reserve.DinerName = item.Tableorder.diner_name;
+                            reserve.GuestCount = item.Tableorder.guests;
+                            reserve.MobileNo = item.Tableorder.mobile;
+                            reserve.ReservationDate = item.Tableorder.date;
+                            reserve.ReservationTime = item.Tableorder.from_time + "-" + item.Tableorder.to_time;
+                            reserve.ReservationStatus = item.Tableorder.status;
+                            if (item.Tableorder.status.ToLower() == "completed")
+                                reserve.ActionText = "Assigned";
+                            else
+                                reserve.ActionText = "Assign Table";
+                            Program.Reservations.Add(reserve);
+                        }
                     }
 
                     var source = new BindingSource(Program.Reservations.OrderByDescending(p => p.PlaceDate).ThenByDescending(p => p.ReservationStatus).ToList(), null);
