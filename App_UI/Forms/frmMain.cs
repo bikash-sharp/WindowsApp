@@ -111,21 +111,21 @@ namespace BestariTerrace.Forms
                 }
 
                 var ProductList = DataProviderWrapper.Instance.GetData(ProductURL, Verbs.GET, "");
-                
+
                 JavaScriptSerializer serializer = new JavaScriptSerializer();
                 var result = serializer.Deserialize<ProductListAPICL>(ProductList);
-                if(foodtype == "all")
+                if (foodtype == "all")
                 {
-                    foreach(var item in result.data)
+                    foreach (var item in result.data)
                     {
                         var prd = item.Product;
-                        if(prd != null)
+                        if (prd != null)
                         {
                             int productId = int.Parse(prd.id);
                             var IsExists = Program.Products.Where(p => p.ProductID == productId).Any();
-                            if(!IsExists)
+                            if (!IsExists)
                             {
-                                Program.Products.Add(new ProductListCL { ProductID = productId,ProductName=prd.product_name,ProductNumber = prd.product_code, Price= double.Parse(prd.product_price) });
+                                Program.Products.Add(new ProductListCL { ProductID = productId, ProductName = prd.product_name, ProductNumber = prd.product_code, Price = double.Parse(prd.product_price) });
                             }
                         }
                     }
@@ -567,7 +567,7 @@ namespace BestariTerrace.Forms
                     bw.Center("[ContactNumber]");
                     bw.Center("[GSTNumber]");
                 }
-                
+
                 bw.LeftJustify("------------------------------------------------");
                 bw.NormalFont("Invoice #: " + OrderNumber);
                 bw.NormalFont("Staff : test User");
@@ -626,7 +626,7 @@ namespace BestariTerrace.Forms
                     bw.CutPaper();
                 }
             }
-            
+
 
             //bw.Center(Program.StoreInfo.message.Restaurant.restaurant_name);
             //bw.Center(Program.StoreInfo.message.Restaurant.address);
@@ -778,9 +778,14 @@ namespace BestariTerrace.Forms
 
         private void lblOrderCount_Click(object sender, EventArgs e)
         {
-            if (!rdbDelivery.Checked)
+            //if (!rdbDelivery.Checked)
+            //{
+            //    rdbDelivery.Checked = true;
+            //}
+
+            if(!rdbReservation.Checked)
             {
-                rdbDelivery.Checked = true;
+                rdbReservation.Checked = true;
             }
         }
 
@@ -1014,13 +1019,55 @@ namespace BestariTerrace.Forms
                     }
                 }
             }
+
+            #endregion
+
+            #region Reservation
+            string ReservationOrderUrl = URL + "/pendingreservations?acess_token=" + Program.Token;
+
+            var ReservationOrders = DataProviderWrapper.Instance.GetData(ReservationOrderUrl, Verbs.GET, "");
+            var rOrders = serializer.Deserialize<ReservationListAPICL>(ReservationOrders);
+
+            if (rOrders.data != null)
+            {
+                if (rOrders.data.Count > 0)
+                {
+                    var dataLst = result.data;
+                    foreach (var item in dataLst)
+                    {
+                        var isExist = Program.Reservations.Where(p => p.TableId == item.Tableorder.id).Any();
+                        if (!isExist)
+                        {
+                            ReservationCL reserve = new ReservationCL();
+                            reserve.TableId = item.Tableorder.id;
+                            reserve.TableNo = "0"; //item.TableNo
+                            reserve.RestrauntId = item.Tableorder.restaurent_id;
+                            reserve.DinerName = item.Tableorder.diner_name;
+                            reserve.GuestCount = item.Tableorder.guests;
+                            reserve.MobileNo = item.Tableorder.mobile;
+                            reserve.ReservationDate = item.Tableorder.date;
+                            reserve.ReservationTime = item.Tableorder.from_time + "-" + item.Tableorder.to_time;
+                            reserve.ReservationStatus = item.Tableorder.status;
+                            if (item.Tableorder.status.ToLower() == "completed")
+                                reserve.ActionText = "Assigned";
+                            else
+                                reserve.ActionText = "Assign Table";
+                            Program.Reservations.Add(reserve);
+                        }
+                    }
+                }
+            }
+            #endregion
+
             //Get the Counting
             Program.OrderCount(EmOrderType.Delivery);
             //Set the Notification Count
             lblOrderCount.DataBindings.Clear();
             var OrderCount = new Binding("Text", Program.OrderBindings, "OrderCount", true, DataSourceUpdateMode.OnPropertyChanged, "0", "");
             lblOrderCount.DataBindings.Add(OrderCount);
-            #endregion
+
+
+
 
             #region DineInOrder & TakeAwayOrders
             string DineInOrderURL = URL + "/dineinorders?acess_token=" + Program.Token;
@@ -1050,13 +1097,13 @@ namespace BestariTerrace.Forms
                     newOrder.OrderType = OrdType;
                     newOrder.OrderTotal = item.Orderdetail.total;
 
-                    
+
                     var orderCart = item.Orderdetail.cart;
                     if (orderCart.Count > 0)
                     {
-                        foreach(var cItem in orderCart)
+                        foreach (var cItem in orderCart)
                         {
-                            if(cItem.cart != null)
+                            if (cItem.cart != null)
                             {
                                 CartItemsCL newCartItem = new CartItemsCL();
                                 newCartItem.orderNo = OrderId.ToString();
@@ -1073,10 +1120,10 @@ namespace BestariTerrace.Forms
                     _PlacedOrder.Add(newOrder);
                 }
                 //Add the Order in the Programs
-                foreach(var _plOrder in _PlacedOrder)
+                foreach (var _plOrder in _PlacedOrder)
                 {
                     var isExists = Program.PlacedOrders.Where(p => p.OrderNo == _plOrder.OrderNo).Any();
-                    if(!isExists)
+                    if (!isExists)
                     {
                         Program.PlacedOrders.Add(_plOrder);
                         var CartItems = CartItemList.Where(p => p.orderNo == _plOrder.OrderID.ToString()).ToList();

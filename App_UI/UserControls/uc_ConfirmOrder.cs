@@ -28,49 +28,52 @@ namespace BestariTerrace.UserControls
             // dataGridView1.Columns.Clear();
             if (_gridType == EmGridType.Reservation)
             {
-                //Load with Reservations
-                string URL = Program.BaseUrl;
-                string ChangeOrdStatusURL = URL + "/pendingreservations?acess_token=" + Program.Token;
+                ////Load with Reservations
+                //string URL = Program.BaseUrl;
+                //string ChangeOrdStatusURL = URL + "/pendingreservations?acess_token=" + Program.Token;
 
-                var GetStatus = DataProviderWrapper.Instance.GetData(ChangeOrdStatusURL, Verbs.GET, "");
-                JavaScriptSerializer serializer = new JavaScriptSerializer();
-                var result = serializer.Deserialize<ReservationListAPICL>(GetStatus);
+                //var GetStatus = DataProviderWrapper.Instance.GetData(ChangeOrdStatusURL, Verbs.GET, "");
+                //JavaScriptSerializer serializer = new JavaScriptSerializer();
+                //var result = serializer.Deserialize<ReservationListAPICL>(GetStatus);
 
-                if (result.data.Count > 0)
-                {
-                    var dataLst = result.data;
-                    foreach (var item in dataLst)
-                    {
-                        var isExist = Program.Reservations.Where(p => p.TableId == item.Tableorder.id).Any();
-                        if(!isExist)
-                        {
-                            ReservationCL reserve = new ReservationCL();
-                            reserve.TableId = item.Tableorder.id;
-                            reserve.TableNo = "0"; //item.TableNo
-                            reserve.RestrauntId = item.Tableorder.restaurent_id;
-                            reserve.DinerName = item.Tableorder.diner_name;
-                            reserve.GuestCount = item.Tableorder.guests;
-                            reserve.MobileNo = item.Tableorder.mobile;
-                            reserve.ReservationDate = item.Tableorder.date;
-                            reserve.ReservationTime = item.Tableorder.from_time + "-" + item.Tableorder.to_time;
-                            reserve.ReservationStatus = item.Tableorder.status;
-                            if (item.Tableorder.status.ToLower() == "completed")
-                                reserve.ActionText = "Assigned";
-                            else
-                                reserve.ActionText = "Assign Table";
-                            Program.Reservations.Add(reserve);
-                        }
-                    }
+                //if (result.data != null)
+                //{
+                //    if (result.data.Count > 0)
+                //    {
+                //        var dataLst = result.data;
+                //        foreach (var item in dataLst)
+                //        {
+                //            var isExist = Program.Reservations.Where(p => p.TableId == item.Tableorder.id).Any();
+                //            if (!isExist)
+                //            {
+                //                ReservationCL reserve = new ReservationCL();
+                //                reserve.TableId = item.Tableorder.id;
+                //                reserve.TableNo = "0"; //item.TableNo
+                //                reserve.RestrauntId = item.Tableorder.restaurent_id;
+                //                reserve.DinerName = item.Tableorder.diner_name;
+                //                reserve.GuestCount = item.Tableorder.guests;
+                //                reserve.MobileNo = item.Tableorder.mobile;
+                //                reserve.ReservationDate = item.Tableorder.date;
+                //                reserve.ReservationTime = item.Tableorder.from_time + "-" + item.Tableorder.to_time;
+                //                reserve.ReservationStatus = item.Tableorder.status;
+                //                if (item.Tableorder.status.ToLower() == "completed")
+                //                    reserve.ActionText = "Assigned";
+                //                else
+                //                    reserve.ActionText = "Assign Table";
+                //                Program.Reservations.Add(reserve);
+                //            }
+                //        }
+                //    }
+                //}
 
-                    var source = new BindingSource(Program.Reservations.OrderByDescending(p => p.PlaceDate).ThenByDescending(p => p.ReservationStatus).ToList(), null);
-                    dataGridView1.AutoGenerateColumns = false;
-                    dataGridView1.DataSource = source;
-                    dataGridView1.ClearSelection();
-                    //UpdateGridColumnType(EmGridType.Reservation);
-                }
+                var source = new BindingSource(Program.Reservations.OrderByDescending(p => p.ReservationStatus).ToList(), null);
+                dataGridView1.AutoGenerateColumns = false;
+                dataGridView1.DataSource = source;
+                dataGridView1.ClearSelection();
+                //UpdateGridColumnType(EmGridType.Reservation);
             }
 
-            //Clear All DatabBindings and Columns
+            //Clear All Label DatabBindings
             lblOrderTotal.Visible = false;
             label2.Visible = false;
             lblOrderTotal.DataBindings.Clear();

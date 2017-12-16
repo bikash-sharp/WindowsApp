@@ -65,7 +65,7 @@ namespace BestariTerrace
 
         public static void OrderCount(EmOrderType _OrderType)
         {
-            OrderBindings.OrderCount = PlacedOrders.Where(p => p.IsOrderConfirmed == false && p.OrderType == EmOrderType.Delivery ).Count();
+            OrderBindings.OrderCount = Reservations.Where(p => p.ActionText.ToLower().Trim() != "assigned").Count();
             var SumConfirmed = PlacedOrders.Where(p => p.IsOrderConfirmed == true && p.OrderType == _OrderType).Sum(p => double.Parse(p.OrderTotal));
             var SumUncofirmed = PlacedOrders.Where(p => p.IsOrderConfirmed == false && p.OrderType == _OrderType).Sum(p => double.Parse(p.OrderTotal));
             if(_OrderType == EmOrderType.Delivery)
