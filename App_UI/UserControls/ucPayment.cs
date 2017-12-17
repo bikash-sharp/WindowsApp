@@ -209,10 +209,10 @@ namespace BestariTerrace.UserControls
             }
             else if (btn.Text == ".")
             {
-                int count = txtAmount.Text.ToCharArray().Count(c => c == '.');
-                if (count > 1)
+                int count = txtAmount.Text.Count(f => f == '.');
+                if (count == 0)
                 {
-                    txtAmount.Text = txtAmount.Text.TrimEnd().Substring(0, txtAmount.Text.Length - 1);
+                    txtAmount.Text += btn.Text;
                 }
             }
             else if (btn.Text == "<-")

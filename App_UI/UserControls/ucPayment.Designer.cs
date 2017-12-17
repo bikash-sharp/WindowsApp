@@ -46,6 +46,7 @@
             this.button8 = new System.Windows.Forms.Button();
             this.button9 = new System.Windows.Forms.Button();
             this.button10 = new System.Windows.Forms.Button();
+            this.button13 = new System.Windows.Forms.Button();
             this.button11 = new System.Windows.Forms.Button();
             this.button12 = new System.Windows.Forms.Button();
             this.txtAmount = new CustomServerControls.TxtBox();
@@ -66,7 +67,8 @@
             this.btnWallet = new System.Windows.Forms.Button();
             this.shapeContainer4 = new Microsoft.VisualBasic.PowerPacks.ShapeContainer();
             this.rectBtnWallet = new Microsoft.VisualBasic.PowerPacks.RectangleShape();
-            this.button13 = new System.Windows.Forms.Button();
+            this.rectangleShape1 = new Microsoft.VisualBasic.PowerPacks.RectangleShape();
+            this.button14 = new System.Windows.Forms.Button();
             this.tblBase.SuspendLayout();
             this.pnlBase.SuspendLayout();
             this.pnlCash.SuspendLayout();
@@ -336,6 +338,19 @@
             this.button10.UseVisualStyleBackColor = true;
             this.button10.Click += new System.EventHandler(this.button7_Click);
             // 
+            // button13
+            // 
+            this.button13.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.button13.Font = new System.Drawing.Font("Segoe UI Black", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button13.Location = new System.Drawing.Point(129, 180);
+            this.button13.Name = "button13";
+            this.button13.Size = new System.Drawing.Size(54, 53);
+            this.button13.TabIndex = 19;
+            this.button13.Text = ".";
+            this.button13.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.button13.UseVisualStyleBackColor = true;
+            this.button13.Click += new System.EventHandler(this.button7_Click);
+            // 
             // button11
             // 
             this.button11.Cursor = System.Windows.Forms.Cursors.Hand;
@@ -530,13 +545,14 @@
             // 
             // panel3
             // 
+            this.panel3.Controls.Add(this.button14);
             this.panel3.Controls.Add(this.btnWallet);
             this.panel3.Controls.Add(this.shapeContainer4);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel3.Location = new System.Drawing.Point(0, 151);
             this.panel3.Margin = new System.Windows.Forms.Padding(0);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(136, 52);
+            this.panel3.Size = new System.Drawing.Size(136, 106);
             this.panel3.TabIndex = 8;
             // 
             // btnWallet
@@ -562,8 +578,9 @@
             this.shapeContainer4.Margin = new System.Windows.Forms.Padding(0);
             this.shapeContainer4.Name = "shapeContainer4";
             this.shapeContainer4.Shapes.AddRange(new Microsoft.VisualBasic.PowerPacks.Shape[] {
+            this.rectangleShape1,
             this.rectBtnWallet});
-            this.shapeContainer4.Size = new System.Drawing.Size(136, 52);
+            this.shapeContainer4.Size = new System.Drawing.Size(136, 106);
             this.shapeContainer4.TabIndex = 0;
             this.shapeContainer4.TabStop = false;
             // 
@@ -578,18 +595,32 @@
             this.rectBtnWallet.Name = "rectBtnWallet";
             this.rectBtnWallet.Size = new System.Drawing.Size(128, 42);
             // 
-            // button13
+            // rectangleShape1
             // 
-            this.button13.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.button13.Font = new System.Drawing.Font("Segoe UI Black", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button13.Location = new System.Drawing.Point(129, 180);
-            this.button13.Name = "button13";
-            this.button13.Size = new System.Drawing.Size(54, 53);
-            this.button13.TabIndex = 19;
-            this.button13.Text = ".";
-            this.button13.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.button13.UseVisualStyleBackColor = true;
-            this.button13.Click += new System.EventHandler(this.button7_Click);
+            this.rectangleShape1.BackStyle = Microsoft.VisualBasic.PowerPacks.BackStyle.Opaque;
+            this.rectangleShape1.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+            this.rectangleShape1.BorderStyle = System.Drawing.Drawing2D.DashStyle.Dash;
+            this.rectangleShape1.BorderWidth = 2;
+            this.rectangleShape1.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.rectangleShape1.Location = new System.Drawing.Point(4, 52);
+            this.rectangleShape1.Name = "rectangleShape1";
+            this.rectangleShape1.Size = new System.Drawing.Size(128, 42);
+            // 
+            // button14
+            // 
+            this.button14.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.button14.FlatAppearance.BorderSize = 0;
+            this.button14.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
+            this.button14.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
+            this.button14.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button14.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button14.Location = new System.Drawing.Point(8, 56);
+            this.button14.Margin = new System.Windows.Forms.Padding(0);
+            this.button14.Name = "button14";
+            this.button14.Size = new System.Drawing.Size(121, 35);
+            this.button14.TabIndex = 2;
+            this.button14.Text = "WALLET";
+            this.button14.UseVisualStyleBackColor = true;
             // 
             // ucPayment
             // 
@@ -659,5 +690,7 @@
         private System.Windows.Forms.Button button11;
         private System.Windows.Forms.Button button12;
         private System.Windows.Forms.Button button13;
+        private System.Windows.Forms.Button button14;
+        private Microsoft.VisualBasic.PowerPacks.RectangleShape rectangleShape1;
     }
 }
