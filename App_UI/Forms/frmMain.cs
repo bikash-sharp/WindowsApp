@@ -783,7 +783,7 @@ namespace BestariTerrace.Forms
             //    rdbDelivery.Checked = true;
             //}
 
-            if(!rdbReservation.Checked)
+            if (!rdbReservation.Checked)
             {
                 rdbReservation.Checked = true;
             }
@@ -1258,6 +1258,27 @@ namespace BestariTerrace.Forms
 
 
         #endregion
+
+        private void btnlogout_Click(object sender, EventArgs e)
+        {
+            DialogResult msgResult = MessageBox.Show("Do you want to Logout Application ?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+            if (msgResult == DialogResult.Yes)
+            {
+                string URL = Program.BaseUrl;
+                int sessionID = Convert.ToInt32(Program.SessionId);
+                string LogoutURL = URL + "/logout?acess_token=" + Program.Token + "&session_id=" + sessionID;
+                var GetStatus = DataProviderWrapper.Instance.GetData(LogoutURL, Verbs.GET, "");
+
+                JavaScriptSerializer serializer = new JavaScriptSerializer();
+                var result = serializer.Deserialize<logoutCL>(GetStatus);
+                if (!result.status)
+                {
+                    this.Hide();
+                    frmLogin obj = new frmLogin();
+                    obj.Show();
+                }
+            }
+        }
     }
 
     public class BitmapData

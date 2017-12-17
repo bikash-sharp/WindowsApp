@@ -40,6 +40,7 @@ namespace BestariTerrace
         public const String BaseUrl = "http://202.75.42.25/index.php/restwebservices/";
         public const String ProductImagesLoc = "http://202.75.42.25/app/webroot/images/uploads/product_images/";
         public const String StoreImagesLoc = "http://202.75.42.25/app/webroot/images/uploads/restaurants_images/";
+        public static string SessionId { get; set; }
         public static string Token { get; set; }
         public static int SelectedProductId { get; set;}
         public static PlaceOrderBinding OrderBindings = new PlaceOrderBinding();

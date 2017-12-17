@@ -55,6 +55,7 @@ namespace BestariTerrace.Forms
                     if (result.message == "success")
                     {
                         this.Hide();
+                        Program.SessionId = result.sessionid;
                         Program.Token = result.data;
                         frmMain _main = new frmMain();
                         _main.ShowDialog();

@@ -23,7 +23,7 @@ namespace App_BAL
     public enum EmOrderStatus
     {
         Pending = 1,
-        InProgress=4,
+        InProgress = 4,
         Confirmed = 2,
         Delivered = 3
     }
@@ -63,12 +63,12 @@ namespace App_BAL
         public string RestrauntId { get; set; }
         public string DinerName { get; set; }
         public string MobileNo { get; set; }
-        public string ReservationDate { get;set;}
-        public string ReservationTime { get;set;}
+        public string ReservationDate { get; set; }
+        public string ReservationTime { get; set; }
         public string GuestCount { get; set; }
         public DateTime PlaceDate
         {
-            get;set;
+            get; set;
         }
         public string ReservationStatus
         {
@@ -536,6 +536,7 @@ namespace App_BAL
         public bool status { get; set; }
         public string data { get; set; }
         public string message { get; set; }
+        public string sessionid { get; set; }
     }
 
     public class CategoryCL
@@ -647,6 +648,12 @@ namespace App_BAL
         public string orderid { get; set; }
     }
 
+    public class logoutCL
+    {
+        public bool status { get; set; }
+        public string message { get; set; }
+    }
+
     #region PendingOrders
     public class Orderdetail
     {
@@ -728,8 +735,8 @@ namespace App_BAL
         public string created { get; set; }
         public Cart2 cart { get; set; }
         public Restaurant Restaurant { get; set; }
-        public Product Product { get;set;}
-        public User User { get; set; }       
+        public Product Product { get; set; }
+        public User User { get; set; }
     }
 
     public class Restaurant

@@ -35,13 +35,13 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.tblMainLayout = new System.Windows.Forms.TableLayoutPanel();
             this.pnlTopMenu = new System.Windows.Forms.Panel();
+            this.lblSettings = new System.Windows.Forms.Label();
             this.rdbReservation = new System.Windows.Forms.RadioButton();
             this.rdbTakeWay = new System.Windows.Forms.RadioButton();
             this.rdbOrder = new System.Windows.Forms.RadioButton();
             this.rdbProducts = new System.Windows.Forms.RadioButton();
             this.btnExit = new System.Windows.Forms.Button();
             this.lblOrderCount = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pbLogo = new System.Windows.Forms.PictureBox();
             this.rdbDelivery = new System.Windows.Forms.RadioButton();
             this.shapeContainer2 = new Microsoft.VisualBasic.PowerPacks.ShapeContainer();
@@ -54,6 +54,7 @@
             this.ovalShape2 = new Microsoft.VisualBasic.PowerPacks.OvalShape();
             this.rectangleShape4 = new Microsoft.VisualBasic.PowerPacks.RectangleShape();
             this.pnlBase = new System.Windows.Forms.Panel();
+            this.txtSearch = new CustomServerControls.TxtBox();
             this.btnRefresh = new System.Windows.Forms.Button();
             this.btnSearch = new System.Windows.Forms.Button();
             this.flyLayout = new System.Windows.Forms.FlowLayoutPanel();
@@ -75,12 +76,11 @@
             this.shapeContainer4 = new Microsoft.VisualBasic.PowerPacks.ShapeContainer();
             this.lineShape2 = new Microsoft.VisualBasic.PowerPacks.LineShape();
             this.lineShape1 = new Microsoft.VisualBasic.PowerPacks.LineShape();
-            this.txtSearch = new CustomServerControls.TxtBox();
-            this.lblSettings = new System.Windows.Forms.Label();
+            this.btnlogout = new System.Windows.Forms.Button();
+            this.rectangleShape3 = new Microsoft.VisualBasic.PowerPacks.RectangleShape();
             this.uc_CategoryMenu1 = new BestariTerrace.UserControls.uc_CategoryMenu();
             this.tblMainLayout.SuspendLayout();
             this.pnlTopMenu.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbLogo)).BeginInit();
             this.pnlPay.SuspendLayout();
             this.pnlBase.SuspendLayout();
@@ -117,6 +117,7 @@
             // 
             this.pnlTopMenu.BackColor = System.Drawing.Color.Black;
             this.tblMainLayout.SetColumnSpan(this.pnlTopMenu, 3);
+            this.pnlTopMenu.Controls.Add(this.btnlogout);
             this.pnlTopMenu.Controls.Add(this.lblSettings);
             this.pnlTopMenu.Controls.Add(this.rdbReservation);
             this.pnlTopMenu.Controls.Add(this.rdbTakeWay);
@@ -124,7 +125,6 @@
             this.pnlTopMenu.Controls.Add(this.rdbProducts);
             this.pnlTopMenu.Controls.Add(this.btnExit);
             this.pnlTopMenu.Controls.Add(this.lblOrderCount);
-            this.pnlTopMenu.Controls.Add(this.pictureBox1);
             this.pnlTopMenu.Controls.Add(this.pbLogo);
             this.pnlTopMenu.Controls.Add(this.rdbDelivery);
             this.pnlTopMenu.Controls.Add(this.shapeContainer2);
@@ -135,13 +135,25 @@
             this.pnlTopMenu.Size = new System.Drawing.Size(875, 59);
             this.pnlTopMenu.TabIndex = 0;
             // 
+            // lblSettings
+            // 
+            this.lblSettings.AutoSize = true;
+            this.lblSettings.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lblSettings.ForeColor = System.Drawing.Color.White;
+            this.lblSettings.Location = new System.Drawing.Point(189, 19);
+            this.lblSettings.Name = "lblSettings";
+            this.lblSettings.Size = new System.Drawing.Size(82, 21);
+            this.lblSettings.TabIndex = 10;
+            this.lblSettings.Text = "SETTINGS";
+            this.lblSettings.Click += new System.EventHandler(this.lblSettings_Click);
+            // 
             // rdbReservation
             // 
             this.rdbReservation.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.rdbReservation.BackColor = System.Drawing.Color.Transparent;
             this.rdbReservation.Cursor = System.Windows.Forms.Cursors.Hand;
             this.rdbReservation.ForeColor = System.Drawing.Color.White;
-            this.rdbReservation.Location = new System.Drawing.Point(333, 18);
+            this.rdbReservation.Location = new System.Drawing.Point(242, 18);
             this.rdbReservation.Name = "rdbReservation";
             this.rdbReservation.Size = new System.Drawing.Size(140, 25);
             this.rdbReservation.TabIndex = 8;
@@ -155,7 +167,7 @@
             this.rdbTakeWay.BackColor = System.Drawing.Color.Transparent;
             this.rdbTakeWay.Cursor = System.Windows.Forms.Cursors.Hand;
             this.rdbTakeWay.ForeColor = System.Drawing.Color.White;
-            this.rdbTakeWay.Location = new System.Drawing.Point(479, 18);
+            this.rdbTakeWay.Location = new System.Drawing.Point(388, 18);
             this.rdbTakeWay.Name = "rdbTakeWay";
             this.rdbTakeWay.Size = new System.Drawing.Size(123, 25);
             this.rdbTakeWay.TabIndex = 9;
@@ -168,7 +180,7 @@
             this.rdbOrder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.rdbOrder.Cursor = System.Windows.Forms.Cursors.Hand;
             this.rdbOrder.ForeColor = System.Drawing.Color.White;
-            this.rdbOrder.Location = new System.Drawing.Point(604, 19);
+            this.rdbOrder.Location = new System.Drawing.Point(513, 19);
             this.rdbOrder.Name = "rdbOrder";
             this.rdbOrder.Size = new System.Drawing.Size(87, 25);
             this.rdbOrder.TabIndex = 1;
@@ -218,23 +230,13 @@
             this.lblOrderCount.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
             this.lblOrderCount.Cursor = System.Windows.Forms.Cursors.Hand;
             this.lblOrderCount.ForeColor = System.Drawing.Color.White;
-            this.lblOrderCount.Location = new System.Drawing.Point(330, 9);
+            this.lblOrderCount.Location = new System.Drawing.Point(148, 9);
             this.lblOrderCount.Name = "lblOrderCount";
             this.lblOrderCount.Padding = new System.Windows.Forms.Padding(10);
             this.lblOrderCount.Size = new System.Drawing.Size(39, 41);
             this.lblOrderCount.TabIndex = 5;
             this.lblOrderCount.Text = "0";
             this.lblOrderCount.Click += new System.EventHandler(this.lblOrderCount_Click);
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = global::BestariTerrace.Properties.Resources.downlogo;
-            this.pictureBox1.Location = new System.Drawing.Point(149, 7);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(176, 45);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.pictureBox1.TabIndex = 3;
-            this.pictureBox1.TabStop = false;
             // 
             // pbLogo
             // 
@@ -252,7 +254,7 @@
             this.rdbDelivery.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.rdbDelivery.Cursor = System.Windows.Forms.Cursors.Hand;
             this.rdbDelivery.ForeColor = System.Drawing.Color.White;
-            this.rdbDelivery.Location = new System.Drawing.Point(692, 19);
+            this.rdbDelivery.Location = new System.Drawing.Point(601, 19);
             this.rdbDelivery.Name = "rdbDelivery";
             this.rdbDelivery.Size = new System.Drawing.Size(97, 25);
             this.rdbDelivery.TabIndex = 0;
@@ -266,6 +268,7 @@
             this.shapeContainer2.Margin = new System.Windows.Forms.Padding(0);
             this.shapeContainer2.Name = "shapeContainer2";
             this.shapeContainer2.Shapes.AddRange(new Microsoft.VisualBasic.PowerPacks.Shape[] {
+            this.rectangleShape3,
             this.rectangleShape1,
             this.ovalShape1});
             this.shapeContainer2.Size = new System.Drawing.Size(875, 59);
@@ -292,7 +295,7 @@
             this.ovalShape1.BackStyle = Microsoft.VisualBasic.PowerPacks.BackStyle.Opaque;
             this.ovalShape1.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ovalShape1.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
-            this.ovalShape1.Location = new System.Drawing.Point(333, 11);
+            this.ovalShape1.Location = new System.Drawing.Point(148, 11);
             this.ovalShape1.Name = "ovalShape1";
             this.ovalShape1.Size = new System.Drawing.Size(38, 33);
             this.ovalShape1.Visible = false;
@@ -390,6 +393,17 @@
             this.pnlBase.Name = "pnlBase";
             this.pnlBase.Size = new System.Drawing.Size(565, 314);
             this.pnlBase.TabIndex = 5;
+            // 
+            // txtSearch
+            // 
+            this.txtSearch.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtSearch.Font = new System.Drawing.Font("Segoe UI Semibold", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtSearch.Location = new System.Drawing.Point(7, 13);
+            this.txtSearch.Name = "txtSearch";
+            this.txtSearch.PlaceholderText = "Search";
+            this.txtSearch.SelectionHighlightEnabled = false;
+            this.txtSearch.Size = new System.Drawing.Size(286, 29);
+            this.txtSearch.TabIndex = 8;
             // 
             // btnRefresh
             // 
@@ -691,27 +705,39 @@
             this.lineShape1.Y1 = 34;
             this.lineShape1.Y2 = 34;
             // 
-            // txtSearch
+            // btnlogout
             // 
-            this.txtSearch.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtSearch.Font = new System.Drawing.Font("Segoe UI Semibold", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtSearch.Location = new System.Drawing.Point(7, 13);
-            this.txtSearch.Name = "txtSearch";
-            this.txtSearch.PlaceholderText = "Search";
-            this.txtSearch.Size = new System.Drawing.Size(286, 29);
-            this.txtSearch.TabIndex = 8;
+            this.btnlogout.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnlogout.BackColor = System.Drawing.Color.Black;
+            this.btnlogout.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnlogout.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.btnlogout.FlatAppearance.BorderSize = 0;
+            this.btnlogout.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Black;
+            this.btnlogout.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Black;
+            this.btnlogout.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnlogout.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnlogout.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+            this.btnlogout.Location = new System.Drawing.Point(704, 11);
+            this.btnlogout.Name = "btnlogout";
+            this.btnlogout.Size = new System.Drawing.Size(80, 37);
+            this.btnlogout.TabIndex = 11;
+            this.btnlogout.Text = "Logout";
+            this.btnlogout.UseVisualStyleBackColor = false;
+            this.btnlogout.Click += new System.EventHandler(this.btnlogout_Click);
             // 
-            // lblSettings
+            // rectangleShape3
             // 
-            this.lblSettings.AutoSize = true;
-            this.lblSettings.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.lblSettings.ForeColor = System.Drawing.Color.White;
-            this.lblSettings.Location = new System.Drawing.Point(393, 19);
-            this.lblSettings.Name = "lblSettings";
-            this.lblSettings.Size = new System.Drawing.Size(82, 21);
-            this.lblSettings.TabIndex = 10;
-            this.lblSettings.Text = "SETTINGS";
-            this.lblSettings.Click += new System.EventHandler(this.lblSettings_Click);
+            this.rectangleShape3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.rectangleShape3.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+            this.rectangleShape3.BorderStyle = System.Drawing.Drawing2D.DashStyle.Dash;
+            this.rectangleShape3.BorderWidth = 2;
+            this.rectangleShape3.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.rectangleShape3.FillColor = System.Drawing.Color.Black;
+            this.rectangleShape3.FillGradientColor = System.Drawing.Color.Black;
+            this.rectangleShape3.FillStyle = Microsoft.VisualBasic.PowerPacks.FillStyle.Solid;
+            this.rectangleShape3.Location = new System.Drawing.Point(703, 8);
+            this.rectangleShape3.Name = "rectangleShape3";
+            this.rectangleShape3.Size = new System.Drawing.Size(83, 44);
             // 
             // uc_CategoryMenu1
             // 
@@ -741,7 +767,6 @@
             this.tblMainLayout.ResumeLayout(false);
             this.pnlTopMenu.ResumeLayout(false);
             this.pnlTopMenu.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbLogo)).EndInit();
             this.pnlPay.ResumeLayout(false);
             this.pnlBase.ResumeLayout(false);
@@ -762,7 +787,6 @@
         private System.Windows.Forms.Button btnPay;
         private System.Windows.Forms.Panel pnlTopMenu;
         private System.Windows.Forms.Label lblOrderCount;
-        private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.PictureBox pbLogo;
         private System.Windows.Forms.RadioButton rdbOrder;
         private System.Windows.Forms.RadioButton rdbDelivery;
@@ -800,5 +824,7 @@
         private UserControls.uc_CategoryMenu uc_CategoryMenu1;
         private CustomServerControls.TxtBox txtSearch;
         private System.Windows.Forms.Label lblSettings;
+        private System.Windows.Forms.Button btnlogout;
+        private Microsoft.VisualBasic.PowerPacks.RectangleShape rectangleShape3;
     }
 }

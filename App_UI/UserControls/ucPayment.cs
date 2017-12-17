@@ -203,13 +203,21 @@ namespace BestariTerrace.UserControls
         private void button7_Click(object sender, EventArgs e)
         {
             Button btn = sender as Button;
-            if(btn.Text == "clear")
+            if (btn.Text == "clear")
             {
                 txtAmount.Clear();
             }
-            else if(btn.Text =="<-")
+            else if (btn.Text == ".")
             {
-                if(!String.IsNullOrEmpty(txtAmount.Text))
+                int count = txtAmount.Text.ToCharArray().Count(c => c == '.');
+                if (count > 1)
+                {
+                    txtAmount.Text = txtAmount.Text.TrimEnd().Substring(0, txtAmount.Text.Length - 1);
+                }
+            }
+            else if (btn.Text == "<-")
+            {
+                if (!String.IsNullOrEmpty(txtAmount.Text))
                 {
                     string val = txtAmount.Text.TrimEnd().Substring(0, txtAmount.Text.Length - 1);
                     txtAmount.Text = val;
@@ -218,7 +226,7 @@ namespace BestariTerrace.UserControls
             }
             else
             {
-                if(txtAmount.Text  == "0" && btn.Text  == "0")
+                if (txtAmount.Text == "0" && btn.Text == "0")
                 {
                     txtAmount.Text = btn.Text;
                 }
