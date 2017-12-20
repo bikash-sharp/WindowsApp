@@ -64,11 +64,11 @@
             this.shapeContainer3 = new Microsoft.VisualBasic.PowerPacks.ShapeContainer();
             this.rectBtnCard = new Microsoft.VisualBasic.PowerPacks.RectangleShape();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.button14 = new System.Windows.Forms.Button();
             this.btnWallet = new System.Windows.Forms.Button();
             this.shapeContainer4 = new Microsoft.VisualBasic.PowerPacks.ShapeContainer();
-            this.rectBtnWallet = new Microsoft.VisualBasic.PowerPacks.RectangleShape();
             this.rectangleShape1 = new Microsoft.VisualBasic.PowerPacks.RectangleShape();
-            this.button14 = new System.Windows.Forms.Button();
+            this.rectBtnWallet = new Microsoft.VisualBasic.PowerPacks.RectangleShape();
             this.tblBase.SuspendLayout();
             this.pnlBase.SuspendLayout();
             this.pnlCash.SuspendLayout();
@@ -555,6 +555,22 @@
             this.panel3.Size = new System.Drawing.Size(136, 106);
             this.panel3.TabIndex = 8;
             // 
+            // button14
+            // 
+            this.button14.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.button14.FlatAppearance.BorderSize = 0;
+            this.button14.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
+            this.button14.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
+            this.button14.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button14.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button14.Location = new System.Drawing.Point(8, 56);
+            this.button14.Margin = new System.Windows.Forms.Padding(0);
+            this.button14.Name = "button14";
+            this.button14.Size = new System.Drawing.Size(121, 35);
+            this.button14.TabIndex = 2;
+            this.button14.Text = "DISCOUNT";
+            this.button14.UseVisualStyleBackColor = true;
+            // 
             // btnWallet
             // 
             this.btnWallet.Cursor = System.Windows.Forms.Cursors.Hand;
@@ -584,17 +600,6 @@
             this.shapeContainer4.TabIndex = 0;
             this.shapeContainer4.TabStop = false;
             // 
-            // rectBtnWallet
-            // 
-            this.rectBtnWallet.BackStyle = Microsoft.VisualBasic.PowerPacks.BackStyle.Opaque;
-            this.rectBtnWallet.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
-            this.rectBtnWallet.BorderStyle = System.Drawing.Drawing2D.DashStyle.Dash;
-            this.rectBtnWallet.BorderWidth = 2;
-            this.rectBtnWallet.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.rectBtnWallet.Location = new System.Drawing.Point(4, 4);
-            this.rectBtnWallet.Name = "rectBtnWallet";
-            this.rectBtnWallet.Size = new System.Drawing.Size(128, 42);
-            // 
             // rectangleShape1
             // 
             this.rectangleShape1.BackStyle = Microsoft.VisualBasic.PowerPacks.BackStyle.Opaque;
@@ -606,21 +611,16 @@
             this.rectangleShape1.Name = "rectangleShape1";
             this.rectangleShape1.Size = new System.Drawing.Size(128, 42);
             // 
-            // button14
+            // rectBtnWallet
             // 
-            this.button14.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.button14.FlatAppearance.BorderSize = 0;
-            this.button14.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
-            this.button14.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
-            this.button14.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button14.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button14.Location = new System.Drawing.Point(8, 56);
-            this.button14.Margin = new System.Windows.Forms.Padding(0);
-            this.button14.Name = "button14";
-            this.button14.Size = new System.Drawing.Size(121, 35);
-            this.button14.TabIndex = 2;
-            this.button14.Text = "WALLET";
-            this.button14.UseVisualStyleBackColor = true;
+            this.rectBtnWallet.BackStyle = Microsoft.VisualBasic.PowerPacks.BackStyle.Opaque;
+            this.rectBtnWallet.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+            this.rectBtnWallet.BorderStyle = System.Drawing.Drawing2D.DashStyle.Dash;
+            this.rectBtnWallet.BorderWidth = 2;
+            this.rectBtnWallet.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.rectBtnWallet.Location = new System.Drawing.Point(4, 4);
+            this.rectBtnWallet.Name = "rectBtnWallet";
+            this.rectBtnWallet.Size = new System.Drawing.Size(128, 42);
             // 
             // ucPayment
             // 

@@ -973,48 +973,51 @@ namespace BestariTerrace.Forms
             var result = serializer.Deserialize<PendingOrderAPI>(GetStatus);
             if (result != null)
             {
-                foreach (var item in result.data)
+                if (result.data != null)
                 {
-                    var OrderId = "" + item.Order?.Orderdetail?.order_id;
-                    var _OrderType = EmOrderType.Delivery;
-                    var ordType = "" + item.Order?.Orderdetail?.order_type;
-                    if (ordType.ToLower() == "dine_in")
+                    foreach (var item in result.data)
                     {
-                        _OrderType = EmOrderType.DineIn;
-                    }
-                    else if (ordType.ToLower() == "takeout" || ordType.ToLower() == "take_away")
-                    {
-                        _OrderType = EmOrderType.TakeOut;
-                    }
-                    else
-                    {
-                        _OrderType = EmOrderType.Delivery;
-                    }
-                    var ordStatus = EmOrderStatus.Pending;
-                    var btnActionText = "Update Status";
-                    var OrderStatus = "" + item.Order?.Orderdetail?.order_status;
-                    if (OrderStatus.ToLower().Trim() == "pending")
-                    {
-                        ordStatus = EmOrderStatus.Pending;
-                        btnActionText = "Pending Status";
-                    }
-                    else if (OrderStatus.ToLower().Trim() == "in_progress")
-                    {
-                        ordStatus = EmOrderStatus.Confirmed;
-                        btnActionText = "In-Progress Status";
-                    }
-                    else if (OrderStatus.ToLower().Trim() == "completed")
-                    {
-                        ordStatus = EmOrderStatus.Delivered;
-                        btnActionText = "Delivered";
-                    }
-                    var Total = "" + item.Order?.Orderdetail?.total;
-                    if (!String.IsNullOrEmpty(OrderId) && !String.IsNullOrEmpty(OrderStatus) && _OrderType == EmOrderType.Delivery)
-                    {
-                        bool isExist = Program.PlacedOrders.Where(p => p.OrderNo == OrderId).Any();
-                        if (!isExist)
+                        var OrderId = "" + item.Order?.Orderdetail?.order_id;
+                        var _OrderType = EmOrderType.Delivery;
+                        var ordType = "" + item.Order?.Orderdetail?.order_type;
+                        if (ordType.ToLower() == "dine_in")
                         {
-                            Program.PlacedOrders.Add(new CartCL { OrderNo = OrderId.Trim(), OrderStatus = ordStatus, OrderType = _OrderType, OrderTotal = Total, IsOrderConfirmed = false, BtnActionStatus = btnActionText });
+                            _OrderType = EmOrderType.DineIn;
+                        }
+                        else if (ordType.ToLower() == "takeout" || ordType.ToLower() == "take_away")
+                        {
+                            _OrderType = EmOrderType.TakeOut;
+                        }
+                        else
+                        {
+                            _OrderType = EmOrderType.Delivery;
+                        }
+                        var ordStatus = EmOrderStatus.Pending;
+                        var btnActionText = "Update Status";
+                        var OrderStatus = "" + item.Order?.Orderdetail?.order_status;
+                        if (OrderStatus.ToLower().Trim() == "pending")
+                        {
+                            ordStatus = EmOrderStatus.Pending;
+                            btnActionText = "Pending Status";
+                        }
+                        else if (OrderStatus.ToLower().Trim() == "in_progress")
+                        {
+                            ordStatus = EmOrderStatus.Confirmed;
+                            btnActionText = "In-Progress Status";
+                        }
+                        else if (OrderStatus.ToLower().Trim() == "completed")
+                        {
+                            ordStatus = EmOrderStatus.Delivered;
+                            btnActionText = "Delivered";
+                        }
+                        var Total = "" + item.Order?.Orderdetail?.total;
+                        if (!String.IsNullOrEmpty(OrderId) && !String.IsNullOrEmpty(OrderStatus) && _OrderType == EmOrderType.Delivery)
+                        {
+                            bool isExist = Program.PlacedOrders.Where(p => p.OrderNo == OrderId).Any();
+                            if (!isExist)
+                            {
+                                Program.PlacedOrders.Add(new CartCL { OrderNo = OrderId.Trim(), OrderStatus = ordStatus, OrderType = _OrderType, OrderTotal = Total, IsOrderConfirmed = false, BtnActionStatus = btnActionText });
+                            }
                         }
                     }
                 }
@@ -1077,47 +1080,49 @@ namespace BestariTerrace.Forms
             List<CartItemsCL> CartItemList = new List<CartItemsCL>();
             if (dineResult != null)
             {
-                foreach (var item in dineResult.data)
+                if (dineResult.data != null)
                 {
-                    var OrderId = "" + item.Orderdetail?.order_id;
-                    var _OrderType = item.Orderdetail?.order_type;
-                    var OrdStatus = EmOrderStatus.Delivered;
-                    var OrdType = EmOrderType.DineIn;
-                    if (_OrderType == "dine_in")
+                    foreach (var item in dineResult.data)
                     {
-                        OrdType = EmOrderType.DineIn;
-                    }
-                    else
-                    {
-                        OrdType = EmOrderType.TakeOut;
-                    }
-                    CartCL newOrder = new CartCL();
-                    newOrder.OrderNo = OrderId.ToString();
-                    newOrder.OrderStatus = OrdStatus;
-                    newOrder.OrderType = OrdType;
-                    newOrder.OrderTotal = item.Orderdetail.total;
-
-
-                    var orderCart = item.Orderdetail.cart;
-                    if (orderCart.Count > 0)
-                    {
-                        foreach (var cItem in orderCart)
+                        var OrderId = "" + item.Orderdetail?.order_id;
+                        var _OrderType = item.Orderdetail?.order_type;
+                        var OrdStatus = EmOrderStatus.Delivered;
+                        var OrdType = EmOrderType.DineIn;
+                        if (_OrderType == "dine_in")
                         {
-                            if (cItem.cart != null)
+                            OrdType = EmOrderType.DineIn;
+                        }
+                        else
+                        {
+                            OrdType = EmOrderType.TakeOut;
+                        }
+                        CartCL newOrder = new CartCL();
+                        newOrder.OrderNo = OrderId.ToString();
+                        newOrder.OrderStatus = OrdStatus;
+                        newOrder.OrderType = OrdType;
+                        newOrder.OrderTotal = item.Orderdetail.total;
+
+
+                        var orderCart = item.Orderdetail.cart;
+                        if (orderCart.Count > 0)
+                        {
+                            foreach (var cItem in orderCart)
                             {
-                                CartItemsCL newCartItem = new CartItemsCL();
-                                newCartItem.orderNo = OrderId.ToString();
-                                newCartItem.ProductID = int.Parse(cItem.cart.product_id);
-                                newCartItem.ProductName = cItem.Product.product_name;
-                                newCartItem.OriginalPrice = double.Parse(cItem.Product.product_price);//cItem.cart.product_price 
-                                newCartItem.GrandTotal = double.Parse(cItem.cart.total_price);
-                                newCartItem.Quantity = int.Parse(cItem.cart.quantity);
-                                CartItemList.Add(newCartItem);
+                                if (cItem.cart != null)
+                                {
+                                    CartItemsCL newCartItem = new CartItemsCL();
+                                    newCartItem.orderNo = OrderId.ToString();
+                                    newCartItem.ProductID = int.Parse(cItem.cart.product_id);
+                                    newCartItem.ProductName = cItem.Product.product_name;
+                                    newCartItem.OriginalPrice = double.Parse(cItem.Product.product_price);//cItem.cart.product_price 
+                                    newCartItem.GrandTotal = double.Parse(cItem.cart.total_price);
+                                    newCartItem.Quantity = int.Parse(cItem.cart.quantity);
+                                    CartItemList.Add(newCartItem);
+                                }
                             }
                         }
+                        _PlacedOrder.Add(newOrder);
                     }
-
-                    _PlacedOrder.Add(newOrder);
                 }
                 //Add the Order in the Programs
                 foreach (var _plOrder in _PlacedOrder)
@@ -1265,18 +1270,18 @@ namespace BestariTerrace.Forms
             if (msgResult == DialogResult.Yes)
             {
                 string URL = Program.BaseUrl;
-                int sessionID = Convert.ToInt32(Program.SessionId);
-                string LogoutURL = URL + "/logout?acess_token=" + Program.Token + "&session_id=" + sessionID;
+                string LogoutURL = URL + "/logout?acess_token=" + Program.Token + "&session_id=" + Program.SessionId;
                 var GetStatus = DataProviderWrapper.Instance.GetData(LogoutURL, Verbs.GET, "");
 
                 JavaScriptSerializer serializer = new JavaScriptSerializer();
                 var result = serializer.Deserialize<logoutCL>(GetStatus);
-                if (!result.status)
-                {
-                    this.Hide();
-                    frmLogin obj = new frmLogin();
-                    obj.Show();
-                }
+                this.Hide();
+                frmLogin obj = new frmLogin();
+                obj.Show();
+                //if (!result.status)
+                //{
+                    
+                //}
             }
         }
     }

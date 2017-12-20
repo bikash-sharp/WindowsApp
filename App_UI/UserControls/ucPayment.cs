@@ -202,6 +202,7 @@ namespace BestariTerrace.UserControls
 
         private void button7_Click(object sender, EventArgs e)
         {
+            decimal Amount = 0;
             Button btn = sender as Button;
             if (btn.Text == "clear")
             {
@@ -209,11 +210,19 @@ namespace BestariTerrace.UserControls
             }
             else if (btn.Text == ".")
             {
-                int count = txtAmount.Text.Count(f => f == '.');
-                if (count == 0)
+                if (txtAmount.Text.Length > 0)
                 {
-                    txtAmount.Text += btn.Text;
+                    if (!txtAmount.Text.Contains("."))
+                    {
+                        txtAmount.Text += btn.Text;
+                    }
                 }
+                else
+                {
+                    txtAmount.Text = "0" + btn.Text;
+                }
+                txtAmount_TextChanged(txtAmount, null);
+
             }
             else if (btn.Text == "<-")
             {
@@ -226,16 +235,29 @@ namespace BestariTerrace.UserControls
             }
             else
             {
-                if (txtAmount.Text == "0" && btn.Text == "0")
+                decimal.TryParse(txtAmount.Text, out Amount);
+
+                if (txtAmount.Text == "0" && btn.Text == "0" && Amount == 0)
                 {
                     txtAmount.Text = btn.Text;
                 }
                 else
                 {
+                    if (txtAmount.Text.Contains("."))
+                    {
+                        decimal.TryParse(txtAmount.Text, out Amount);
+                        var newAmount = Amount.ToString("N2");
+
+                        if (newAmount.Split('.')[1] == "00")
+                            txtAmount.Text = newAmount.Substring(0, newAmount.Length - 2);
+                        else
+                            txtAmount.Text = newAmount.Substring(0, newAmount.Length - 1);
+                    }
                     txtAmount.Text += btn.Text;
                 }
                 txtAmount_TextChanged(txtAmount, null);
             }
+
         }
     }
 }
