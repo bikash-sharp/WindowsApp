@@ -32,13 +32,20 @@ namespace App_BAL
         TakeOut = 1,
         Delivery = 2,
         DineIn = 3,
-        Reservation = 4
+        Reservation = 4,
+        CounterSale=5
     }
     public enum EmPaymentType
     {
         Cash = 1,
         Card = 2,
         Wallet = 3
+    }
+
+    public enum EmDiscountType
+    {
+        Amount,
+        Percent
     }
 
     public enum EmGridType
@@ -131,8 +138,12 @@ namespace App_BAL
         public string BtnActionStatus { get; set; }
         public int SrNo { get; set; }
         public int OrderID { get; set; }
+        public string TableNo { get; set; }
         public string OrderNo { get; set; }
         public string OrderTotal { get; set; }
+        public double DiscountAmt { get; set; }
+        public string DiscountType { get; set; }
+        public string OrderRemarks { get; set; }
         public EmOrderType OrderType { get; set; }
         public BindingList<CartItemsCL> Items { get; set; }
         public bool IsOrderConfirmed { get; set; }
@@ -335,6 +346,9 @@ namespace App_BAL
 
     public class CartItemsCL : INotifyPropertyChanged
     {
+        //Used in Case of Counter Sales
+        public string Description { get; set;}
+        public decimal SaleTotal { get; set; }
         private int QuantityValue = 0;
         private double PriceValue = 0;
         private double CartTotalValue = 0;

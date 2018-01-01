@@ -552,7 +552,7 @@
             this.panel3.Location = new System.Drawing.Point(0, 151);
             this.panel3.Margin = new System.Windows.Forms.Padding(0);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(136, 106);
+            this.panel3.Size = new System.Drawing.Size(136, 100);
             this.panel3.TabIndex = 8;
             // 
             // button14
@@ -570,6 +570,7 @@
             this.button14.TabIndex = 2;
             this.button14.Text = "DISCOUNT";
             this.button14.UseVisualStyleBackColor = true;
+            this.button14.Click += new System.EventHandler(this.button14_Click);
             // 
             // btnWallet
             // 
@@ -596,7 +597,7 @@
             this.shapeContainer4.Shapes.AddRange(new Microsoft.VisualBasic.PowerPacks.Shape[] {
             this.rectangleShape1,
             this.rectBtnWallet});
-            this.shapeContainer4.Size = new System.Drawing.Size(136, 106);
+            this.shapeContainer4.Size = new System.Drawing.Size(136, 100);
             this.shapeContainer4.TabIndex = 0;
             this.shapeContainer4.TabStop = false;
             // 

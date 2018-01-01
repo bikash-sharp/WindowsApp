@@ -11,6 +11,7 @@ using App_BAL;
 using App_Wrapper;
 using System.Web.Script.Serialization;
 using Newtonsoft.Json;
+using BestariTerrace.Forms;
 
 namespace BestariTerrace.UserControls
 {
@@ -20,6 +21,10 @@ namespace BestariTerrace.UserControls
         public double RemAmount = 0;
         public EmPaymentType PayementType = EmPaymentType.Cash;
         public string LastTransactionID = string.Empty;
+        public bool IsAmount = false;
+        public bool IsDiscount = false;
+        public double DiscountAmt = 0;
+        public EmDiscountType DiscountType;
         public ucPayment()
         {
             InitializeComponent();
@@ -255,6 +260,35 @@ namespace BestariTerrace.UserControls
                     }
                     txtAmount.Text += btn.Text;
                 }
+                txtAmount_TextChanged(txtAmount, null);
+            }
+
+        }
+
+        private void button14_Click(object sender, EventArgs e)
+        {
+            frmDiscount frm = new frmDiscount();
+            frm.OriginalAmt = RemAmount;
+            if (IsDiscount)
+            {
+                frm.DiscountType = DiscountType;
+                frm.DiscountAmt = DiscountAmt;
+            }
+            frm.ShowDialog();
+            DiscountType = frm.DiscountType;
+            if(DiscountAmt > 0)
+            {
+                if(DiscountType == EmDiscountType.Amount)
+                {
+                    RemAmount = RemAmount - DiscountAmt;
+                }
+                else if(DiscountType == EmDiscountType.Percent)
+                {
+                    DiscountAmt = (RemAmount * DiscountAmt) / 100;
+                    RemAmount = RemAmount - DiscountAmt;
+                }
+
+                BindData(RemAmount);
                 txtAmount_TextChanged(txtAmount, null);
             }
 

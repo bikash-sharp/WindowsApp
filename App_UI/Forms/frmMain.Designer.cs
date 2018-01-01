@@ -40,7 +40,6 @@
             this.rdbReservation = new System.Windows.Forms.RadioButton();
             this.rdbTakeWay = new System.Windows.Forms.RadioButton();
             this.rdbOrder = new System.Windows.Forms.RadioButton();
-            this.rdbProducts = new System.Windows.Forms.RadioButton();
             this.btnExit = new System.Windows.Forms.Button();
             this.lblOrderCount = new System.Windows.Forms.Label();
             this.pbLogo = new System.Windows.Forms.PictureBox();
@@ -48,7 +47,7 @@
             this.shapeContainer2 = new Microsoft.VisualBasic.PowerPacks.ShapeContainer();
             this.rectangleShape3 = new Microsoft.VisualBasic.PowerPacks.RectangleShape();
             this.rectangleShape1 = new Microsoft.VisualBasic.PowerPacks.RectangleShape();
-            this.ovalShape1 = new Microsoft.VisualBasic.PowerPacks.OvalShape();
+            this.rdbProducts = new System.Windows.Forms.RadioButton();
             this.pnlPay = new System.Windows.Forms.Panel();
             this.btnPay = new System.Windows.Forms.Button();
             this.shapeContainer1 = new Microsoft.VisualBasic.PowerPacks.ShapeContainer();
@@ -56,6 +55,7 @@
             this.ovalShape2 = new Microsoft.VisualBasic.PowerPacks.OvalShape();
             this.rectangleShape4 = new Microsoft.VisualBasic.PowerPacks.RectangleShape();
             this.pnlBase = new System.Windows.Forms.Panel();
+            this.btnCounterSale = new System.Windows.Forms.Button();
             this.txtSearch = new CustomServerControls.TxtBox();
             this.btnRefresh = new System.Windows.Forms.Button();
             this.btnSearch = new System.Windows.Forms.Button();
@@ -93,10 +93,10 @@
             // 
             this.tblMainLayout.BackColor = System.Drawing.Color.White;
             this.tblMainLayout.ColumnCount = 4;
-            this.tblMainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tblMainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 10F));
             this.tblMainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tblMainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 290F));
-            this.tblMainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tblMainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 300F));
+            this.tblMainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 10F));
             this.tblMainLayout.Controls.Add(this.pnlTopMenu, 1, 0);
             this.tblMainLayout.Controls.Add(this.pnlPay, 2, 2);
             this.tblMainLayout.Controls.Add(this.pnlBase, 1, 1);
@@ -122,17 +122,17 @@
             this.pnlTopMenu.Controls.Add(this.rdbReservation);
             this.pnlTopMenu.Controls.Add(this.rdbTakeWay);
             this.pnlTopMenu.Controls.Add(this.rdbOrder);
-            this.pnlTopMenu.Controls.Add(this.rdbProducts);
             this.pnlTopMenu.Controls.Add(this.btnExit);
             this.pnlTopMenu.Controls.Add(this.lblOrderCount);
             this.pnlTopMenu.Controls.Add(this.pbLogo);
             this.pnlTopMenu.Controls.Add(this.rdbDelivery);
             this.pnlTopMenu.Controls.Add(this.shapeContainer2);
+            this.pnlTopMenu.Controls.Add(this.rdbProducts);
             this.pnlTopMenu.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlTopMenu.Location = new System.Drawing.Point(20, 0);
+            this.pnlTopMenu.Location = new System.Drawing.Point(10, 0);
             this.pnlTopMenu.Margin = new System.Windows.Forms.Padding(0);
             this.pnlTopMenu.Name = "pnlTopMenu";
-            this.pnlTopMenu.Size = new System.Drawing.Size(875, 59);
+            this.pnlTopMenu.Size = new System.Drawing.Size(885, 59);
             this.pnlTopMenu.TabIndex = 0;
             // 
             // btnlogout
@@ -145,11 +145,11 @@
             this.btnlogout.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Black;
             this.btnlogout.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Black;
             this.btnlogout.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnlogout.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnlogout.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnlogout.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
-            this.btnlogout.Location = new System.Drawing.Point(686, 11);
+            this.btnlogout.Location = new System.Drawing.Point(726, 11);
             this.btnlogout.Name = "btnlogout";
-            this.btnlogout.Size = new System.Drawing.Size(97, 37);
+            this.btnlogout.Size = new System.Drawing.Size(85, 37);
             this.btnlogout.TabIndex = 11;
             this.btnlogout.Text = "LOG OUT";
             this.btnlogout.UseVisualStyleBackColor = false;
@@ -159,10 +159,11 @@
             // 
             this.lblSettings.AutoSize = true;
             this.lblSettings.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lblSettings.Font = new System.Drawing.Font("Segoe UI Semibold", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSettings.ForeColor = System.Drawing.Color.White;
-            this.lblSettings.Location = new System.Drawing.Point(189, 19);
+            this.lblSettings.Location = new System.Drawing.Point(179, 22);
             this.lblSettings.Name = "lblSettings";
-            this.lblSettings.Size = new System.Drawing.Size(82, 21);
+            this.lblSettings.Size = new System.Drawing.Size(56, 13);
             this.lblSettings.TabIndex = 10;
             this.lblSettings.Text = "SETTINGS";
             this.lblSettings.Click += new System.EventHandler(this.lblSettings_Click);
@@ -172,10 +173,11 @@
             this.rdbReservation.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.rdbReservation.BackColor = System.Drawing.Color.Transparent;
             this.rdbReservation.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.rdbReservation.Font = new System.Drawing.Font("Segoe UI Semibold", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rdbReservation.ForeColor = System.Drawing.Color.White;
-            this.rdbReservation.Location = new System.Drawing.Point(226, 18);
+            this.rdbReservation.Location = new System.Drawing.Point(401, 17);
             this.rdbReservation.Name = "rdbReservation";
-            this.rdbReservation.Size = new System.Drawing.Size(140, 25);
+            this.rdbReservation.Size = new System.Drawing.Size(100, 25);
             this.rdbReservation.TabIndex = 8;
             this.rdbReservation.Text = "RESERVATIONS";
             this.rdbReservation.UseVisualStyleBackColor = false;
@@ -186,10 +188,11 @@
             this.rdbTakeWay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.rdbTakeWay.BackColor = System.Drawing.Color.Transparent;
             this.rdbTakeWay.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.rdbTakeWay.Font = new System.Drawing.Font("Segoe UI Semibold", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rdbTakeWay.ForeColor = System.Drawing.Color.White;
-            this.rdbTakeWay.Location = new System.Drawing.Point(372, 18);
+            this.rdbTakeWay.Location = new System.Drawing.Point(500, 18);
             this.rdbTakeWay.Name = "rdbTakeWay";
-            this.rdbTakeWay.Size = new System.Drawing.Size(123, 25);
+            this.rdbTakeWay.Size = new System.Drawing.Size(84, 25);
             this.rdbTakeWay.TabIndex = 9;
             this.rdbTakeWay.Text = "TAKE-AWAY";
             this.rdbTakeWay.UseVisualStyleBackColor = false;
@@ -199,30 +202,15 @@
             // 
             this.rdbOrder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.rdbOrder.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.rdbOrder.Font = new System.Drawing.Font("Segoe UI Semibold", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rdbOrder.ForeColor = System.Drawing.Color.White;
-            this.rdbOrder.Location = new System.Drawing.Point(497, 19);
+            this.rdbOrder.Location = new System.Drawing.Point(583, 19);
             this.rdbOrder.Name = "rdbOrder";
-            this.rdbOrder.Size = new System.Drawing.Size(87, 25);
+            this.rdbOrder.Size = new System.Drawing.Size(65, 25);
             this.rdbOrder.TabIndex = 1;
             this.rdbOrder.Text = "DINE-IN";
             this.rdbOrder.UseVisualStyleBackColor = true;
             this.rdbOrder.CheckedChanged += new System.EventHandler(this.rdbOrder_CheckedChanged);
-            // 
-            // rdbProducts
-            // 
-            this.rdbProducts.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.rdbProducts.Checked = true;
-            this.rdbProducts.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.rdbProducts.ForeColor = System.Drawing.Color.White;
-            this.rdbProducts.Location = new System.Drawing.Point(380, 18);
-            this.rdbProducts.Name = "rdbProducts";
-            this.rdbProducts.Size = new System.Drawing.Size(61, 25);
-            this.rdbProducts.TabIndex = 7;
-            this.rdbProducts.TabStop = true;
-            this.rdbProducts.Text = "ALL";
-            this.rdbProducts.UseVisualStyleBackColor = true;
-            this.rdbProducts.Visible = false;
-            this.rdbProducts.CheckedChanged += new System.EventHandler(this.rdbProducts_CheckedChanged);
             // 
             // btnExit
             // 
@@ -234,11 +222,11 @@
             this.btnExit.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Black;
             this.btnExit.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Black;
             this.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnExit.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnExit.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnExit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
-            this.btnExit.Location = new System.Drawing.Point(797, 11);
+            this.btnExit.Location = new System.Drawing.Point(824, 12);
             this.btnExit.Name = "btnExit";
-            this.btnExit.Size = new System.Drawing.Size(70, 38);
+            this.btnExit.Size = new System.Drawing.Size(50, 36);
             this.btnExit.TabIndex = 6;
             this.btnExit.Text = "EXIT";
             this.btnExit.UseVisualStyleBackColor = false;
@@ -249,11 +237,12 @@
             this.lblOrderCount.AutoSize = true;
             this.lblOrderCount.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
             this.lblOrderCount.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lblOrderCount.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblOrderCount.ForeColor = System.Drawing.Color.White;
-            this.lblOrderCount.Location = new System.Drawing.Point(148, 9);
+            this.lblOrderCount.Location = new System.Drawing.Point(138, 12);
             this.lblOrderCount.Name = "lblOrderCount";
             this.lblOrderCount.Padding = new System.Windows.Forms.Padding(10);
-            this.lblOrderCount.Size = new System.Drawing.Size(39, 41);
+            this.lblOrderCount.Size = new System.Drawing.Size(34, 35);
             this.lblOrderCount.TabIndex = 5;
             this.lblOrderCount.Text = "0";
             this.lblOrderCount.Click += new System.EventHandler(this.lblOrderCount_Click);
@@ -261,7 +250,7 @@
             // pbLogo
             // 
             this.pbLogo.Image = global::BestariTerrace.Properties.Resources.logoblack;
-            this.pbLogo.Location = new System.Drawing.Point(7, 13);
+            this.pbLogo.Location = new System.Drawing.Point(3, 13);
             this.pbLogo.Margin = new System.Windows.Forms.Padding(0);
             this.pbLogo.Name = "pbLogo";
             this.pbLogo.Size = new System.Drawing.Size(131, 33);
@@ -273,10 +262,11 @@
             // 
             this.rdbDelivery.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.rdbDelivery.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.rdbDelivery.Font = new System.Drawing.Font("Segoe UI Semibold", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rdbDelivery.ForeColor = System.Drawing.Color.White;
-            this.rdbDelivery.Location = new System.Drawing.Point(585, 19);
+            this.rdbDelivery.Location = new System.Drawing.Point(647, 19);
             this.rdbDelivery.Name = "rdbDelivery";
-            this.rdbDelivery.Size = new System.Drawing.Size(97, 25);
+            this.rdbDelivery.Size = new System.Drawing.Size(73, 25);
             this.rdbDelivery.TabIndex = 0;
             this.rdbDelivery.Text = "DELIVERY";
             this.rdbDelivery.UseVisualStyleBackColor = true;
@@ -289,9 +279,8 @@
             this.shapeContainer2.Name = "shapeContainer2";
             this.shapeContainer2.Shapes.AddRange(new Microsoft.VisualBasic.PowerPacks.Shape[] {
             this.rectangleShape3,
-            this.rectangleShape1,
-            this.ovalShape1});
-            this.shapeContainer2.Size = new System.Drawing.Size(875, 59);
+            this.rectangleShape1});
+            this.shapeContainer2.Size = new System.Drawing.Size(885, 59);
             this.shapeContainer2.TabIndex = 4;
             this.shapeContainer2.TabStop = false;
             // 
@@ -305,9 +294,9 @@
             this.rectangleShape3.FillColor = System.Drawing.Color.Black;
             this.rectangleShape3.FillGradientColor = System.Drawing.Color.Black;
             this.rectangleShape3.FillStyle = Microsoft.VisualBasic.PowerPacks.FillStyle.Solid;
-            this.rectangleShape3.Location = new System.Drawing.Point(685, 8);
+            this.rectangleShape3.Location = new System.Drawing.Point(724, 8);
             this.rectangleShape3.Name = "rectangleShape3";
-            this.rectangleShape3.Size = new System.Drawing.Size(99, 44);
+            this.rectangleShape3.Size = new System.Drawing.Size(92, 44);
             // 
             // rectangleShape1
             // 
@@ -319,21 +308,26 @@
             this.rectangleShape1.FillColor = System.Drawing.Color.Black;
             this.rectangleShape1.FillGradientColor = System.Drawing.Color.Black;
             this.rectangleShape1.FillStyle = Microsoft.VisualBasic.PowerPacks.FillStyle.Solid;
-            this.rectangleShape1.Location = new System.Drawing.Point(795, 8);
+            this.rectangleShape1.Location = new System.Drawing.Point(821, 8);
             this.rectangleShape1.Name = "rectangleShape1";
-            this.rectangleShape1.Size = new System.Drawing.Size(75, 44);
+            this.rectangleShape1.Size = new System.Drawing.Size(56, 44);
             // 
-            // ovalShape1
+            // rdbProducts
             // 
-            this.ovalShape1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
-            this.ovalShape1.BackStyle = Microsoft.VisualBasic.PowerPacks.BackStyle.Opaque;
-            this.ovalShape1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ovalShape1.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
-            this.ovalShape1.Location = new System.Drawing.Point(148, 11);
-            this.ovalShape1.Name = "ovalShape1";
-            this.ovalShape1.Size = new System.Drawing.Size(38, 33);
-            this.ovalShape1.Visible = false;
-            this.ovalShape1.Click += new System.EventHandler(this.lblOrderCount_Click);
+            this.rdbProducts.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.rdbProducts.Checked = true;
+            this.rdbProducts.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.rdbProducts.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rdbProducts.ForeColor = System.Drawing.Color.White;
+            this.rdbProducts.Location = new System.Drawing.Point(400, 18);
+            this.rdbProducts.Name = "rdbProducts";
+            this.rdbProducts.Size = new System.Drawing.Size(39, 25);
+            this.rdbProducts.TabIndex = 7;
+            this.rdbProducts.TabStop = true;
+            this.rdbProducts.Text = "ALL";
+            this.rdbProducts.UseVisualStyleBackColor = true;
+            this.rdbProducts.Visible = false;
+            this.rdbProducts.CheckedChanged += new System.EventHandler(this.rdbProducts_CheckedChanged);
             // 
             // pnlPay
             // 
@@ -343,7 +337,7 @@
             this.pnlPay.Location = new System.Drawing.Point(585, 373);
             this.pnlPay.Margin = new System.Windows.Forms.Padding(0);
             this.pnlPay.Name = "pnlPay";
-            this.pnlPay.Size = new System.Drawing.Size(290, 104);
+            this.pnlPay.Size = new System.Drawing.Size(300, 104);
             this.pnlPay.TabIndex = 2;
             // 
             // btnPay
@@ -355,7 +349,7 @@
             this.btnPay.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
             this.btnPay.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnPay.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
-            this.btnPay.Location = new System.Drawing.Point(99, 29);
+            this.btnPay.Location = new System.Drawing.Point(109, 29);
             this.btnPay.Margin = new System.Windows.Forms.Padding(0);
             this.btnPay.Name = "btnPay";
             this.btnPay.Size = new System.Drawing.Size(186, 52);
@@ -373,7 +367,7 @@
             this.lineShape3,
             this.ovalShape2,
             this.rectangleShape4});
-            this.shapeContainer1.Size = new System.Drawing.Size(290, 104);
+            this.shapeContainer1.Size = new System.Drawing.Size(300, 104);
             this.shapeContainer1.TabIndex = 0;
             this.shapeContainer1.TabStop = false;
             // 
@@ -410,23 +404,43 @@
             this.rectangleShape4.Cursor = System.Windows.Forms.Cursors.Hand;
             this.rectangleShape4.FillColor = System.Drawing.Color.White;
             this.rectangleShape4.FillStyle = Microsoft.VisualBasic.PowerPacks.FillStyle.Solid;
-            this.rectangleShape4.Location = new System.Drawing.Point(96, 25);
+            this.rectangleShape4.Location = new System.Drawing.Point(106, 25);
             this.rectangleShape4.Name = "rectangleShape4";
             this.rectangleShape4.Size = new System.Drawing.Size(191, 59);
             // 
             // pnlBase
             // 
+            this.pnlBase.Controls.Add(this.btnCounterSale);
             this.pnlBase.Controls.Add(this.txtSearch);
             this.pnlBase.Controls.Add(this.btnRefresh);
             this.pnlBase.Controls.Add(this.btnSearch);
             this.pnlBase.Controls.Add(this.flyLayout);
             this.pnlBase.Controls.Add(this.shapeContainer3);
             this.pnlBase.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlBase.Location = new System.Drawing.Point(20, 59);
+            this.pnlBase.Location = new System.Drawing.Point(10, 59);
             this.pnlBase.Margin = new System.Windows.Forms.Padding(0);
             this.pnlBase.Name = "pnlBase";
-            this.pnlBase.Size = new System.Drawing.Size(565, 314);
+            this.pnlBase.Size = new System.Drawing.Size(575, 314);
             this.pnlBase.TabIndex = 5;
+            // 
+            // btnCounterSale
+            // 
+            this.btnCounterSale.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCounterSale.BackgroundImage = global::BestariTerrace.Properties.Resources.sale;
+            this.btnCounterSale.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnCounterSale.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnCounterSale.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnCounterSale.FlatAppearance.BorderSize = 0;
+            this.btnCounterSale.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
+            this.btnCounterSale.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
+            this.btnCounterSale.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCounterSale.Location = new System.Drawing.Point(469, 10);
+            this.btnCounterSale.Name = "btnCounterSale";
+            this.btnCounterSale.Size = new System.Drawing.Size(66, 35);
+            this.btnCounterSale.TabIndex = 9;
+            this.btnCounterSale.Tag = "Counter Sale";
+            this.btnCounterSale.UseVisualStyleBackColor = true;
+            this.btnCounterSale.Click += new System.EventHandler(this.btnCounterSale_Click);
             // 
             // txtSearch
             // 
@@ -450,7 +464,7 @@
             this.btnRefresh.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
             this.btnRefresh.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
             this.btnRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRefresh.Location = new System.Drawing.Point(531, 14);
+            this.btnRefresh.Location = new System.Drawing.Point(541, 14);
             this.btnRefresh.Name = "btnRefresh";
             this.btnRefresh.Size = new System.Drawing.Size(30, 29);
             this.btnRefresh.TabIndex = 7;
@@ -480,7 +494,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.flyLayout.Location = new System.Drawing.Point(3, 53);
             this.flyLayout.Name = "flyLayout";
-            this.flyLayout.Size = new System.Drawing.Size(559, 258);
+            this.flyLayout.Size = new System.Drawing.Size(569, 258);
             this.flyLayout.TabIndex = 4;
             // 
             // shapeContainer3
@@ -490,7 +504,7 @@
             this.shapeContainer3.Name = "shapeContainer3";
             this.shapeContainer3.Shapes.AddRange(new Microsoft.VisualBasic.PowerPacks.Shape[] {
             this.rectangleShape2});
-            this.shapeContainer3.Size = new System.Drawing.Size(565, 314);
+            this.shapeContainer3.Size = new System.Drawing.Size(575, 314);
             this.shapeContainer3.TabIndex = 6;
             this.shapeContainer3.TabStop = false;
             // 
@@ -517,7 +531,7 @@
             this.tblCart.RowCount = 2;
             this.tblCart.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tblCart.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 130F));
-            this.tblCart.Size = new System.Drawing.Size(290, 314);
+            this.tblCart.Size = new System.Drawing.Size(300, 314);
             this.tblCart.TabIndex = 6;
             // 
             // dataGridView1
@@ -560,7 +574,7 @@
             this.dataGridView1.ShowCellToolTips = false;
             this.dataGridView1.ShowEditingIcon = false;
             this.dataGridView1.ShowRowErrors = false;
-            this.dataGridView1.Size = new System.Drawing.Size(288, 181);
+            this.dataGridView1.Size = new System.Drawing.Size(298, 181);
             this.dataGridView1.TabIndex = 7;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             // 
@@ -627,7 +641,7 @@
             this.pnlCart.Location = new System.Drawing.Point(1, 183);
             this.pnlCart.Margin = new System.Windows.Forms.Padding(0);
             this.pnlCart.Name = "pnlCart";
-            this.pnlCart.Size = new System.Drawing.Size(288, 130);
+            this.pnlCart.Size = new System.Drawing.Size(298, 130);
             this.pnlCart.TabIndex = 8;
             // 
             // lblGrandTotal
@@ -640,7 +654,7 @@
             this.lblGrandTotal.Location = new System.Drawing.Point(65, 80);
             this.lblGrandTotal.Margin = new System.Windows.Forms.Padding(3, 0, 60, 0);
             this.lblGrandTotal.Name = "lblGrandTotal";
-            this.lblGrandTotal.Size = new System.Drawing.Size(225, 37);
+            this.lblGrandTotal.Size = new System.Drawing.Size(235, 37);
             this.lblGrandTotal.TabIndex = 6;
             this.lblGrandTotal.Text = "0.00";
             this.lblGrandTotal.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -651,7 +665,7 @@
             this.lblCartTotal.BackColor = System.Drawing.Color.Transparent;
             this.lblCartTotal.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCartTotal.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.lblCartTotal.Location = new System.Drawing.Point(95, 42);
+            this.lblCartTotal.Location = new System.Drawing.Point(105, 42);
             this.lblCartTotal.Name = "lblCartTotal";
             this.lblCartTotal.Size = new System.Drawing.Size(190, 21);
             this.lblCartTotal.TabIndex = 5;
@@ -664,7 +678,7 @@
             this.lblTax.BackColor = System.Drawing.Color.Transparent;
             this.lblTax.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTax.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.lblTax.Location = new System.Drawing.Point(95, 6);
+            this.lblTax.Location = new System.Drawing.Point(105, 6);
             this.lblTax.Name = "lblTax";
             this.lblTax.Size = new System.Drawing.Size(190, 21);
             this.lblTax.TabIndex = 4;
@@ -715,7 +729,7 @@
             this.shapeContainer4.Shapes.AddRange(new Microsoft.VisualBasic.PowerPacks.Shape[] {
             this.lineShape2,
             this.lineShape1});
-            this.shapeContainer4.Size = new System.Drawing.Size(288, 130);
+            this.shapeContainer4.Size = new System.Drawing.Size(298, 130);
             this.shapeContainer4.TabIndex = 0;
             this.shapeContainer4.TabStop = false;
             // 
@@ -743,10 +757,10 @@
             // 
             this.uc_CategoryMenu1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.uc_CategoryMenu1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.uc_CategoryMenu1.Location = new System.Drawing.Point(24, 378);
+            this.uc_CategoryMenu1.Location = new System.Drawing.Point(14, 378);
             this.uc_CategoryMenu1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.uc_CategoryMenu1.Name = "uc_CategoryMenu1";
-            this.uc_CategoryMenu1.Size = new System.Drawing.Size(557, 94);
+            this.uc_CategoryMenu1.Size = new System.Drawing.Size(567, 94);
             this.uc_CategoryMenu1.TabIndex = 7;
             // 
             // frmMain
@@ -791,7 +805,6 @@
         private System.Windows.Forms.RadioButton rdbOrder;
         private System.Windows.Forms.RadioButton rdbDelivery;
         private Microsoft.VisualBasic.PowerPacks.ShapeContainer shapeContainer2;
-        private Microsoft.VisualBasic.PowerPacks.OvalShape ovalShape1;
         private System.Windows.Forms.Button btnExit;
         private Microsoft.VisualBasic.PowerPacks.RectangleShape rectangleShape1;
         private System.Windows.Forms.FlowLayoutPanel flyLayout;
@@ -826,5 +839,6 @@
         private System.Windows.Forms.Label lblSettings;
         private System.Windows.Forms.Button btnlogout;
         private Microsoft.VisualBasic.PowerPacks.RectangleShape rectangleShape3;
+        private System.Windows.Forms.Button btnCounterSale;
     }
 }

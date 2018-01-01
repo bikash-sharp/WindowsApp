@@ -22,7 +22,7 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>28</ApplicationRevision>
+    <ApplicationRevision>29</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -130,6 +130,18 @@
     <Compile Include="Forms\FrmContainer.Designer.cs">
       <DependentUpon>FrmContainer.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\frmCounterSale.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmCounterSale.Designer.cs">
+      <DependentUpon>frmCounterSale.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmDiscount.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmDiscount.Designer.cs">
+      <DependentUpon>frmDiscount.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\frmForgotPassword.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -159,6 +171,12 @@
     </Compile>
     <Compile Include="Forms\frmProductQty.Designer.cs">
       <DependentUpon>frmProductQty.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmTableSelection.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmTableSelection.Designer.cs">
+      <DependentUpon>frmTableSelection.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\PrinterSetup.cs">
       <SubType>Form</SubType>
@@ -205,6 +223,12 @@
     <EmbeddedResource Include="Forms\FrmContainer.resx">
       <DependentUpon>FrmContainer.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmCounterSale.resx">
+      <DependentUpon>frmCounterSale.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmDiscount.resx">
+      <DependentUpon>frmDiscount.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmForgotPassword.resx">
       <DependentUpon>frmForgotPassword.cs</DependentUpon>
     </EmbeddedResource>
@@ -219,6 +243,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmProductQty.resx">
       <DependentUpon>frmProductQty.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmTableSelection.resx">
+      <DependentUpon>frmTableSelection.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\PrinterSetup.resx">
       <DependentUpon>PrinterSetup.cs</DependentUpon>
@@ -286,6 +313,7 @@
     <Content Include="Bestari.ico" />
     <Content Include="POS.ico" />
     <Content Include="Resources\logo.jpg" />
+    <Content Include="Resources\sale.png" />
     <None Include="Resources\sc.bmp" />
     <None Include="Resources\refresh24.png" />
   </ItemGroup>
