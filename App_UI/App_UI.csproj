@@ -310,6 +310,9 @@
     <None Include="Resources\search24.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="bestari.accdb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Bestari.ico" />
     <Content Include="POS.ico" />
     <Content Include="Resources\logo.jpg" />

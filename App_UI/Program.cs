@@ -28,6 +28,7 @@ namespace BestariTerrace
         //        return new string[] { "192.168.20.5", "192.168.1.200" };
         //    }
         //}
+        public static string ConnectionStr = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=bestari.accdb;Jet OLEDB:Database Password=bestari;Persist Security Info=True";
         public static StoreDetails StoreInfo = new StoreDetails();
         public static List<CategoryListCL> Categories = new List<CategoryListCL>();
         public static List<ProductListCL> Products = new List<ProductListCL>();
