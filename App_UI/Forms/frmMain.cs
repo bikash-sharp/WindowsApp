@@ -158,9 +158,9 @@ namespace BestariTerrace.Forms
 
             PictureBox pic = new PictureBox();
             pic.Name = "pic_" + itm.id;
-            //pic.ImageLocation = Program.ProductImagesLoc + itm.product_image;
+            pic.ImageLocation = Program.ProductImagesLoc + itm.product_image;
             pic.ErrorImage = global::BestariTerrace.Properties.Resources.IMG_NotFound;
-            pic.Image = global::BestariTerrace.Properties.Resources.IMG_NotFound;
+            //pic.Image = global::BestariTerrace.Properties.Resources.IMG_NotFound;
             pic.Width = 200;
             pic.Height = 130;
             pic.BorderStyle = BorderStyle.None;
