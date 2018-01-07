@@ -268,7 +268,7 @@ namespace BestariTerrace.UserControls
         private void button14_Click(object sender, EventArgs e)
         {
             frmDiscount frm = new frmDiscount();
-            frm.OriginalAmt = RemAmount;
+            frm.OriginalAmt = Program.cartItems.Sum(p => p.Price); 
             if (IsDiscount)
             {
                 frm.DiscountType = DiscountType;
@@ -276,19 +276,23 @@ namespace BestariTerrace.UserControls
             }
             frm.ShowDialog();
             DiscountType = frm.DiscountType;
+            DiscountAmt = frm.DiscountAmt;
             if(DiscountAmt > 0)
             {
-                if(DiscountType == EmDiscountType.Amount)
+                IsDiscount = true;
+                if (DiscountType == EmDiscountType.Amount)
                 {
-                    RemAmount = RemAmount - DiscountAmt;
+                    var _FinalAmt = frm.OriginalAmt - DiscountAmt;
+                    BindData(_FinalAmt);
+                    //RemAmount = RemAmount - DiscountAmt;
+
                 }
                 else if(DiscountType == EmDiscountType.Percent)
                 {
-                    DiscountAmt = (RemAmount * DiscountAmt) / 100;
-                    RemAmount = RemAmount - DiscountAmt;
+                    var _FinalAmt =frm.OriginalAmt - ((frm.OriginalAmt * DiscountAmt) / 100);
+                    BindData(_FinalAmt);
                 }
-
-                BindData(RemAmount);
+                //BindData(RemAmount);
                 txtAmount_TextChanged(txtAmount, null);
             }
 

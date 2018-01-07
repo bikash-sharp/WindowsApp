@@ -26,7 +26,7 @@ namespace BestariTerrace.Forms
             Double _discountAmt = 0;
             Double.TryParse(txtAmt.Text.Trim(), out _discountAmt);
             Double PercentAmt = 0;
-            Double.TryParse(txtAmt.Text.Trim(), out PercentAmt);
+            Double.TryParse(txtPercent.Text.Trim(), out PercentAmt);
             //Both Are Null
             if (String.IsNullOrEmpty(txtAmt.Text.Trim()) && String.IsNullOrEmpty(txtPercent.Text.Trim()))
             {
@@ -42,18 +42,18 @@ namespace BestariTerrace.Forms
             else if(!String.IsNullOrEmpty(txtAmt.Text.Trim()))
             {
                 
-                if(_discountAmt <= 0)
+                if(_discountAmt < 0)
                 {
                     //Show Message for Minus values
                     MessageBox.Show("Amount cannot be Less than or equal to 0.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    txtAmt.Text = "0.00";
+                    txtAmt.Text = "";
                     txtAmt.Focus();
                 }
                 else if(_discountAmt > OriginalAmt)
                 {
                     //Show Message for Minus values
                     MessageBox.Show("Discount Amount cannot be greater than or equal to original Price.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    txtAmt.Text = "0.00";
+                    txtAmt.Text = "";
                     txtAmt.Focus();
                 }
                 else 
@@ -67,7 +67,7 @@ namespace BestariTerrace.Forms
             {
 
                 
-                if (PercentAmt <= 0)
+                if (PercentAmt < 0)
                 {
                     //Show Message for Minus Percentage
                     MessageBox.Show("Percent cannot be Less than or equal to 0.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);

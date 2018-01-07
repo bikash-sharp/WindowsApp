@@ -54,8 +54,10 @@ namespace BestariTerrace.Forms
         {
             if(orderType == EmOrderType.TakeOut)
             {
-                txtTableNo.Text = "TakeAway";
-                txtTableNo.Enabled = false;
+                //txtTableNo.Text = "TakeAway";
+                //txtTableNo.Enabled = false;
+                label4.Visible = false;
+                txtTableNo.Visible = false;
             }
             else
             {

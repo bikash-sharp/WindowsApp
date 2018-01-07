@@ -485,9 +485,16 @@ namespace BestariTerrace.UserControls
                 dataGridView1.Columns.Add(txtTotal);
                 dataGridView1.Columns[2].Name = "OrderTotal";
 
+                //DataGridViewTextBoxColumn txtCol = new DataGridViewTextBoxColumn();
+                //txtCol.DataPropertyName = "OrderStatus";
+                //txtCol.HeaderText = "Status";
+                //txtCol.Resizable = DataGridViewTriState.False;
+                //txtCol.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                //dataGridView1.Columns.Add(txtCol);
+
                 DataGridViewTextBoxColumn txtCol = new DataGridViewTextBoxColumn();
-                txtCol.DataPropertyName = "OrderStatus";
-                txtCol.HeaderText = "Status";
+                txtCol.DataPropertyName = "TableNo";
+                txtCol.HeaderText = "Table No.";
                 txtCol.Resizable = DataGridViewTriState.False;
                 txtCol.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                 dataGridView1.Columns.Add(txtCol);

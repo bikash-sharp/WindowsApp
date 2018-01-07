@@ -36,9 +36,11 @@
             this.btnRemoveProduct = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
             this.shapeContainer1 = new Microsoft.VisualBasic.PowerPacks.ShapeContainer();
-            this.rectangleShape1 = new Microsoft.VisualBasic.PowerPacks.RectangleShape();
-            this.rectangleShape2 = new Microsoft.VisualBasic.PowerPacks.RectangleShape();
             this.rectangleShape3 = new Microsoft.VisualBasic.PowerPacks.RectangleShape();
+            this.rectangleShape2 = new Microsoft.VisualBasic.PowerPacks.RectangleShape();
+            this.rectangleShape1 = new Microsoft.VisualBasic.PowerPacks.RectangleShape();
+            this.txtPrice = new CustomServerControls.TxtBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -76,6 +78,7 @@
             this.txtQty.Location = new System.Drawing.Point(145, 56);
             this.txtQty.Name = "txtQty";
             this.txtQty.PlaceholderText = "Quantity";
+            this.txtQty.SelectionHighlightEnabled = false;
             this.txtQty.Size = new System.Drawing.Size(222, 29);
             this.txtQty.TabIndex = 3;
             // 
@@ -84,9 +87,9 @@
             this.btnUpdateQty.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnUpdateQty.FlatAppearance.BorderSize = 0;
             this.btnUpdateQty.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnUpdateQty.Location = new System.Drawing.Point(32, 125);
+            this.btnUpdateQty.Location = new System.Drawing.Point(34, 162);
             this.btnUpdateQty.Name = "btnUpdateQty";
-            this.btnUpdateQty.Size = new System.Drawing.Size(123, 48);
+            this.btnUpdateQty.Size = new System.Drawing.Size(119, 46);
             this.btnUpdateQty.TabIndex = 4;
             this.btnUpdateQty.Text = "Update";
             this.btnUpdateQty.UseVisualStyleBackColor = true;
@@ -97,9 +100,9 @@
             this.btnRemoveProduct.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnRemoveProduct.FlatAppearance.BorderSize = 0;
             this.btnRemoveProduct.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRemoveProduct.Location = new System.Drawing.Point(199, 127);
+            this.btnRemoveProduct.Location = new System.Drawing.Point(199, 162);
             this.btnRemoveProduct.Name = "btnRemoveProduct";
-            this.btnRemoveProduct.Size = new System.Drawing.Size(118, 46);
+            this.btnRemoveProduct.Size = new System.Drawing.Size(118, 45);
             this.btnRemoveProduct.TabIndex = 5;
             this.btnRemoveProduct.Text = "Remove";
             this.btnRemoveProduct.UseVisualStyleBackColor = true;
@@ -110,9 +113,9 @@
             this.btnClose.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnClose.FlatAppearance.BorderSize = 0;
             this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnClose.Location = new System.Drawing.Point(369, 127);
+            this.btnClose.Location = new System.Drawing.Point(368, 161);
             this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(117, 46);
+            this.btnClose.Size = new System.Drawing.Size(120, 47);
             this.btnClose.TabIndex = 6;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
@@ -127,43 +130,65 @@
             this.rectangleShape3,
             this.rectangleShape2,
             this.rectangleShape1});
-            this.shapeContainer1.Size = new System.Drawing.Size(506, 201);
+            this.shapeContainer1.Size = new System.Drawing.Size(506, 233);
             this.shapeContainer1.TabIndex = 7;
             this.shapeContainer1.TabStop = false;
-            // 
-            // rectangleShape1
-            // 
-            this.rectangleShape1.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
-            this.rectangleShape1.BorderStyle = System.Drawing.Drawing2D.DashStyle.Dash;
-            this.rectangleShape1.BorderWidth = 2;
-            this.rectangleShape1.Location = new System.Drawing.Point(30, 123);
-            this.rectangleShape1.Name = "rectangleShape1";
-            this.rectangleShape1.Size = new System.Drawing.Size(127, 53);
-            // 
-            // rectangleShape2
-            // 
-            this.rectangleShape2.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
-            this.rectangleShape2.BorderStyle = System.Drawing.Drawing2D.DashStyle.Dash;
-            this.rectangleShape2.BorderWidth = 2;
-            this.rectangleShape2.Location = new System.Drawing.Point(195, 123);
-            this.rectangleShape2.Name = "rectangleShape2";
-            this.rectangleShape2.Size = new System.Drawing.Size(127, 53);
             // 
             // rectangleShape3
             // 
             this.rectangleShape3.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
             this.rectangleShape3.BorderStyle = System.Drawing.Drawing2D.DashStyle.Dash;
             this.rectangleShape3.BorderWidth = 2;
-            this.rectangleShape3.Location = new System.Drawing.Point(364, 123);
+            this.rectangleShape3.Location = new System.Drawing.Point(364, 158);
             this.rectangleShape3.Name = "rectangleShape3";
             this.rectangleShape3.Size = new System.Drawing.Size(127, 53);
+            // 
+            // rectangleShape2
+            // 
+            this.rectangleShape2.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+            this.rectangleShape2.BorderStyle = System.Drawing.Drawing2D.DashStyle.Dash;
+            this.rectangleShape2.BorderWidth = 2;
+            this.rectangleShape2.Location = new System.Drawing.Point(195, 158);
+            this.rectangleShape2.Name = "rectangleShape2";
+            this.rectangleShape2.Size = new System.Drawing.Size(127, 53);
+            // 
+            // rectangleShape1
+            // 
+            this.rectangleShape1.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+            this.rectangleShape1.BorderStyle = System.Drawing.Drawing2D.DashStyle.Dash;
+            this.rectangleShape1.BorderWidth = 2;
+            this.rectangleShape1.Location = new System.Drawing.Point(30, 158);
+            this.rectangleShape1.Name = "rectangleShape1";
+            this.rectangleShape1.Size = new System.Drawing.Size(127, 53);
+            // 
+            // txtPrice
+            // 
+            this.txtPrice.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPrice.Location = new System.Drawing.Point(145, 91);
+            this.txtPrice.Name = "txtPrice";
+            this.txtPrice.PlaceholderText = "Price";
+            this.txtPrice.SelectionHighlightEnabled = false;
+            this.txtPrice.Size = new System.Drawing.Size(222, 29);
+            this.txtPrice.TabIndex = 9;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.BackColor = System.Drawing.Color.Transparent;
+            this.label2.Location = new System.Drawing.Point(13, 94);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(122, 21);
+            this.label2.TabIndex = 8;
+            this.label2.Text = "Price                  :";
             // 
             // frmProductQty
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(506, 201);
+            this.ClientSize = new System.Drawing.Size(506, 233);
+            this.Controls.Add(this.txtPrice);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.btnRemoveProduct);
             this.Controls.Add(this.btnUpdateQty);
@@ -201,5 +226,7 @@
         private Microsoft.VisualBasic.PowerPacks.RectangleShape rectangleShape1;
         private Microsoft.VisualBasic.PowerPacks.RectangleShape rectangleShape2;
         private Microsoft.VisualBasic.PowerPacks.RectangleShape rectangleShape3;
+        private CustomServerControls.TxtBox txtPrice;
+        private System.Windows.Forms.Label label2;
     }
 }

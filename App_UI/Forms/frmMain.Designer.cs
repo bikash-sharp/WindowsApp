@@ -175,7 +175,7 @@
             this.rdbReservation.Cursor = System.Windows.Forms.Cursors.Hand;
             this.rdbReservation.Font = new System.Drawing.Font("Segoe UI Semibold", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rdbReservation.ForeColor = System.Drawing.Color.White;
-            this.rdbReservation.Location = new System.Drawing.Point(401, 17);
+            this.rdbReservation.Location = new System.Drawing.Point(392, 17);
             this.rdbReservation.Name = "rdbReservation";
             this.rdbReservation.Size = new System.Drawing.Size(100, 25);
             this.rdbReservation.TabIndex = 8;
@@ -190,7 +190,7 @@
             this.rdbTakeWay.Cursor = System.Windows.Forms.Cursors.Hand;
             this.rdbTakeWay.Font = new System.Drawing.Font("Segoe UI Semibold", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rdbTakeWay.ForeColor = System.Drawing.Color.White;
-            this.rdbTakeWay.Location = new System.Drawing.Point(500, 18);
+            this.rdbTakeWay.Location = new System.Drawing.Point(495, 18);
             this.rdbTakeWay.Name = "rdbTakeWay";
             this.rdbTakeWay.Size = new System.Drawing.Size(84, 25);
             this.rdbTakeWay.TabIndex = 9;
@@ -440,6 +440,7 @@
             this.btnCounterSale.TabIndex = 9;
             this.btnCounterSale.Tag = "Counter Sale";
             this.btnCounterSale.UseVisualStyleBackColor = true;
+            this.btnCounterSale.Visible = false;
             this.btnCounterSale.Click += new System.EventHandler(this.btnCounterSale_Click);
             // 
             // txtSearch

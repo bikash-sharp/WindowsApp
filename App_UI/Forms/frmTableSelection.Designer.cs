@@ -92,11 +92,11 @@
             this.btnCancel.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LimeGreen;
             this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCancel.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCancel.Location = new System.Drawing.Point(306, 298);
+            this.btnCancel.Location = new System.Drawing.Point(306, 297);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(124, 43);
+            this.btnCancel.Size = new System.Drawing.Size(124, 44);
             this.btnCancel.TabIndex = 4;
-            this.btnCancel.Text = "CANCEL";
+            this.btnCancel.Text = "SKIP";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 

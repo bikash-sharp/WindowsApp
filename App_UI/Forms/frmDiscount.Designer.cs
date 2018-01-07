@@ -71,7 +71,7 @@
             this.btnCancel.Location = new System.Drawing.Point(333, 190);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(124, 43);
-            this.btnCancel.TabIndex = 16;
+            this.btnCancel.TabIndex = 4;
             this.btnCancel.Text = "CANCEL";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
@@ -84,7 +84,7 @@
             this.txtAmt.PlaceholderText = "Amount";
             this.txtAmt.SelectionHighlightEnabled = false;
             this.txtAmt.Size = new System.Drawing.Size(291, 33);
-            this.txtAmt.TabIndex = 15;
+            this.txtAmt.TabIndex = 1;
             // 
             // label4
             // 
@@ -108,7 +108,7 @@
             this.btnApply.Location = new System.Drawing.Point(201, 188);
             this.btnApply.Name = "btnApply";
             this.btnApply.Size = new System.Drawing.Size(111, 44);
-            this.btnApply.TabIndex = 12;
+            this.btnApply.TabIndex = 3;
             this.btnApply.Text = "APPLY";
             this.btnApply.UseVisualStyleBackColor = true;
             this.btnApply.Click += new System.EventHandler(this.btnApply_Click);
@@ -121,7 +121,7 @@
             this.txtPercent.PlaceholderText = "Percent %";
             this.txtPercent.SelectionHighlightEnabled = false;
             this.txtPercent.Size = new System.Drawing.Size(291, 33);
-            this.txtPercent.TabIndex = 10;
+            this.txtPercent.TabIndex = 2;
             this.txtPercent.Tag = "";
             // 
             // label2

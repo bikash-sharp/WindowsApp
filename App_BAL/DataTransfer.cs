@@ -347,6 +347,7 @@ namespace App_BAL
     public class CartItemsCL : INotifyPropertyChanged
     {
         //Used in Case of Counter Sales
+        public bool IsCounterSale { get; set; }
         public string Description { get; set;}
         public decimal SaleTotal { get; set; }
         private int QuantityValue = 0;
@@ -874,6 +875,7 @@ namespace App_BAL
         public string quantity { get; set; }
         public int price { get; set; }
         public string delivery_type { get; set; }
+        public string product_name { get; set; }
     }
     #endregion
 
