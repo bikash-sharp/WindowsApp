@@ -22,7 +22,7 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>35</ApplicationRevision>
+    <ApplicationRevision>37</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -160,6 +160,12 @@
     <Compile Include="Forms\frmMain.Designer.cs">
       <DependentUpon>frmMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\frmManagerExit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmManagerExit.Designer.cs">
+      <DependentUpon>frmManagerExit.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\frmOrderType.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -237,6 +243,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmManagerExit.resx">
+      <DependentUpon>frmManagerExit.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmOrderType.resx">
       <DependentUpon>frmOrderType.cs</DependentUpon>

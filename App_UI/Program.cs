@@ -44,6 +44,7 @@ namespace BestariTerrace
         public static string SessionId { get; set; }
         public static string Token { get; set; }
         public static int SelectedProductId { get; set;}
+        public static string OutletType { get; set; }
         public static PlaceOrderBinding OrderBindings = new PlaceOrderBinding();
         /// <summary>
         /// The main entry point for the application.
@@ -55,6 +56,23 @@ namespace BestariTerrace
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new frmLogin());
+        }
+
+        public static void ClearData()
+        {
+            StoreInfo = new StoreDetails();
+            Categories.Clear();
+            OutletType = string.Empty;
+            Token = string.Empty;
+            SessionId = string.Empty;
+            Categories.Clear();
+            Products.Clear();
+            PlacedOrders.Clear();
+            Reservations.Clear();
+            cartItems.Clear();
+            PlacedCartItems.Clear();
+            cartTotal.Clear();
+
         }
         public static void TotalCart()
         {

@@ -245,16 +245,23 @@ namespace BestariTerrace.UserControls
                                 string DeleteOrderUrl = URL + "/deleteDineInOrder?order_id=" + OrderNo + "&acess_token=" + Program.Token;
                                 var GetStatus = DataProviderWrapper.Instance.GetData(DeleteOrderUrl, Verbs.GET, "");
                                 JavaScriptSerializer serializer = new JavaScriptSerializer();
-                                var result = serializer.Deserialize<MessageCL>(GetStatus);
-                                if (result.status)
+                                try
                                 {
-                                    if (SelectedOrder != null)
+                                    var result = serializer.Deserialize<MessageCL>(GetStatus);
+                                    if (result.status)
                                     {
-                                        Program.PlacedOrders.Remove(SelectedOrder);
+                                        if (SelectedOrder != null)
+                                        {
+                                            Program.PlacedOrders.Remove(SelectedOrder);
+                                        }
                                     }
                                 }
+                                catch(Exception ex)
+                                {
+                                    var err = ex.Message;
+                                    MessageBox.Show("Unable to delete the order!!!", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                                }
                             }
-
                         }
                     }
                     else if (_gridType == EmGridType.Reservation)

@@ -75,6 +75,7 @@ namespace BestariTerrace.Forms
                     {
                         this.Hide();
                         Program.SessionId = result.sessionid;
+                        Program.OutletType = result.outlet_Type;
                         Program.Token = result.data;
                         frmMain _main = new frmMain();
                         _main.ShowDialog();
@@ -87,7 +88,7 @@ namespace BestariTerrace.Forms
                 catch (Exception ex)
                 {
                     var err = ex.Message;
-
+                    MessageBox.Show(ex.Message, "Error Occurred", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
         }

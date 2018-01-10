@@ -552,6 +552,7 @@ namespace App_BAL
         public string data { get; set; }
         public string message { get; set; }
         public string sessionid { get; set; }
+        public string outlet_Type { get; set; }
     }
 
     public class CategoryCL
@@ -893,6 +894,7 @@ namespace App_BAL
         public string position { get; set; }
         public string created { get; set; }
         public string daily_cash_limit { get; set; }
+        public string outlet_type { get; set; }
     }
 
 

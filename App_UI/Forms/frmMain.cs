@@ -68,6 +68,21 @@ namespace BestariTerrace.Forms
         }
         private void frmMain_Load(object sender, EventArgs e)
         {
+            if (Program.OutletType.Contains("RESTAURANT"))
+            {
+                rdbDelivery.Visible = rdbOrder.Visible = rdbTakeWay.Visible = rdbReservation.Visible = true;
+                rdbDelivery.Location = new Point(647, 19);
+                rdbDelivery.Size = new Size(73, 25);
+                rdbDelivery.Text = "DELIVERY";
+            }
+            else
+            {
+                rdbDelivery.Visible = true;
+                rdbDelivery.Location = new Point(550, 19);
+                rdbDelivery.Text = "SALES AND DELIVERIES";
+                rdbDelivery.Size = new Size(160, 25);
+                rdbOrder.Visible = rdbTakeWay.Visible = rdbReservation.Visible = false;
+            }
             var path = new System.Drawing.Drawing2D.GraphicsPath();
             path.AddEllipse(0, 0, lblOrderCount.Width, lblOrderCount.Height);
             this.lblOrderCount.Region = new Region(path);
@@ -328,10 +343,17 @@ namespace BestariTerrace.Forms
 
         private void btnExit_Click(object sender, EventArgs e)
         {
+
             DialogResult msgResult = MessageBox.Show("Do you want to Exit Application ?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
             if (msgResult == DialogResult.Yes)
             {
-                Application.ExitThread();
+                frmManagerExit mgr = new frmManagerExit();
+                mgr.ShowDialog();
+                if(mgr.IsOK)
+                {
+                    Program.ClearData();
+                    Application.ExitThread();
+                }
             }
 
         }
@@ -693,7 +715,9 @@ namespace BestariTerrace.Forms
 
                     try
                     {
-                        if (Program.StoreInfo.message.Restaurant.gst_status != null)
+                    
+                       //if (Program.StoreInfo.message.Restaurant.gst_status != null)
+                        if (Program.OutletType.Contains("RESTAURANT"))
                         {
                             bw.NormalFont("GST : 6.00 %");
                             var Amount = decimal.Parse(cartItems.FirstOrDefault().CartTotal.ToString("N2"));
@@ -708,6 +732,11 @@ namespace BestariTerrace.Forms
                         else
                         {
                             var Amount = decimal.Parse(cartItems.FirstOrDefault().CartTotal.ToString("N2"));
+                            var GST = decimal.Parse("6");
+                            var Tax = decimal.Parse(((Convert.ToDecimal(Amount) * GST) / 100).ToString("N2"));
+                            Amount += Tax;
+                            bw.NormalFont("GST Price : " + Tax);
+                            bw.NormalFont("Amount : " + Amount.ToString());
                             var roundOffAmt = Math.Round(Amount, 2);
                             bw.NormalFont("Grand Total :  " + roundOffAmt.ToString());
                             bw.NormalFont("Rounding Adjustment : " + (roundOffAmt - Amount).ToString());
@@ -716,6 +745,11 @@ namespace BestariTerrace.Forms
                     catch
                     {
                         var Amount = decimal.Parse(cartItems.FirstOrDefault().CartTotal.ToString("N2"));
+                        var GST = decimal.Parse("6");
+                        var Tax = decimal.Parse(((Convert.ToDecimal(Amount) * GST) / 100).ToString("N2"));
+                        Amount += Tax;
+                        bw.NormalFont("GST Price : " + Tax);
+                        bw.NormalFont("Amount : " + Amount.ToString());
                         var roundOffAmt = Math.Round(Amount, 2);
                         bw.NormalFont("Grand Total :  " + roundOffAmt.ToString());
                         bw.NormalFont("Rounding Adjustment : " + (roundOffAmt - Amount).ToString());
@@ -935,15 +969,15 @@ namespace BestariTerrace.Forms
 
         private void lblOrderCount_Click(object sender, EventArgs e)
         {
-            //if (!rdbDelivery.Checked)
-            //{
-            //    rdbDelivery.Checked = true;
-            //}
-
-            if (!rdbReservation.Checked)
+            if (!rdbDelivery.Checked)
             {
-                rdbReservation.Checked = true;
+                rdbDelivery.Checked = true;
             }
+
+            //if (!rdbReservation.Checked)
+            //{
+            //    rdbReservation.Checked = true;
+            //}
         }
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
