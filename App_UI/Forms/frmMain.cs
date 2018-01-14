@@ -431,10 +431,12 @@ namespace BestariTerrace.Forms
                                 return;
                             }
                         }
-                        else
-                        {
-                            CurrentOrderType = EmOrderType.TakeOut;
-                        }
+                       
+                    }
+                    else
+                    {
+                        CurrentOrderType = EmOrderType.TakeOut;
+                    }
                 }
 
                 var TotalAmount = 0.0;  // Total Price
@@ -1474,13 +1476,16 @@ namespace BestariTerrace.Forms
 
                 JavaScriptSerializer serializer = new JavaScriptSerializer();
                 var result = serializer.Deserialize<logoutCL>(GetStatus);
-                //this.Hide();
+                Program.IsLogined = false;
+                Up:
                 frmLogin obj = new frmLogin();
+                obj.IsMain = true;
                 obj.ShowDialog();
-                //if (!result.status)
-                //{
-
-                //}
+                
+                if (!Program.IsLogined)
+                {
+                    goto Up;
+                }
             }
         }
 

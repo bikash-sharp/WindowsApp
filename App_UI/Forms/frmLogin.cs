@@ -15,9 +15,10 @@ using System.Data.OleDb;
 
 namespace BestariTerrace.Forms
 {
-    public partial class frmLogin : CommonForm
+    public partial class frmLogin : Form
     {
-
+        public bool IsMain = false;
+        public static bool IsClosed = false;
         public frmLogin()
         {
             InitializeComponent();
@@ -78,8 +79,12 @@ namespace BestariTerrace.Forms
                         Program.SessionId = result.sessionid;
                         Program.OutletType = result.outlet_Type;
                         Program.Token = result.data;
-                        frmMain _main = new frmMain();
-                        _main.ShowDialog();
+                        //Form Opened Directly
+                        if(!IsMain)
+                        {
+                            frmMain _main = new frmMain();
+                            _main.ShowDialog();
+                        }
                     }
                     else
                     {
@@ -155,6 +160,51 @@ namespace BestariTerrace.Forms
         private void txtUserName_MouseMove(object sender, MouseEventArgs e)
         {
             txtUserName.SelectionLength = 0;
+        }
+
+        protected override void OnFormClosed(FormClosedEventArgs e)
+        {
+            if (IsClosed)
+            {
+                Application.ExitThread();
+            }
+
+            //base.OnFormClosed(e);
+        }
+
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            if(!IsMain)
+            {
+                DialogResult msgResult = MessageBox.Show("Do you want to Exit Application ?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                if (msgResult == DialogResult.No)
+                {
+                    e.Cancel = true;
+                    IsClosed = false;
+                }
+                else
+                {
+                    Program.ClearData();
+                    Application.ExitThread();
+                    //if (Program.IsLogined)
+                    //{
+                    //    frmManagerExit mgr = new frmManagerExit();
+                    //    mgr.ShowDialog();
+                    //    if (mgr.IsOK)
+                    //    {
+                    //        Program.ClearData();
+                    //        Application.ExitThread();
+                    //    }
+                    //}
+                    //else
+                    //{
+
+                    //}
+                    IsClosed = true;
+                }
+            }
+            
+            //base.OnFormClosing(e);
         }
     }
 }
