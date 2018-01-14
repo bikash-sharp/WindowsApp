@@ -45,6 +45,7 @@ namespace BestariTerrace
         public static string Token { get; set; }
         public static int SelectedProductId { get; set;}
         public static string OutletType { get; set; }
+        public static bool IsLogined { get; set; } //Check if Login Already, Then Will Ask For Manager Password first time
         public static PlaceOrderBinding OrderBindings = new PlaceOrderBinding();
         /// <summary>
         /// The main entry point for the application.

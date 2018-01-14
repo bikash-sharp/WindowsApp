@@ -74,6 +74,7 @@ namespace BestariTerrace.Forms
                     if (result.message == "success")
                     {
                         this.Hide();
+                        Program.IsLogined = true;
                         Program.SessionId = result.sessionid;
                         Program.OutletType = result.outlet_Type;
                         Program.Token = result.data;

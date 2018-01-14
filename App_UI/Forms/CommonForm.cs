@@ -31,9 +31,23 @@ namespace BestariTerrace.Forms
             }
             else
             {
+                if(Program.IsLogined)
+                {
+                    frmManagerExit mgr = new frmManagerExit();
+                    mgr.ShowDialog();
+                    if (mgr.IsOK)
+                    {
+                        Program.ClearData();
+                        Application.ExitThread();
+                    }
+                }
+                else
+                {
+                    Program.ClearData();
+                    Application.ExitThread();
+                }
                 IsClosed = true;
             }
-
             //base.OnFormClosing(e);
         }
 

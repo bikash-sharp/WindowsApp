@@ -71,17 +71,18 @@ namespace BestariTerrace.Forms
             if (Program.OutletType.Contains("RESTAURANT"))
             {
                 rdbDelivery.Visible = rdbOrder.Visible = rdbTakeWay.Visible = rdbReservation.Visible = true;
-                rdbDelivery.Location = new Point(647, 19);
-                rdbDelivery.Size = new Size(73, 25);
-                rdbDelivery.Text = "DELIVERY";
+                //rdbDelivery.Location = new Point(647, 19);
+                //rdbDelivery.Size = new Size(73, 25);
+                //rdbDelivery.Text = "DELIVERY";
             }
             else
             {
-                rdbDelivery.Visible = true;
-                rdbDelivery.Location = new Point(550, 19);
-                rdbDelivery.Text = "SALES AND DELIVERIES";
-                rdbDelivery.Size = new Size(160, 25);
-                rdbOrder.Visible = rdbTakeWay.Visible = rdbReservation.Visible = false;
+                rdbTakeWay.Text = "SALES";
+                //rdbDelivery.Visible = true;
+                //rdbDelivery.Location = new Point(550, 19);
+                //rdbDelivery.Text = "SALES AND DELIVERIES";
+                //rdbDelivery.Size = new Size(160, 25);
+                rdbOrder.Visible = rdbReservation.Visible = false;
             }
             var path = new System.Drawing.Drawing2D.GraphicsPath();
             path.AddEllipse(0, 0, lblOrderCount.Width, lblOrderCount.Height);
@@ -401,32 +402,39 @@ namespace BestariTerrace.Forms
             {
                 string TableSelection = "";
                 string OrderRemarks = "";
+
                 if (CurrentOrderType == EmOrderType.CounterSale)
                 {
                     //This is Counter Sale Part.
                 }
                 else
                 {
-                    frmOrderType _frmOrder = new frmOrderType();
-                    _frmOrder.ShowDialog();
-                    if (!frmOrderType.isClosed)
+                    if (Program.OutletType.Contains("RESTAURANT"))
                     {
-                        frmTableSelection frmTbl = new frmTableSelection();
-                        frmTbl.orderType = CurrentOrderType;
-                        frmTbl.ShowDialog();
-
-                        OrderRemarks = frmTbl.tableRemarks;
-                        TableSelection = frmTbl.tableSelection;
-
-                        if (CurrentOrderType == EmOrderType.TakeOut)
-                            TableSelection = "TakeAway";
-
-                        if (String.IsNullOrEmpty(TableSelection))
+                        frmOrderType _frmOrder = new frmOrderType();
+                        _frmOrder.ShowDialog();
+                        if (!frmOrderType.isClosed)
                         {
-                            MessageBox.Show("Please select table Number", " Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            return;
+                            frmTableSelection frmTbl = new frmTableSelection();
+                            frmTbl.orderType = CurrentOrderType;
+                            frmTbl.ShowDialog();
+
+                            OrderRemarks = frmTbl.tableRemarks;
+                            TableSelection = frmTbl.tableSelection;
+
+                            if (CurrentOrderType == EmOrderType.TakeOut)
+                                TableSelection = "TakeAway";
+
+                            if (String.IsNullOrEmpty(TableSelection))
+                            {
+                                MessageBox.Show("Please select table Number", " Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                return;
+                            }
                         }
-                    }
+                        else
+                        {
+                            CurrentOrderType = EmOrderType.TakeOut;
+                        }
                 }
 
                 var TotalAmount = 0.0;  // Total Price
@@ -1466,9 +1474,9 @@ namespace BestariTerrace.Forms
 
                 JavaScriptSerializer serializer = new JavaScriptSerializer();
                 var result = serializer.Deserialize<logoutCL>(GetStatus);
-                this.Hide();
+                //this.Hide();
                 frmLogin obj = new frmLogin();
-                obj.Show();
+                obj.ShowDialog();
                 //if (!result.status)
                 //{
 

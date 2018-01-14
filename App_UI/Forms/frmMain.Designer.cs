@@ -190,7 +190,7 @@
             this.rdbTakeWay.Cursor = System.Windows.Forms.Cursors.Hand;
             this.rdbTakeWay.Font = new System.Drawing.Font("Segoe UI Semibold", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rdbTakeWay.ForeColor = System.Drawing.Color.White;
-            this.rdbTakeWay.Location = new System.Drawing.Point(495, 18);
+            this.rdbTakeWay.Location = new System.Drawing.Point(561, 18);
             this.rdbTakeWay.Name = "rdbTakeWay";
             this.rdbTakeWay.Size = new System.Drawing.Size(84, 25);
             this.rdbTakeWay.TabIndex = 9;
@@ -204,7 +204,7 @@
             this.rdbOrder.Cursor = System.Windows.Forms.Cursors.Hand;
             this.rdbOrder.Font = new System.Drawing.Font("Segoe UI Semibold", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rdbOrder.ForeColor = System.Drawing.Color.White;
-            this.rdbOrder.Location = new System.Drawing.Point(583, 19);
+            this.rdbOrder.Location = new System.Drawing.Point(494, 18);
             this.rdbOrder.Name = "rdbOrder";
             this.rdbOrder.Size = new System.Drawing.Size(65, 25);
             this.rdbOrder.TabIndex = 1;
