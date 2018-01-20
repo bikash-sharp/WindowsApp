@@ -137,7 +137,7 @@ namespace App_BAL
         private EmOrderStatus _OrderStatus { get; set; }
         public string BtnActionStatus { get; set; }
         public int SrNo { get; set; }
-        public int OrderID { get; set; }
+        public string OrderID { get; set; }
         public string TableNo { get; set; }
         public string OrderNo { get; set; }
         public string OrderTotal { get; set; }
@@ -783,6 +783,7 @@ namespace App_BAL
         public object supported_payment_types { get; set; }
         public object ref_url { get; set; }
         public string gst_no { get; set; }
+        public string gst_value { get; set; }
         public string address { get; set; }
     }
 
@@ -874,7 +875,7 @@ namespace App_BAL
     {
         public string product_id { get; set; }
         public string quantity { get; set; }
-        public int price { get; set; }
+        public string price { get; set; }
         public string delivery_type { get; set; }
         public string product_name { get; set; }
     }

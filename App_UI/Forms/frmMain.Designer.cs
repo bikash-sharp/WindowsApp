@@ -175,9 +175,9 @@
             this.rdbReservation.Cursor = System.Windows.Forms.Cursors.Hand;
             this.rdbReservation.Font = new System.Drawing.Font("Segoe UI Semibold", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rdbReservation.ForeColor = System.Drawing.Color.White;
-            this.rdbReservation.Location = new System.Drawing.Point(392, 17);
+            this.rdbReservation.Location = new System.Drawing.Point(352, 17);
             this.rdbReservation.Name = "rdbReservation";
-            this.rdbReservation.Size = new System.Drawing.Size(100, 25);
+            this.rdbReservation.Size = new System.Drawing.Size(106, 25);
             this.rdbReservation.TabIndex = 8;
             this.rdbReservation.Text = "RESERVATIONS";
             this.rdbReservation.UseVisualStyleBackColor = false;
@@ -190,9 +190,9 @@
             this.rdbTakeWay.Cursor = System.Windows.Forms.Cursors.Hand;
             this.rdbTakeWay.Font = new System.Drawing.Font("Segoe UI Semibold", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rdbTakeWay.ForeColor = System.Drawing.Color.White;
-            this.rdbTakeWay.Location = new System.Drawing.Point(561, 18);
+            this.rdbTakeWay.Location = new System.Drawing.Point(549, 18);
             this.rdbTakeWay.Name = "rdbTakeWay";
-            this.rdbTakeWay.Size = new System.Drawing.Size(84, 25);
+            this.rdbTakeWay.Size = new System.Drawing.Size(92, 25);
             this.rdbTakeWay.TabIndex = 9;
             this.rdbTakeWay.Text = "TAKE-AWAY";
             this.rdbTakeWay.UseVisualStyleBackColor = false;
@@ -204,9 +204,9 @@
             this.rdbOrder.Cursor = System.Windows.Forms.Cursors.Hand;
             this.rdbOrder.Font = new System.Drawing.Font("Segoe UI Semibold", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rdbOrder.ForeColor = System.Drawing.Color.White;
-            this.rdbOrder.Location = new System.Drawing.Point(494, 18);
+            this.rdbOrder.Location = new System.Drawing.Point(469, 18);
             this.rdbOrder.Name = "rdbOrder";
-            this.rdbOrder.Size = new System.Drawing.Size(65, 25);
+            this.rdbOrder.Size = new System.Drawing.Size(71, 25);
             this.rdbOrder.TabIndex = 1;
             this.rdbOrder.Text = "DINE-IN";
             this.rdbOrder.UseVisualStyleBackColor = true;
@@ -264,7 +264,7 @@
             this.rdbDelivery.Cursor = System.Windows.Forms.Cursors.Hand;
             this.rdbDelivery.Font = new System.Drawing.Font("Segoe UI Semibold", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rdbDelivery.ForeColor = System.Drawing.Color.White;
-            this.rdbDelivery.Location = new System.Drawing.Point(647, 19);
+            this.rdbDelivery.Location = new System.Drawing.Point(645, 19);
             this.rdbDelivery.Name = "rdbDelivery";
             this.rdbDelivery.Size = new System.Drawing.Size(73, 25);
             this.rdbDelivery.TabIndex = 0;

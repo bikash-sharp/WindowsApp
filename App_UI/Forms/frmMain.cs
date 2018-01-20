@@ -57,6 +57,9 @@ namespace BestariTerrace.Forms
                 {
                     Program.StoreInfo = result;
                 }
+                Program.IsGSTApplied = Program.StoreInfo.message.Restaurant.gst_status == "0" ? false : true;
+                Program.GSTValue = Program.StoreInfo.message.Restaurant.gst_value;
+                Program.TanentID = Program.StoreInfo.message.Restaurant.tanent_id;
                 string StoreLogo = Program.StoreInfo.message.Restaurant.restaurant_image;
                 StoreLogo = Program.StoreImagesLoc + StoreLogo;
                 GetImage(StoreLogo);
@@ -336,10 +339,13 @@ namespace BestariTerrace.Forms
             lblTax.DataBindings.Clear();
             //if(!IsConnected)
             //{
-            var CartTotalBinding = new Binding("Text", Program.cartItems.FirstOrDefault(), "CartTotal", true, DataSourceUpdateMode.Never, "0.00", "N");
+            var CartTotalBinding = new Binding("Text", Program.cartItems.FirstOrDefault(), "CartTotal", true, DataSourceUpdateMode.Never, "0.00", "N2");
             lblCartTotal.DataBindings.Add(CartTotalBinding);
-            var GrandTotalBinding = new Binding("Text", Program.cartItems.FirstOrDefault(), "GrandTotal", true, DataSourceUpdateMode.Never, "0.00", "N");
+            var GrandTotalBinding = new Binding("Text", Program.cartItems.FirstOrDefault(), "GrandTotal", true, DataSourceUpdateMode.Never, "0.00", "N2");
             lblGrandTotal.DataBindings.Add(GrandTotalBinding);
+
+            var TaxTotalBinding = new Binding("Text", Program.cartItems.FirstOrDefault(), "Tax", true, DataSourceUpdateMode.Never, "0.00", "N2");
+            lblTax.DataBindings.Add(TaxTotalBinding);
         }
 
         private void btnExit_Click(object sender, EventArgs e)
@@ -430,8 +436,7 @@ namespace BestariTerrace.Forms
                                 MessageBox.Show("Please select table Number", " Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 return;
                             }
-                        }
-                       
+                        }                       
                     }
                     else
                     {
@@ -440,7 +445,7 @@ namespace BestariTerrace.Forms
                 }
 
                 var TotalAmount = 0.0;  // Total Price
-                TotalAmount = Program.cartItems.Sum(p => p.Price);
+                TotalAmount = Program.cartItems.FirstOrDefault().GrandTotal;
                 FrmContainer frm = new FrmContainer();
                 ucPayment uc = new ucPayment();
                 frm.Dock = DockStyle.Fill;
@@ -457,14 +462,14 @@ namespace BestariTerrace.Forms
 
                     cart.IsOrderConfirmed = true;
                     cart.OrderStatus = EmOrderStatus.Delivered;
-                    cart.OrderID = 0;
+                    cart.OrderID = "0";
                     cart.OrderNo = OrderNumber;
                     cart.DiscountAmt = uc.DiscountAmt;
                     cart.DiscountType = (uc.DiscountType == EmDiscountType.Amount ? "amount" : "percentage");
                     cart.OrderType = CurrentOrderType;
                     cart.PaymentType = uc.PayementType;
                     cart.Items = Program.cartItems;
-                    cart.OrderTotal = Program.cartItems.First().GrandTotal.ToString("N");
+                    cart.OrderTotal = Program.cartItems.First().GrandTotal.ToString("N2");
                     cart.TableNo = TableSelection;
                     cart.OrderRemarks = OrderRemarks;
                     cart.IsCurrentOrder = true;
@@ -705,8 +710,11 @@ namespace BestariTerrace.Forms
 
                     bw.LeftJustify("------------------------------------------------");
                     bw.NormalFont("Invoice #: " + OrderNumber);
-                    bw.NormalFont("Table No#: " + Order.TableNo);
-                    bw.NormalFont("Staff : test User");
+                    if(Program.OutletType.Contains("RESTAURANT"))
+                    {
+                        bw.NormalFont("Table No#: " + Order.TableNo);
+                    }
+                    bw.NormalFont("Staff : "+Program.StaffName);
                     bw.NormalFont("Date: " + DateTime.UtcNow.ToString("dd/MM/yyyy hh:mm:ss tt", new CultureInfo("en-SG")));
                     bw.NormalFont("------------------------------------------------");
                     bw.FeedLines(1);
@@ -744,9 +752,9 @@ namespace BestariTerrace.Forms
                             var Amount = decimal.Parse(cartItems.FirstOrDefault().CartTotal.ToString("N2"));
                             var GST = decimal.Parse("6");
                             var Tax = decimal.Parse(((Convert.ToDecimal(Amount) * GST) / 100).ToString("N2"));
-                            Amount += Tax;
                             bw.NormalFont("GST Price : " + Tax);
                             bw.NormalFont("Amount : " + Amount.ToString());
+                            Amount += Tax;
                             var roundOffAmt = Math.Round(Amount, 2);
                             bw.NormalFont("Grand Total :  " + roundOffAmt.ToString());
                             bw.NormalFont("Rounding Adjustment : " + (roundOffAmt - Amount).ToString());
@@ -757,9 +765,9 @@ namespace BestariTerrace.Forms
                         var Amount = decimal.Parse(cartItems.FirstOrDefault().CartTotal.ToString("N2"));
                         var GST = decimal.Parse("6");
                         var Tax = decimal.Parse(((Convert.ToDecimal(Amount) * GST) / 100).ToString("N2"));
-                        Amount += Tax;
                         bw.NormalFont("GST Price : " + Tax);
                         bw.NormalFont("Amount : " + Amount.ToString());
+                        Amount += Tax;
                         var roundOffAmt = Math.Round(Amount, 2);
                         bw.NormalFont("Grand Total :  " + roundOffAmt.ToString());
                         bw.NormalFont("Rounding Adjustment : " + (roundOffAmt - Amount).ToString());
@@ -850,7 +858,8 @@ namespace BestariTerrace.Forms
                     _order.product_id = (item.IsCounterSale) ? "0" : item.ProductID.ToString();
                     _order.product_name = item.ProductName.ToString();
                     _order.quantity = item.Quantity.ToString();
-                    _order.price = Convert.ToInt32(Math.Ceiling(decimal.Parse(item.Price.ToString())));
+                    //_order.price = Convert.ToInt32(Math.Ceiling(decimal.Parse(item.Price.ToString())));
+                    _order.price = item.Price.ToString();
 
                     if (item.IsCounterSale)
                     {
@@ -872,7 +881,7 @@ namespace BestariTerrace.Forms
                 }
 
                 string URL = Program.BaseUrl;
-                string PostOrderURL = URL + "/makedineinorder?acess_token=" + Program.Token;
+                string PostOrderURL = URL + "/makedineinorder?acess_token=" + Program.Token+"&discount=0";
                 JavaScriptSerializer serializer = new JavaScriptSerializer();
                 var postData = serializer.Serialize(Orders);
                 var PostResult = DataProviderWrapper.Instance.PostData(PostOrderURL, postData);
@@ -881,7 +890,7 @@ namespace BestariTerrace.Forms
                 {
                     fresult = result.message;
                 }
-                if (fresult == "Success.")
+                if (fresult.ToLower().Contains("success"))
                 {
                     CurrentOrder.OrderNo = result.orderid;
                     foreach (var item in CartItems)
@@ -1239,24 +1248,27 @@ namespace BestariTerrace.Forms
                     var dataLst = result.data;
                     foreach (var item in dataLst)
                     {
-                        var isExist = Program.Reservations.Where(p => p.TableId == item.Tableorder.id).Any();
-                        if (!isExist)
+                        if(item.Tableorder != null)
                         {
-                            ReservationCL reserve = new ReservationCL();
-                            reserve.TableId = item.Tableorder.id;
-                            reserve.TableNo = "0"; //item.TableNo
-                            reserve.RestrauntId = item.Tableorder.restaurent_id;
-                            reserve.DinerName = item.Tableorder.diner_name;
-                            reserve.GuestCount = item.Tableorder.guests;
-                            reserve.MobileNo = item.Tableorder.mobile;
-                            reserve.ReservationDate = item.Tableorder.date;
-                            reserve.ReservationTime = item.Tableorder.from_time + "-" + item.Tableorder.to_time;
-                            reserve.ReservationStatus = item.Tableorder.status;
-                            if (item.Tableorder.status.ToLower() == "completed")
-                                reserve.ActionText = "Assigned";
-                            else
-                                reserve.ActionText = "Assign Table";
-                            Program.Reservations.Add(reserve);
+                            var isExist = Program.Reservations.Where(p => p.TableId == item.Tableorder.id).Any();
+                            if (!isExist)
+                            {
+                                ReservationCL reserve = new ReservationCL();
+                                reserve.TableId = item.Tableorder.id;
+                                reserve.TableNo = "0"; //item.TableNo
+                                reserve.RestrauntId = item.Tableorder.restaurent_id;
+                                reserve.DinerName = item.Tableorder.diner_name;
+                                reserve.GuestCount = item.Tableorder.guests;
+                                reserve.MobileNo = item.Tableorder.mobile;
+                                reserve.ReservationDate = item.Tableorder.date;
+                                reserve.ReservationTime = item.Tableorder.from_time + "-" + item.Tableorder.to_time;
+                                reserve.ReservationStatus = item.Tableorder.status;
+                                if (item.Tableorder.status.ToLower() == "completed")
+                                    reserve.ActionText = "Assigned";
+                                else
+                                    reserve.ActionText = "Assign Table";
+                                Program.Reservations.Add(reserve);
+                            }
                         }
                     }
                 }
@@ -1313,11 +1325,11 @@ namespace BestariTerrace.Forms
                                 {
                                     CartItemsCL newCartItem = new CartItemsCL();
                                     newCartItem.orderNo = OrderId.ToString();
-                                    newCartItem.ProductID = int.Parse(cItem.cart.product_id);
+                                    newCartItem.ProductID = int.Parse((String.IsNullOrEmpty(cItem.cart.product_id)== true)?"0": cItem.cart.product_id);
                                     newCartItem.ProductName = cItem.Product.product_name;
-                                    newCartItem.OriginalPrice = double.Parse(cItem.Product.product_price);//cItem.cart.product_price 
-                                    newCartItem.GrandTotal = double.Parse(cItem.cart.total_price);
-                                    newCartItem.Quantity = int.Parse(cItem.cart.quantity);
+                                    newCartItem.OriginalPrice = double.Parse((String.IsNullOrEmpty(cItem.Product.product_price) == true) ? "0" : cItem.Product.product_price);//cItem.cart.product_price 
+                                    newCartItem.GrandTotal = double.Parse(String.IsNullOrEmpty(cItem.cart.total_price)?"0": cItem.cart.total_price);
+                                    newCartItem.Quantity = int.Parse(String.IsNullOrEmpty(cItem.cart.quantity)?"0": cItem.cart.quantity);
                                     CartItemList.Add(newCartItem);
                                 }
                             }
@@ -1332,7 +1344,7 @@ namespace BestariTerrace.Forms
                     if (!isExists)
                     {
                         Program.PlacedOrders.Add(_plOrder);
-                        var CartItems = CartItemList.Where(p => p.orderNo == _plOrder.OrderID.ToString()).ToList();
+                        var CartItems = CartItemList.Where(p => p.orderNo == _plOrder.OrderNo).ToList();
                         Program.PlacedCartItems.AddRange(CartItems);
                     }
                 }
@@ -1359,7 +1371,7 @@ namespace BestariTerrace.Forms
         }
 
         #region LogoPrint
-        public byte[] GetLogo(string LogoFileName)
+        public static byte[] GetLogo(string LogoFileName)
         {
             if (!File.Exists(LogoFileName))
                 return null;

@@ -214,6 +214,7 @@ namespace BestariTerrace.UserControls
 
                                     try
                                     {
+                                        frmMain.Print(PrinterSetup.GetPrinterName(EmPrinterType.CashCounter), frmMain.GetLogo("StoreLogo.bmp"));
                                         frmMain.Print(PrinterSetup.GetPrinterName(EmPrinterType.CashCounter), frmMain.GetDocument(OrderNo, EmPrinterType.CashCounter));
                                     }
                                     catch (Exception ex)

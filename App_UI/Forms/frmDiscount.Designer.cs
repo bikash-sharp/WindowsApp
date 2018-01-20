@@ -118,7 +118,7 @@
             this.txtPercent.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtPercent.Location = new System.Drawing.Point(199, 116);
             this.txtPercent.Name = "txtPercent";
-            this.txtPercent.PlaceholderText = "Percent %";
+            this.txtPercent.PlaceholderText = "Percentage";
             this.txtPercent.SelectionHighlightEnabled = false;
             this.txtPercent.Size = new System.Drawing.Size(291, 33);
             this.txtPercent.TabIndex = 2;
@@ -128,11 +128,11 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(67, 119);
+            this.label2.Location = new System.Drawing.Point(64, 119);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(119, 25);
+            this.label2.Size = new System.Drawing.Size(121, 25);
             this.label2.TabIndex = 9;
-            this.label2.Text = "Percent(%) :";
+            this.label2.Text = "Percentage :";
             // 
             // label1
             // 

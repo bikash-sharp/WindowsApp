@@ -6,6 +6,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -20,15 +21,37 @@ namespace BestariTerrace.Forms
             InitializeComponent();
         }
 
+        public IPAddress ValidateIP(MaskedTextBox input)
+        {
+            IPAddress ipAddress;
+            if (input.Text.Contains(" "))
+                input.Text = input.Text.Replace(" ", "");
+            if (IPAddress.TryParse(input.Text, out ipAddress))
+            {
+                //IP address has been parsed correctly
+            }
+            return ipAddress;
+        }
+
         private void btnPrinterSave_Click(object sender, EventArgs e)
         {
             bool isExist = File.Exists(filePath);
             try
             {
+                bool IsKitchenIPCorrect = ValidateIP(txtKitchen) == null ? false : true ;
+                bool IsCashierIPCorrect = ValidateIP(txtCashPrinter) == null ? false : true;
+                if(!IsKitchenIPCorrect)
+                {
+                    MessageBox.Show("Kitchen Printer IP is not a valid IP", "Printer Setting", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                if(!IsCashierIPCorrect)
+                {
+                    MessageBox.Show("Cashier Printer IP is not a valid IP", "Printer Setting", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
                 using (StreamWriter writer = new StreamWriter("Printer.txt"))
                 {
-                    writer.WriteLine("Kitchen$" + txtKitchen.Text.Trim());
-                    writer.WriteLine("CashCounter$" + txtCashPrinter.Text.Trim());
+                    writer.WriteLine("Kitchen$" + ValidateIP(txtKitchen).ToString());
+                    writer.WriteLine("CashCounter$" + ValidateIP(txtCashPrinter).ToString());
                 }
                 MessageBox.Show("Printer Setup done successfully", "Printer Setting", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Close();
@@ -49,7 +72,19 @@ namespace BestariTerrace.Forms
             
             try
             {
-                
+                txtKitchen.Text = "   .   .   .   ";
+                txtKitchen.PromptChar = ' ';
+                txtKitchen.Mask = "009.009.009.900";
+                txtKitchen.ResetOnSpace = false;
+                txtKitchen.SkipLiterals = false;
+
+                txtCashPrinter.Text = "   .   .   .   ";
+                txtCashPrinter.PromptChar = ' ';
+                txtCashPrinter.Mask = "009.009.009.900";
+                txtCashPrinter.ResetOnSpace = false;
+                txtCashPrinter.SkipLiterals = false;
+
+
                 FileInfo _fileinfo = new FileInfo(filePath);
                 if(_fileinfo.Exists)
                 {

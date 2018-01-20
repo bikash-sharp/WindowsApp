@@ -31,25 +31,25 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.button1 = new System.Windows.Forms.Button();
             this.btnPrinterSave = new System.Windows.Forms.Button();
-            this.txtKitchen = new CustomServerControls.TxtBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.txtCashPrinter = new CustomServerControls.TxtBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.shapeContainer1 = new Microsoft.VisualBasic.PowerPacks.ShapeContainer();
             this.rectangleShape2 = new Microsoft.VisualBasic.PowerPacks.RectangleShape();
             this.rectangleShape1 = new Microsoft.VisualBasic.PowerPacks.RectangleShape();
+            this.txtKitchen = new System.Windows.Forms.MaskedTextBox();
+            this.txtCashPrinter = new System.Windows.Forms.MaskedTextBox();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.White;
+            this.panel1.Controls.Add(this.txtCashPrinter);
+            this.panel1.Controls.Add(this.txtKitchen);
             this.panel1.Controls.Add(this.button1);
             this.panel1.Controls.Add(this.btnPrinterSave);
-            this.panel1.Controls.Add(this.txtKitchen);
             this.panel1.Controls.Add(this.label4);
-            this.panel1.Controls.Add(this.txtCashPrinter);
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.shapeContainer1);
@@ -72,7 +72,7 @@
             this.button1.Location = new System.Drawing.Point(371, 188);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(113, 47);
-            this.button1.TabIndex = 22;
+            this.button1.TabIndex = 4;
             this.button1.Text = "CANCEL";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
@@ -89,19 +89,10 @@
             this.btnPrinterSave.Location = new System.Drawing.Point(206, 188);
             this.btnPrinterSave.Name = "btnPrinterSave";
             this.btnPrinterSave.Size = new System.Drawing.Size(122, 47);
-            this.btnPrinterSave.TabIndex = 21;
+            this.btnPrinterSave.TabIndex = 3;
             this.btnPrinterSave.Text = "SAVE";
             this.btnPrinterSave.UseVisualStyleBackColor = true;
             this.btnPrinterSave.Click += new System.EventHandler(this.btnPrinterSave_Click);
-            // 
-            // txtKitchen
-            // 
-            this.txtKitchen.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtKitchen.Location = new System.Drawing.Point(206, 85);
-            this.txtKitchen.Name = "txtKitchen";
-            this.txtKitchen.PlaceholderText = "Printer IP";
-            this.txtKitchen.Size = new System.Drawing.Size(291, 33);
-            this.txtKitchen.TabIndex = 20;
             // 
             // label4
             // 
@@ -112,15 +103,6 @@
             this.label4.Size = new System.Drawing.Size(88, 25);
             this.label4.TabIndex = 19;
             this.label4.Text = "Kitchen :";
-            // 
-            // txtCashPrinter
-            // 
-            this.txtCashPrinter.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtCashPrinter.Location = new System.Drawing.Point(207, 123);
-            this.txtCashPrinter.Name = "txtCashPrinter";
-            this.txtCashPrinter.PlaceholderText = "Printer IP";
-            this.txtCashPrinter.Size = new System.Drawing.Size(291, 33);
-            this.txtCashPrinter.TabIndex = 18;
             // 
             // label2
             // 
@@ -173,6 +155,24 @@
             this.rectangleShape1.Name = "rectangleShape1";
             this.rectangleShape1.Size = new System.Drawing.Size(125, 50);
             // 
+            // txtKitchen
+            // 
+            this.txtKitchen.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold);
+            this.txtKitchen.Location = new System.Drawing.Point(207, 80);
+            this.txtKitchen.Name = "txtKitchen";
+            this.txtKitchen.PromptChar = ' ';
+            this.txtKitchen.Size = new System.Drawing.Size(291, 33);
+            this.txtKitchen.TabIndex = 1;
+            // 
+            // txtCashPrinter
+            // 
+            this.txtCashPrinter.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold);
+            this.txtCashPrinter.Location = new System.Drawing.Point(207, 126);
+            this.txtCashPrinter.Name = "txtCashPrinter";
+            this.txtCashPrinter.PromptChar = ' ';
+            this.txtCashPrinter.Size = new System.Drawing.Size(291, 33);
+            this.txtCashPrinter.TabIndex = 2;
+            // 
             // PrinterSetup
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
@@ -199,9 +199,7 @@
         #endregion
 
         private System.Windows.Forms.Panel panel1;
-        private CustomServerControls.TxtBox txtKitchen;
         private System.Windows.Forms.Label label4;
-        private CustomServerControls.TxtBox txtCashPrinter;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button button1;
@@ -209,5 +207,7 @@
         private Microsoft.VisualBasic.PowerPacks.ShapeContainer shapeContainer1;
         private Microsoft.VisualBasic.PowerPacks.RectangleShape rectangleShape1;
         private Microsoft.VisualBasic.PowerPacks.RectangleShape rectangleShape2;
+        private System.Windows.Forms.MaskedTextBox txtKitchen;
+        private System.Windows.Forms.MaskedTextBox txtCashPrinter;
     }
 }
