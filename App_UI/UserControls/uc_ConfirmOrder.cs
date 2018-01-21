@@ -126,7 +126,6 @@ namespace BestariTerrace.UserControls
                 dataGridView1.DataSource = source;
                 dataGridView1.ClearSelection();
             }
-
         }
 
 

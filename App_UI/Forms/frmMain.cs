@@ -350,19 +350,29 @@ namespace BestariTerrace.Forms
 
         private void btnExit_Click(object sender, EventArgs e)
         {
+            bool IsAllow = false;
 
-            DialogResult msgResult = MessageBox.Show("Do you want to Exit Application ?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
-            if (msgResult == DialogResult.Yes)
+            var Count = Program.PlacedOrders.Where(p => p.OrderType == EmOrderType.Delivery && p.OrderStatus != EmOrderStatus.Delivered).Count();
+            if (Count == 0)
+                IsAllow = true;
+            else
             {
-                frmManagerExit mgr = new frmManagerExit();
-                mgr.ShowDialog();
-                if(mgr.IsOK)
+                MessageBox.Show("You have "+ Count +" pending deliveries.", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+            }
+            if(IsAllow)
+            {
+                DialogResult msgResult = MessageBox.Show("Do you want to Exit Application ?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                if (msgResult == DialogResult.Yes)
                 {
-                    Program.ClearData();
-                    Application.ExitThread();
+                    frmManagerExit mgr = new frmManagerExit();
+                    mgr.ShowDialog();
+                    if (mgr.IsOK)
+                    {
+                        Program.ClearData();
+                        Application.ExitThread();
+                    }
                 }
             }
-
         }
 
         private void btnSearch_Click(object sender, EventArgs e)
@@ -469,7 +479,7 @@ namespace BestariTerrace.Forms
                     cart.OrderType = CurrentOrderType;
                     cart.PaymentType = uc.PayementType;
                     cart.Items = Program.cartItems;
-                    cart.OrderTotal = Program.cartItems.First().GrandTotal.ToString("N2");
+                    cart.OrderTotal = (Program.cartItems.First().GrandTotal - uc.DiscountAmt).ToString("N2");
                     cart.TableNo = TableSelection;
                     cart.OrderRemarks = OrderRemarks;
                     cart.IsCurrentOrder = true;

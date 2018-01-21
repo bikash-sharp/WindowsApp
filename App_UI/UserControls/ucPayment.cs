@@ -109,6 +109,13 @@ namespace BestariTerrace.UserControls
 
             if (IsDone)
             {
+                //double PaidAmount = 0;
+                //double.TryParse(txtAmount.Text, out PaidAmount);
+                //foreach(var item in Program.cartItems)
+                //{
+                //    item.GrandTotal = PaidAmount;
+                //}
+
                 if (this.ParentForm.Modal)
                 {
                     this.ParentForm.DialogResult = DialogResult.OK;
@@ -267,8 +274,9 @@ namespace BestariTerrace.UserControls
 
         private void button14_Click(object sender, EventArgs e)
         {
+            Double OriginalAmt= Program.cartItems.FirstOrDefault().GrandTotal;
             frmDiscount frm = new frmDiscount();
-            frm.OriginalAmt = Program.cartItems.Sum(p => p.Price); 
+            frm.OriginalAmt = OriginalAmt;
             if (IsDiscount)
             {
                 frm.DiscountType = DiscountType;
@@ -284,18 +292,18 @@ namespace BestariTerrace.UserControls
                 {
                     var _FinalAmt = frm.OriginalAmt - DiscountAmt;
                     BindData(_FinalAmt);
-                    //RemAmount = RemAmount - DiscountAmt;
-
                 }
                 else if(DiscountType == EmDiscountType.Percent)
                 {
                     var _FinalAmt =frm.OriginalAmt - ((frm.OriginalAmt * DiscountAmt) / 100);
                     BindData(_FinalAmt);
                 }
-                //BindData(RemAmount);
-                txtAmount_TextChanged(txtAmount, null);
             }
-
+            else
+            {
+                BindData(OriginalAmt);
+            }
+            txtAmount_TextChanged(txtAmount, null);
         }
     }
 }
