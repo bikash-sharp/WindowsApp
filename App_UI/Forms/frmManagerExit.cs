@@ -101,5 +101,10 @@ namespace BestariTerrace.Forms
                 this.rectangleShape2.BorderColor = Color.FromArgb(225, 225, 225);
             }
         }
+
+        private void toolTip1_Popup(object sender, PopupEventArgs e)
+        {
+
+        }
     }
 }

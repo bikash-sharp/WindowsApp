@@ -56,8 +56,12 @@ namespace BestariTerrace.Forms
                 if (result != null)
                 {
                     Program.StoreInfo = result;
+                    double _limit = 0;
+                    double.TryParse(result.message?.Employee?.daily_cash_limit , out _limit);
+                    Program.DailyLimit = _limit;
                 }
                 Program.IsGSTApplied = Program.StoreInfo.message.Restaurant.gst_status == "0" ? false : true;
+                
                 Program.GSTValue = Program.StoreInfo.message.Restaurant.gst_value;
                 Program.TanentID = Program.StoreInfo.message.Restaurant.tanent_id;
                 string StoreLogo = Program.StoreInfo.message.Restaurant.restaurant_image;
@@ -414,152 +418,172 @@ namespace BestariTerrace.Forms
 
         private void btnPay_Click(object sender, EventArgs e)
         {
-            if (Program.cartItems.Count > 0)
+            try
             {
-                string TableSelection = "";
-                string OrderRemarks = "";
 
-                if (CurrentOrderType == EmOrderType.CounterSale)
+                #region Payment
+                if (Program.cartItems.Count > 0)
                 {
-                    //This is Counter Sale Part.
-                }
-                else
-                {
-                    if (Program.OutletType.Contains("RESTAURANT"))
+                    string TableSelection = "";
+                    string OrderRemarks = "";
+
+                    if (CurrentOrderType == EmOrderType.CounterSale)
                     {
-                        frmOrderType _frmOrder = new frmOrderType();
-                        _frmOrder.ShowDialog();
-                        if (!frmOrderType.isClosed)
-                        {
-                            frmTableSelection frmTbl = new frmTableSelection();
-                            frmTbl.orderType = CurrentOrderType;
-                            frmTbl.ShowDialog();
-
-                            OrderRemarks = frmTbl.tableRemarks;
-                            TableSelection = frmTbl.tableSelection;
-
-                            if (CurrentOrderType == EmOrderType.TakeOut)
-                                TableSelection = "TakeAway";
-
-                            if (String.IsNullOrEmpty(TableSelection))
-                            {
-                                MessageBox.Show("Please select table Number", " Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                return;
-                            }
-                        }                       
+                        //This is Counter Sale Part.
                     }
                     else
                     {
-                        CurrentOrderType = EmOrderType.TakeOut;
-                    }
-                }
-
-                var TotalAmount = 0.0;  // Total Price
-                TotalAmount = Program.cartItems.FirstOrDefault().GrandTotal;
-                FrmContainer frm = new FrmContainer();
-                ucPayment uc = new ucPayment();
-                frm.Dock = DockStyle.Fill;
-                uc.BindData(TotalAmount);
-                frm.Width = uc.Width + 20;
-                frm.Height = uc.Height + 40;
-                frm.Controls.Add(uc);
-                frm.StartPosition = FormStartPosition.CenterScreen;
-                var dgRes = frm.ShowDialog();
-                if (dgRes == System.Windows.Forms.DialogResult.OK)
-                {
-                    string OrderNumber = DateTime.UtcNow.Ticks.ToString();
-                    CartCL cart = new CartCL();
-
-                    cart.IsOrderConfirmed = true;
-                    cart.OrderStatus = EmOrderStatus.Delivered;
-                    cart.OrderID = "0";
-                    cart.OrderNo = OrderNumber;
-                    cart.DiscountAmt = uc.DiscountAmt;
-                    cart.DiscountType = (uc.DiscountType == EmDiscountType.Amount ? "amount" : "percentage");
-                    cart.OrderType = CurrentOrderType;
-                    cart.PaymentType = uc.PayementType;
-                    cart.Items = Program.cartItems;
-                    cart.OrderTotal = (Program.cartItems.First().GrandTotal - uc.DiscountAmt).ToString("N2");
-                    cart.TableNo = TableSelection;
-                    cart.OrderRemarks = OrderRemarks;
-                    cart.IsCurrentOrder = true;
-                    cart.TransactionID = uc.LastTransactionID;
-                    MessageBox.Show("Order has been placed successfully", " Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    Program.PlacedOrders.Add(cart);
-                    //Program.OrderCount();
-                    //Update Cart Order Number
-                    foreach (var item in Program.cartItems)
-                    {
-                        item.orderNo = OrderNumber;
-                        Program.PlacedCartItems.Add(item);
-                    }
-                    //Post Order
-                    var NewOrderId = PostOrder(OrderNumber);
-                    lblOrderCount.DataBindings.Clear();
-                    var OrderCount = new Binding("Text", Program.OrderBindings, "OrderCount", true, DataSourceUpdateMode.Never, "0", "");
-                    lblOrderCount.DataBindings.Add(OrderCount);
-                    //Clear the Cart and Total Field
-                    ClearList();
-                    bool isCash = false;
-                    bool ReprintMsg = true;
-
-                    //Counter Sales
-                    if (cart.OrderType == EmOrderType.CounterSale)
-                    {
-                        isCash = true;
-                    }
-
-                    //Printing
-                    Up:
-                    try
-                    {
-                        string filePath = Path.Combine(Environment.CurrentDirectory, "Printer.txt");
-                        FileInfo _fileinfo = new FileInfo(filePath);
-                        if (_fileinfo.Exists)
+                        if (Program.OutletType.Contains("RESTAURANT"))
                         {
-                            string[] lines = File.ReadAllLines(filePath);
-                            if (lines.Length > 0)
+                            frmOrderType _frmOrder = new frmOrderType();
+                            _frmOrder.ShowDialog();
+                            if (!frmOrderType.isClosed)
                             {
-                                string Kitchen = lines[0].Split('$')[1];
-                                string Cashier = lines[1].Split('$')[1];
-                                if (!String.IsNullOrEmpty(Cashier))
+                                frmTableSelection frmTbl = new frmTableSelection();
+                                frmTbl.orderType = CurrentOrderType;
+                                frmTbl.ShowDialog();
+
+                                OrderRemarks = frmTbl.tableRemarks;
+                                TableSelection = frmTbl.tableSelection;
+
+                                if (CurrentOrderType == EmOrderType.TakeOut)
+                                    TableSelection = "TakeAway";
+
+                                if (String.IsNullOrEmpty(TableSelection))
                                 {
-                                    Print(PrinterSetup.GetPrinterName(EmPrinterType.CashCounter), GetLogo("StoreLogo.bmp"));
-                                    Print(PrinterSetup.GetPrinterName(EmPrinterType.CashCounter), GetDocument(NewOrderId, EmPrinterType.CashCounter));
+                                    MessageBox.Show("Please select table Number", " Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    return;
                                 }
-                                if (!string.IsNullOrEmpty(Kitchen))
-                                {
-                                    if (!isCash)
-                                        Print(PrinterSetup.GetPrinterName(EmPrinterType.Kitchen), GetDocument(NewOrderId, EmPrinterType.Kitchen));
-                                }
-                            }
-                            else
-                            {
-                                ReprintMsg = false;
-                                MessageBox.Show("No Printer installed", "Information", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             }
                         }
+                        else
+                        {
+                            CurrentOrderType = EmOrderType.TakeOut;
+                        }
                     }
-                    catch (Exception ex)
+
+                    var TotalAmount = 0.0;  // Total Price
+                    TotalAmount = Program.cartItems.FirstOrDefault().GrandTotal;
+                    FrmContainer frm = new FrmContainer();
+                    ucPayment uc = new ucPayment();
+                    frm.Dock = DockStyle.Fill;
+                    uc.BindData(TotalAmount);
+                    frm.Width = uc.Width + 20;
+                    frm.Height = uc.Height + 40;
+                    frm.Controls.Add(uc);
+                    frm.StartPosition = FormStartPosition.CenterScreen;
+                    var dgRes = frm.ShowDialog();
+                    if (dgRes == System.Windows.Forms.DialogResult.OK)
                     {
-                        MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                    if (ReprintMsg)
-                    {
-                        DialogResult reprintMsg = MessageBox.Show("Do you want to print again ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
-                        if (reprintMsg == DialogResult.Yes)
+                        string OrderNumber = DateTime.UtcNow.Ticks.ToString();
+                        CartCL cart = new CartCL();
+
+                        cart.IsOrderConfirmed = true;
+                        cart.OrderStatus = EmOrderStatus.Delivered;
+                        cart.OrderID = "0";
+                        cart.OrderNo = OrderNumber;
+                        cart.DiscountAmt = uc.DiscountAmt;
+                        cart.DiscountType = (uc.DiscountType == EmDiscountType.Amount ? "amount" : "percentage");
+                        double DiscountAmt = 0;
+                        if (cart.DiscountType == "amount")
+                        {
+                            DiscountAmt = uc.DiscountAmt;
+                        }
+                        else
+                        {
+                            DiscountAmt = TotalAmount - ((TotalAmount * DiscountAmt) / 100);
+                        }
+                        cart.OrderType = CurrentOrderType;
+                        cart.PaymentType = uc.PayementType;
+                        cart.Items = Program.cartItems;
+                        cart.OrderTotal = (Program.cartItems.First().GrandTotal - DiscountAmt).ToString("N2");
+                        cart.TableNo = TableSelection;
+                        cart.OrderRemarks = OrderRemarks;
+                        cart.IsCurrentOrder = true;
+                        cart.TransactionID = uc.LastTransactionID;
+                        MessageBox.Show("Order has been placed successfully", " Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        Program.PlacedOrders.Add(cart);
+                        //Program.OrderCount();
+                        //Update Cart Order Number
+                        foreach (var item in Program.cartItems)
+                        {
+                            item.orderNo = OrderNumber;
+                            Program.PlacedCartItems.Add(item);
+                        }
+                        //Post Order
+                        var NewOrderId = PostOrder(OrderNumber);
+                        lblOrderCount.DataBindings.Clear();
+                        var OrderCount = new Binding("Text", Program.OrderBindings, "OrderCount", true, DataSourceUpdateMode.Never, "0", "");
+                        lblOrderCount.DataBindings.Add(OrderCount);
+                        //Clear the Cart and Total Field
+                        ClearList();
+                        bool isCash = false;
+                        bool ReprintMsg = true;
+
+                        //Counter Sales
+                        if (cart.OrderType == EmOrderType.CounterSale)
                         {
                             isCash = true;
-                            goto Up;
                         }
-                    }
 
+                        //Printing
+                        Up:
+                        try
+                        {
+                            string filePath = Path.Combine(Environment.CurrentDirectory, "Printer.txt");
+                            FileInfo _fileinfo = new FileInfo(filePath);
+                            if (_fileinfo.Exists)
+                            {
+                                string[] lines = File.ReadAllLines(filePath);
+                                if (lines.Length > 0)
+                                {
+                                    string Kitchen = lines[0].Split('$')[1];
+                                    string Cashier = lines[1].Split('$')[1];
+                                    if (!String.IsNullOrEmpty(Cashier))
+                                    {
+                                        Print(PrinterSetup.GetPrinterName(EmPrinterType.CashCounter), GetLogo("StoreLogo.bmp"));
+                                        Print(PrinterSetup.GetPrinterName(EmPrinterType.CashCounter), GetDocument(NewOrderId, EmPrinterType.CashCounter));
+                                    }
+                                    if (!string.IsNullOrEmpty(Kitchen))
+                                    {
+                                        if (!isCash)
+                                            Print(PrinterSetup.GetPrinterName(EmPrinterType.Kitchen), GetDocument(NewOrderId, EmPrinterType.Kitchen));
+                                    }
+                                }
+                                else
+                                {
+                                    ReprintMsg = false;
+                                    MessageBox.Show("No Printer installed", "Information", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                }
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                        if (ReprintMsg)
+                        {
+                            DialogResult reprintMsg = MessageBox.Show("Do you want to print again ?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                            if (reprintMsg == DialogResult.Yes)
+                            {
+                                isCash = true;
+                                goto Up;
+                            }
+                        }
+
+                    }
                 }
+                else
+                {
+                    MessageBox.Show("Cart is Empty", "Empty Cart", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+#endregion
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("Cart is Empty", "Empty Cart", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "Payment", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            
         }
 
 

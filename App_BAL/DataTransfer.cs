@@ -134,6 +134,7 @@ namespace App_BAL
     }
     public class CartCL : INotifyPropertyChanged
     {
+        public string EmployeeID { get; set; }
         private EmOrderStatus _OrderStatus { get; set; }
         public string BtnActionStatus { get; set; }
         public int SrNo { get; set; }

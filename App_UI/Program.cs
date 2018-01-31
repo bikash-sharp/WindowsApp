@@ -32,7 +32,7 @@ namespace BestariTerrace
         public static string Token { get; set; }
         public static int SelectedProductId { get; set;}
         public static string OutletType { get; set; }
-
+        public static double DailyLimit { get; set; }
         public static string GSTValue { get; set; }
         public static bool IsGSTApplied { get; set; }
         public static string StaffName { get; set; }

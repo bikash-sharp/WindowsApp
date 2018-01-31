@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.rectangleShape4 = new Microsoft.VisualBasic.PowerPacks.RectangleShape();
             this.rectangleShape3 = new Microsoft.VisualBasic.PowerPacks.RectangleShape();
             this.rectangleShape2 = new Microsoft.VisualBasic.PowerPacks.RectangleShape();
@@ -37,7 +38,8 @@
             this.button1 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.txtPassword = new CustomServerControls.TxtBox();
-            this.txtUserName = new CustomServerControls.TxtBox();
+            this.txtUserName = new System.Windows.Forms.TextBox();
+            this.tipUserName = new System.Windows.Forms.ToolTip(this.components);
             this.SuspendLayout();
             // 
             // rectangleShape4
@@ -162,16 +164,24 @@
             // txtUserName
             // 
             this.txtUserName.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtUserName.Font = new System.Drawing.Font("Segoe UI Semilight", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtUserName.ForeColor = System.Drawing.Color.Gray;
-            this.txtUserName.Location = new System.Drawing.Point(82, 93);
+            this.txtUserName.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtUserName.Location = new System.Drawing.Point(80, 93);
             this.txtUserName.Name = "txtUserName";
-            this.txtUserName.PlaceholderText = "Username";
-            this.txtUserName.SelectionHighlightEnabled = false;
-            this.txtUserName.Size = new System.Drawing.Size(312, 26);
+            this.txtUserName.Size = new System.Drawing.Size(316, 26);
             this.txtUserName.TabIndex = 1;
             this.txtUserName.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.tipUserName.SetToolTip(this.txtUserName, "Enter UserName");
             this.txtUserName.TextChanged += new System.EventHandler(this.txtUserName_TextChanged);
+            // 
+            // tipUserName
+            // 
+            this.tipUserName.AutoPopDelay = 5000;
+            this.tipUserName.InitialDelay = 50;
+            this.tipUserName.IsBalloon = true;
+            this.tipUserName.ReshowDelay = 100;
+            this.tipUserName.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            this.tipUserName.ToolTipTitle = "Information";
+            this.tipUserName.Popup += new System.Windows.Forms.PopupEventHandler(this.toolTip1_Popup);
             // 
             // frmManagerExit
             // 
@@ -179,11 +189,11 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(478, 341);
+            this.Controls.Add(this.txtUserName);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.btnLogin);
             this.Controls.Add(this.txtPassword);
-            this.Controls.Add(this.txtUserName);
             this.Controls.Add(this.shapeContainer1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
@@ -205,11 +215,12 @@
         private Microsoft.VisualBasic.PowerPacks.RectangleShape rectangleShape3;
         private Microsoft.VisualBasic.PowerPacks.RectangleShape rectangleShape2;
         private Microsoft.VisualBasic.PowerPacks.ShapeContainer shapeContainer1;
-        private CustomServerControls.TxtBox txtUserName;
         private CustomServerControls.TxtBox txtPassword;
         private System.Windows.Forms.Button btnLogin;
         private Microsoft.VisualBasic.PowerPacks.RectangleShape rectangleShape1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox txtUserName;
+        private System.Windows.Forms.ToolTip tipUserName;
     }
 }
