@@ -38,9 +38,11 @@ namespace BestariTerrace.Forms
             bool isExist = File.Exists(filePath);
             try
             {
-                bool IsKitchenIPCorrect = ValidateIP(txtKitchen) == null ? false : true ;
-                bool IsCashierIPCorrect = ValidateIP(txtCashPrinter) == null ? false : true;
-                if(!IsKitchenIPCorrect)
+                //bool IsKitchenIPCorrect = ValidateIP(txtKitchen) == null ? false : true ;
+                //bool IsCashierIPCorrect = ValidateIP(txtCashPrinter) == null ? false : true;
+                bool IsKitchenIPCorrect = true;
+                bool IsCashierIPCorrect = true;
+                if (!IsKitchenIPCorrect)
                 {
                     MessageBox.Show("Kitchen Printer IP is not a valid IP", "Printer Setting", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
@@ -50,8 +52,10 @@ namespace BestariTerrace.Forms
                 }
                 using (StreamWriter writer = new StreamWriter("Printer.txt"))
                 {
-                    writer.WriteLine("Kitchen$" + ValidateIP(txtKitchen).ToString());
-                    writer.WriteLine("CashCounter$" + ValidateIP(txtCashPrinter).ToString());
+                    //writer.WriteLine("Kitchen$" + ValidateIP(txtKitchen).ToString());
+                    //writer.WriteLine("CashCounter$" + ValidateIP(txtCashPrinter).ToString());
+                    writer.WriteLine("Kitchen$" + txtKitchen.Text);
+                    writer.WriteLine("CashCounter$" + txtCashPrinter.Text);
                 }
                 MessageBox.Show("Printer Setup done successfully", "Printer Setting", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Close();
@@ -72,17 +76,17 @@ namespace BestariTerrace.Forms
             
             try
             {
-                txtKitchen.Text = "   .   .   .   ";
-                txtKitchen.PromptChar = ' ';
-                txtKitchen.Mask = "009.009.009.900";
-                txtKitchen.ResetOnSpace = false;
-                txtKitchen.SkipLiterals = false;
+                //txtKitchen.Text = "   .   .   .   ";
+                //txtKitchen.PromptChar = ' ';
+                //txtKitchen.Mask = "009.009.009.900";
+                //txtKitchen.ResetOnSpace = false;
+                //txtKitchen.SkipLiterals = false;
 
-                txtCashPrinter.Text = "   .   .   .   ";
-                txtCashPrinter.PromptChar = ' ';
-                txtCashPrinter.Mask = "009.009.009.900";
-                txtCashPrinter.ResetOnSpace = false;
-                txtCashPrinter.SkipLiterals = false;
+                //txtCashPrinter.Text = "   .   .   .   ";
+                //txtCashPrinter.PromptChar = ' ';
+                //txtCashPrinter.Mask = "009.009.009.900";
+                //txtCashPrinter.ResetOnSpace = false;
+                //txtCashPrinter.SkipLiterals = false;
 
 
                 FileInfo _fileinfo = new FileInfo(filePath);

@@ -60,7 +60,7 @@ namespace BestariTerrace.Forms
                         Program.StaffName = txtUserName.Text.ToString();
                         Program.IsLogined = true;
                         Program.SessionId = result.sessionid;
-                        Program.OutletType = result.outlet_Type;
+                        Program.OutletType = result.outlet_Type.ToUpper();
                         Program.Token = result.data;
                         //Form Opened Directly
                         if(!IsMain)

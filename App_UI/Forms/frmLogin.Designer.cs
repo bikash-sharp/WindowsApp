@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmLogin));
             this.shapeContainer1 = new Microsoft.VisualBasic.PowerPacks.ShapeContainer();
             this.rectangleShape4 = new Microsoft.VisualBasic.PowerPacks.RectangleShape();
@@ -40,8 +41,9 @@
             this.lblHelp = new System.Windows.Forms.Label();
             this.lblContactAdmin = new System.Windows.Forms.Label();
             this.lblForgotPassword = new System.Windows.Forms.Label();
-            this.txtUserName = new CustomServerControls.TxtBox();
-            this.txtPassword = new CustomServerControls.TxtBox();
+            this.txtPassword = new System.Windows.Forms.TextBox();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.txtUserName = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -116,7 +118,7 @@
             this.btnLogin.Margin = new System.Windows.Forms.Padding(0);
             this.btnLogin.Name = "btnLogin";
             this.btnLogin.Size = new System.Drawing.Size(312, 43);
-            this.btnLogin.TabIndex = 4;
+            this.btnLogin.TabIndex = 3;
             this.btnLogin.Text = "LOGIN";
             this.btnLogin.UseVisualStyleBackColor = true;
             this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
@@ -185,33 +187,33 @@
             this.lblForgotPassword.Visible = false;
             this.lblForgotPassword.Click += new System.EventHandler(this.lblForgotPassword_Click);
             // 
-            // txtUserName
-            // 
-            this.txtUserName.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtUserName.Font = new System.Drawing.Font("Segoe UI Semilight", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtUserName.ForeColor = System.Drawing.Color.Gray;
-            this.txtUserName.Location = new System.Drawing.Point(48, 123);
-            this.txtUserName.Name = "txtUserName";
-            this.txtUserName.PlaceholderText = "User Name";
-            this.txtUserName.SelectionHighlightEnabled = false;
-            this.txtUserName.Size = new System.Drawing.Size(315, 26);
-            this.txtUserName.TabIndex = 1;
-            this.txtUserName.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.txtUserName.TextChanged += new System.EventHandler(this.txtUserName_TextChanged);
-            // 
             // txtPassword
             // 
             this.txtPassword.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtPassword.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPassword.ForeColor = System.Drawing.Color.Gray;
-            this.txtPassword.Location = new System.Drawing.Point(49, 195);
+            this.txtPassword.Location = new System.Drawing.Point(50, 195);
             this.txtPassword.Name = "txtPassword";
-            this.txtPassword.PlaceholderText = "Password";
-            this.txtPassword.SelectionHighlightEnabled = false;
-            this.txtPassword.Size = new System.Drawing.Size(315, 26);
+            this.txtPassword.Size = new System.Drawing.Size(311, 26);
             this.txtPassword.TabIndex = 2;
             this.txtPassword.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.txtPassword.TextChanged += new System.EventHandler(this.txtPassword_TextChanged);
+            this.toolTip1.SetToolTip(this.txtPassword, "Enter Password");
+            this.txtPassword.UseSystemPasswordChar = true;
+            // 
+            // toolTip1
+            // 
+            this.toolTip1.IsBalloon = true;
+            this.toolTip1.ShowAlways = true;
+            // 
+            // txtUserName
+            // 
+            this.txtUserName.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtUserName.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtUserName.Location = new System.Drawing.Point(49, 124);
+            this.txtUserName.Name = "txtUserName";
+            this.txtUserName.Size = new System.Drawing.Size(311, 26);
+            this.txtUserName.TabIndex = 1;
+            this.txtUserName.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.toolTip1.SetToolTip(this.txtUserName, "Enter Username");
             // 
             // frmLogin
             // 
@@ -220,8 +222,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(408, 479);
-            this.Controls.Add(this.txtPassword);
             this.Controls.Add(this.txtUserName);
+            this.Controls.Add(this.txtPassword);
             this.Controls.Add(this.lblForgotPassword);
             this.Controls.Add(this.lblContactAdmin);
             this.Controls.Add(this.lblHelp);
@@ -258,7 +260,8 @@
         private System.Windows.Forms.Label lblHelp;
         private System.Windows.Forms.Label lblContactAdmin;
         private System.Windows.Forms.Label lblForgotPassword;
-        private CustomServerControls.TxtBox txtUserName;
-        private CustomServerControls.TxtBox txtPassword;
+        private System.Windows.Forms.TextBox txtPassword;
+        private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.TextBox txtUserName;
     }
 }

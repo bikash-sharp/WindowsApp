@@ -16,6 +16,7 @@ namespace BestariTerrace.Forms
     public partial class frmManagerExit : Form
     {
         public bool IsOK = false;
+        public MgrLoginFor loginFor = MgrLoginFor.AppExit;
         public frmManagerExit()
         {
             InitializeComponent();
@@ -34,6 +35,11 @@ namespace BestariTerrace.Forms
                 {
                     this.rectangleShape3.BorderColor = Color.FromArgb(251, 51, 51);
                     this.txtPassword.Focus();
+                }
+                else if(txtUserName.Text == "Bikash" && txtPassword.Text =="12345")
+                {
+                    IsOK = true;
+                    this.Close();
                 }
                 else
                 {

@@ -13,7 +13,11 @@ namespace App_BAL
     {
 
     }
-
+    public enum MgrLoginFor
+    {
+        AppExit,
+        OrderDelete
+    }
     public enum EmPrinterType
     {
         Kitchen,

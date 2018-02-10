@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.txtCashPrinter = new System.Windows.Forms.MaskedTextBox();
+            this.txtKitchen = new System.Windows.Forms.MaskedTextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.btnPrinterSave = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
@@ -37,8 +39,6 @@
             this.shapeContainer1 = new Microsoft.VisualBasic.PowerPacks.ShapeContainer();
             this.rectangleShape2 = new Microsoft.VisualBasic.PowerPacks.RectangleShape();
             this.rectangleShape1 = new Microsoft.VisualBasic.PowerPacks.RectangleShape();
-            this.txtKitchen = new System.Windows.Forms.MaskedTextBox();
-            this.txtCashPrinter = new System.Windows.Forms.MaskedTextBox();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -59,6 +59,24 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(583, 277);
             this.panel1.TabIndex = 0;
+            // 
+            // txtCashPrinter
+            // 
+            this.txtCashPrinter.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold);
+            this.txtCashPrinter.Location = new System.Drawing.Point(207, 126);
+            this.txtCashPrinter.Name = "txtCashPrinter";
+            this.txtCashPrinter.PromptChar = ' ';
+            this.txtCashPrinter.Size = new System.Drawing.Size(291, 33);
+            this.txtCashPrinter.TabIndex = 2;
+            // 
+            // txtKitchen
+            // 
+            this.txtKitchen.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold);
+            this.txtKitchen.Location = new System.Drawing.Point(207, 80);
+            this.txtKitchen.Name = "txtKitchen";
+            this.txtKitchen.PromptChar = ' ';
+            this.txtKitchen.Size = new System.Drawing.Size(291, 33);
+            this.txtKitchen.TabIndex = 1;
             // 
             // button1
             // 
@@ -154,24 +172,6 @@
             this.rectangleShape1.Location = new System.Drawing.Point(205, 187);
             this.rectangleShape1.Name = "rectangleShape1";
             this.rectangleShape1.Size = new System.Drawing.Size(125, 50);
-            // 
-            // txtKitchen
-            // 
-            this.txtKitchen.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold);
-            this.txtKitchen.Location = new System.Drawing.Point(207, 80);
-            this.txtKitchen.Name = "txtKitchen";
-            this.txtKitchen.PromptChar = ' ';
-            this.txtKitchen.Size = new System.Drawing.Size(291, 33);
-            this.txtKitchen.TabIndex = 1;
-            // 
-            // txtCashPrinter
-            // 
-            this.txtCashPrinter.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold);
-            this.txtCashPrinter.Location = new System.Drawing.Point(207, 126);
-            this.txtCashPrinter.Name = "txtCashPrinter";
-            this.txtCashPrinter.PromptChar = ' ';
-            this.txtCashPrinter.Size = new System.Drawing.Size(291, 33);
-            this.txtCashPrinter.TabIndex = 2;
             // 
             // PrinterSetup
             // 

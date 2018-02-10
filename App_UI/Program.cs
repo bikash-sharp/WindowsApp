@@ -74,7 +74,7 @@ namespace BestariTerrace
             {
                 item.CartTotal = Program.cartItems.Sum(p => p.Price);
                 Double GSTAmount = 0;
-                if(IsGSTApplied)
+                if(Program.OutletType !="RESTAURANT")
                 {
                     GSTAmount = (item.CartTotal * double.Parse(GSTValue))/100;
                     item.GrandTotal = item.CartTotal + GSTAmount;

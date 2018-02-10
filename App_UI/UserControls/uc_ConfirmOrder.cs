@@ -241,25 +241,34 @@ namespace BestariTerrace.UserControls
                             }
                             else if (e.ColumnIndex == 4)
                             {
-                                string URL = Program.BaseUrl;
-                                string DeleteOrderUrl = URL + "/deleteDineInOrder?order_id=" + OrderNo + "&acess_token=" + Program.Token;
-                                var GetStatus = DataProviderWrapper.Instance.GetData(DeleteOrderUrl, Verbs.GET, "");
-                                JavaScriptSerializer serializer = new JavaScriptSerializer();
-                                try
+                                frmManagerExit mgr = new frmManagerExit();
+                                mgr.ShowDialog();
+                                if (mgr.IsOK)
                                 {
-                                    var result = serializer.Deserialize<MessageCL>(GetStatus);
-                                    if (result.status)
+                                    string URL = Program.BaseUrl;
+                                    string DeleteOrderUrl = URL + "/deleteDineInOrder?order_id=" + OrderNo + "&acess_token=" + Program.Token;
+                                    var GetStatus = DataProviderWrapper.Instance.GetData(DeleteOrderUrl, Verbs.GET, "");
+                                    JavaScriptSerializer serializer = new JavaScriptSerializer();
+                                    try
                                     {
-                                        if (SelectedOrder != null)
+                                        var result = serializer.Deserialize<MessageCL>(GetStatus);
+                                        if (result.status)
                                         {
-                                            Program.PlacedOrders.Remove(SelectedOrder);
+                                            if (SelectedOrder != null)
+                                            {
+                                                Program.PlacedOrders.Remove(SelectedOrder);
+                                            }
                                         }
                                     }
+                                    catch (Exception ex)
+                                    {
+                                        var err = ex.Message;
+                                        MessageBox.Show("Unable to delete the order!!!", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                                    }
                                 }
-                                catch(Exception ex)
+                                else
                                 {
-                                    var err = ex.Message;
-                                    MessageBox.Show("Unable to delete the order!!!", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                                    MessageBox.Show("Manager Approval required for Order Deletion", "Information", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                                 }
                             }
                         }

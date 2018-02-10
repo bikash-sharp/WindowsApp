@@ -78,17 +78,10 @@ namespace BestariTerrace.Forms
             if (Program.OutletType.Contains("RESTAURANT"))
             {
                 rdbDelivery.Visible = rdbOrder.Visible = rdbTakeWay.Visible = rdbReservation.Visible = true;
-                //rdbDelivery.Location = new Point(647, 19);
-                //rdbDelivery.Size = new Size(73, 25);
-                //rdbDelivery.Text = "DELIVERY";
             }
             else
             {
                 rdbTakeWay.Text = "SALES";
-                //rdbDelivery.Visible = true;
-                //rdbDelivery.Location = new Point(550, 19);
-                //rdbDelivery.Text = "SALES AND DELIVERIES";
-                //rdbDelivery.Size = new Size(160, 25);
                 rdbOrder.Visible = rdbReservation.Visible = false;
             }
             var path = new System.Drawing.Drawing2D.GraphicsPath();
@@ -358,7 +351,9 @@ namespace BestariTerrace.Forms
 
             var Count = Program.PlacedOrders.Where(p => p.OrderType == EmOrderType.Delivery && p.OrderStatus != EmOrderStatus.Delivered).Count();
             if (Count == 0)
+            {
                 IsAllow = true;
+            }
             else
             {
                 MessageBox.Show("You have "+ Count +" pending deliveries.", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
@@ -935,14 +930,14 @@ namespace BestariTerrace.Forms
                     //Update the Discount Details
                     if (CurrentOrder.DiscountAmt > 0)
                     {
-                        string DiscountURL = "/applyDiscount?order_id=" + result.orderid + "&discount_value=" + CurrentOrder.DiscountAmt + "&discount_type=" + CurrentOrder.DiscountType + "&acess_token=" + Program.Token;
+                        string DiscountURL = URL+ "/applyDiscount?order_id=" + result.orderid + "&discount_value=" + CurrentOrder.DiscountAmt + "&discount_type=" + CurrentOrder.DiscountType + "&acess_token=" + Program.Token;
                         var DiscountResult = DataProviderWrapper.Instance.GetData(DiscountURL, Verbs.GET, "");
                     }
 
                     //Update the Table Details
                     if (CurrentOrderType == EmOrderType.DineIn)
                     {
-                        string TableUrl = "/addTableDetails?reservation_id=" + result.orderid + "&remarks=" + CurrentOrder.OrderRemarks + "&table_no=" + CurrentOrder.TableNo + "&acess_token=" + Program.Token;
+                        string TableUrl = URL + "/addTableDetails?reservation_id=" + result.orderid + "&remarks=" + CurrentOrder.OrderRemarks + "&table_no=" + CurrentOrder.TableNo + "&acess_token=" + Program.Token;
                         var TableResult = DataProviderWrapper.Instance.GetData(TableUrl, Verbs.GET, "");
                     }
 
@@ -1522,6 +1517,11 @@ namespace BestariTerrace.Forms
 
                 JavaScriptSerializer serializer = new JavaScriptSerializer();
                 var result = serializer.Deserialize<logoutCL>(GetStatus);
+                if(result.status)
+                {
+                    MessageBox.Show("You have been Successfully logout", "Logout Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    ClearList();
+                }
                 Program.IsLogined = false;
                 Up:
                 frmLogin obj = new frmLogin();

@@ -23,7 +23,27 @@ namespace BestariTerrace.Forms
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            this.Close();
+            if (orderType == EmOrderType.DineIn)
+            {
+                if (String.IsNullOrEmpty(txtTableNo.Text))
+                {
+                    txtTableNo.Focus();
+                    MessageBox.Show("Please enter the table number.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+                else
+                {
+                    tableRemarks = txtDescription.Text.Trim();
+                    tableSelection = txtTableNo.Text.Trim();
+                    this.Close();
+                }
+            }
+            else
+            {
+                tableRemarks = txtDescription.Text.Trim();
+                tableSelection = txtTableNo.Text.Trim();
+                this.Close();
+            }
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -33,6 +53,8 @@ namespace BestariTerrace.Forms
                 if(String.IsNullOrEmpty(txtTableNo.Text))
                 {
                     MessageBox.Show("Please enter the table number.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    txtTableNo.Focus();
+                    return;
                 }
                 else
                 {
@@ -58,11 +80,13 @@ namespace BestariTerrace.Forms
                 //txtTableNo.Enabled = false;
                 label4.Visible = false;
                 txtTableNo.Visible = false;
+
             }
             else
             {
                 txtTableNo.Text = string.Empty;
                 txtTableNo.Enabled = true;
+                txtTableNo.Focus();
             }
         }
     }
