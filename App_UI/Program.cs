@@ -28,6 +28,7 @@ namespace BestariTerrace
         public const String StoreImagesLoc = "http://bestariterrace.com/app/webroot/images/uploads/restaurants_images/";
 
         public static string TanentID { get; set; }
+        public static string CurrentEmployeeId { get; set; }
         public static string SessionId { get; set; }
         public static string Token { get; set; }
         public static int SelectedProductId { get; set;}
@@ -74,7 +75,7 @@ namespace BestariTerrace
             {
                 item.CartTotal = Program.cartItems.Sum(p => p.Price);
                 Double GSTAmount = 0;
-                if(Program.OutletType !="RESTAURANT")
+                if(Program.OutletType.ToUpper().Trim() !="RESTAURANT")
                 {
                     GSTAmount = (item.CartTotal * double.Parse(GSTValue))/100;
                     item.GrandTotal = item.CartTotal + GSTAmount;

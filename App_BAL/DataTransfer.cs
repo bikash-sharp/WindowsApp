@@ -620,6 +620,7 @@ namespace App_BAL
         {
             Cart_products = new List<CartProduct>();
             Orderdetail = new Orderdetail();
+            
         }
     }
 
@@ -860,9 +861,11 @@ namespace App_BAL
         public bool status { get; set; }
         public List<Datum> data { get; set; }
         public string message { get; set; }
+        public Employee employee { get; set; }
         public PendingOrderAPI()
         {
             data = new List<Datum>();
+            employee = new Employee();
         }
     }
     #endregion
