@@ -263,12 +263,12 @@ namespace BestariTerrace.UserControls
                                     catch (Exception ex)
                                     {
                                         var err = ex.Message;
-                                        MessageBox.Show("Unable to delete the order!!!", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                                        MessageBox.Show("Unable to delete the order!!!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                     }
                                 }
                                 else
                                 {
-                                    MessageBox.Show("Manager Approval required for Order Deletion", "Information", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                                    MessageBox.Show("Manager Approval required for Order Deletion", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 }
                             }
                         }

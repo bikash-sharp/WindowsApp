@@ -1511,27 +1511,31 @@ namespace BestariTerrace.Forms
             DialogResult msgResult = MessageBox.Show("Do you want to Logout Application ?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
             if (msgResult == DialogResult.Yes)
             {
+                ClearList();
                 string URL = Program.BaseUrl;
                 string LogoutURL = URL + "/logout?acess_token=" + Program.Token + "&session_id=" + Program.SessionId;
                 var GetStatus = DataProviderWrapper.Instance.GetData(LogoutURL, Verbs.GET, "");
 
                 JavaScriptSerializer serializer = new JavaScriptSerializer();
                 var result = serializer.Deserialize<logoutCL>(GetStatus);
-                if(result.status)
+                if (!result.status || result.status)
                 {
                     MessageBox.Show("You have been Successfully logout", "Logout Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    ClearList();
                 }
                 Program.IsLogined = false;
-                Up:
-                frmLogin obj = new frmLogin();
-                obj.IsMain = true;
-                obj.ShowDialog();
+                this.Close();
+                this.Hide();
+                frmLogout _logout = new frmLogout();
+                _logout.ShowDialog();
+                //Up:
+                //frmLogin obj = new frmLogin();
+                //obj.IsMain = true;
+                //obj.ShowDialog();
                 
-                if (!Program.IsLogined)
-                {
-                    goto Up;
-                }
+                //if (!Program.IsLogined)
+                //{
+                //    goto Up;
+                //}
             }
         }
 

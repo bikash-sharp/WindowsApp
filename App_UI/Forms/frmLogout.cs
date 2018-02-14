@@ -43,24 +43,6 @@ namespace BestariTerrace.Forms
                 this.rectangleShape2.BorderColor = Color.FromArgb(225, 225, 225);
                 try
                 {
-                    //var rowCount = 0;
-                    //using (OleDbConnection OConn = new OleDbConnection(Program.ConnectionStr))
-                    //{
-                    //    OConn.Open();
-                    //    OleDbCommand cmd = new OleDbCommand("SELECT COUNT(*) FROM employees", OConn);
-                    //    int.TryParse(cmd.ExecuteScalar()+"", out rowCount);
-                    //    //OleDbCommand cmd = new OleDbCommand("SELECT password FROM employees WHERE user = '" + txtUserName.Text.Trim() + "'", OConn);
-                    //}
-                    //if(rowCount > 0)
-                    //{
-                    //    //try Login
-                    //}
-                    //else
-                    //{
-                    //    //Show Message for Sync.
-                    //    //Sync all api altogether.
-                    //}
-
                     string URL = Program.BaseUrl;
                     string LoginUrl = URL + "/login?username=" + txtUserName.Text.Trim() + "&password=" + txtPassword.Text.Trim();
 
@@ -73,8 +55,10 @@ namespace BestariTerrace.Forms
                         this.Hide();
                         Program.IsLogined = true;
                         Program.SessionId = result.sessionid;
-                        Program.OutletType = result.outlet_Type;
-                        Program.Token = result.data;                        
+                        Program.OutletType = result.outlet_Type.ToUpper();
+                        Program.Token = result.data;
+                        frmMain _main = new frmMain();
+                        _main.ShowDialog();                     
                     }
                     else
                     {
