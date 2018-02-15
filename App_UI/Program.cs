@@ -23,7 +23,7 @@ namespace BestariTerrace
         public static BindingList<CartItemsCL> cartItems = new BindingList<CartItemsCL>();
         public static List<CartItemsCL> PlacedCartItems = new List<CartItemsCL>();
         public static BindingList<CalculateCart> cartTotal = new BindingList<CalculateCart>();
-        public const String BaseUrl = "http://bestariterrace.com/index.php/restwebservices/"; //202.75.42.25
+        public const String BaseUrl = "http://bestariterrace.com/index.php/restwebservices"; //202.75.42.25
         public const String ProductImagesLoc = "http://bestariterrace.com/app/webroot/images/uploads/product_images/";//bestariterrace.com
         public const String StoreImagesLoc = "http://bestariterrace.com/app/webroot/images/uploads/restaurants_images/";
 

@@ -1374,7 +1374,7 @@ namespace BestariTerrace.Forms
                         newOrder.OrderTotal = item.Orderdetail.total;
                         newOrder.EmployeeID = dineResult.employee?.id;
 
-                        var orderCart = item.Orderdetail.cart;
+                        var orderCart = item.Orderdetail?.cart ?? new List<Cart>();
                         if (orderCart.Count > 0)
                         {
                             foreach (var cItem in orderCart)

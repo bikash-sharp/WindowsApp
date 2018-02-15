@@ -349,7 +349,7 @@ namespace BestariTerrace.UserControls
                                     if (isAllowed)
                                     {
                                         string URL = Program.BaseUrl;
-                                        string ChangeOrdStatusURL = URL + "confirmorder?order_id=" + OrderNo + "&order_status=" + statusUpdated + "&acess_token=" + Program.Token;
+                                        string ChangeOrdStatusURL = URL + "/confirmorder?order_id=" + OrderNo + "&order_status=" + statusUpdated + "&acess_token=" + Program.Token;
 
                                         var GetStatus = DataProviderWrapper.Instance.GetData(ChangeOrdStatusURL, Verbs.GET, "");
                                         JavaScriptSerializer serializer = new JavaScriptSerializer();
