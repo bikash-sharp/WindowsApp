@@ -39,12 +39,16 @@
             this.shapeContainer1 = new Microsoft.VisualBasic.PowerPacks.ShapeContainer();
             this.rectangleShape2 = new Microsoft.VisualBasic.PowerPacks.RectangleShape();
             this.rectangleShape1 = new Microsoft.VisualBasic.PowerPacks.RectangleShape();
+            this.txtPort = new System.Windows.Forms.MaskedTextBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.White;
+            this.panel1.Controls.Add(this.txtPort);
+            this.panel1.Controls.Add(this.label3);
             this.panel1.Controls.Add(this.txtCashPrinter);
             this.panel1.Controls.Add(this.txtKitchen);
             this.panel1.Controls.Add(this.button1);
@@ -57,7 +61,7 @@
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Margin = new System.Windows.Forms.Padding(0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(583, 277);
+            this.panel1.Size = new System.Drawing.Size(583, 322);
             this.panel1.TabIndex = 0;
             // 
             // txtCashPrinter
@@ -87,7 +91,7 @@
             this.button1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LimeGreen;
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button1.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(371, 188);
+            this.button1.Location = new System.Drawing.Point(371, 240);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(113, 47);
             this.button1.TabIndex = 4;
@@ -104,9 +108,9 @@
             this.btnPrinterSave.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LimeGreen;
             this.btnPrinterSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnPrinterSave.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnPrinterSave.Location = new System.Drawing.Point(206, 188);
+            this.btnPrinterSave.Location = new System.Drawing.Point(206, 241);
             this.btnPrinterSave.Name = "btnPrinterSave";
-            this.btnPrinterSave.Size = new System.Drawing.Size(122, 47);
+            this.btnPrinterSave.Size = new System.Drawing.Size(122, 46);
             this.btnPrinterSave.TabIndex = 3;
             this.btnPrinterSave.Text = "SAVE";
             this.btnPrinterSave.UseVisualStyleBackColor = true;
@@ -151,7 +155,7 @@
             this.shapeContainer1.Shapes.AddRange(new Microsoft.VisualBasic.PowerPacks.Shape[] {
             this.rectangleShape2,
             this.rectangleShape1});
-            this.shapeContainer1.Size = new System.Drawing.Size(583, 277);
+            this.shapeContainer1.Size = new System.Drawing.Size(583, 322);
             this.shapeContainer1.TabIndex = 23;
             this.shapeContainer1.TabStop = false;
             // 
@@ -160,7 +164,7 @@
             this.rectangleShape2.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
             this.rectangleShape2.BorderStyle = System.Drawing.Drawing2D.DashStyle.Dash;
             this.rectangleShape2.BorderWidth = 2;
-            this.rectangleShape2.Location = new System.Drawing.Point(369, 186);
+            this.rectangleShape2.Location = new System.Drawing.Point(369, 239);
             this.rectangleShape2.Name = "rectangleShape2";
             this.rectangleShape2.Size = new System.Drawing.Size(117, 50);
             // 
@@ -169,15 +173,34 @@
             this.rectangleShape1.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
             this.rectangleShape1.BorderStyle = System.Drawing.Drawing2D.DashStyle.Dash;
             this.rectangleShape1.BorderWidth = 2;
-            this.rectangleShape1.Location = new System.Drawing.Point(205, 187);
+            this.rectangleShape1.Location = new System.Drawing.Point(205, 240);
             this.rectangleShape1.Name = "rectangleShape1";
             this.rectangleShape1.Size = new System.Drawing.Size(125, 50);
+            // 
+            // txtPort
+            // 
+            this.txtPort.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F, System.Drawing.FontStyle.Bold);
+            this.txtPort.Location = new System.Drawing.Point(207, 170);
+            this.txtPort.Name = "txtPort";
+            this.txtPort.PromptChar = ' ';
+            this.txtPort.Size = new System.Drawing.Size(291, 33);
+            this.txtPort.TabIndex = 3;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(64, 174);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(130, 25);
+            this.label3.TabIndex = 25;
+            this.label3.Text = "Display Port :";
             // 
             // PrinterSetup
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(583, 277);
+            this.ClientSize = new System.Drawing.Size(583, 322);
             this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -209,5 +232,7 @@
         private Microsoft.VisualBasic.PowerPacks.RectangleShape rectangleShape2;
         private System.Windows.Forms.MaskedTextBox txtKitchen;
         private System.Windows.Forms.MaskedTextBox txtCashPrinter;
+        private System.Windows.Forms.MaskedTextBox txtPort;
+        private System.Windows.Forms.Label label3;
     }
 }

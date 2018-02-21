@@ -39,6 +39,9 @@ namespace BestariTerrace.UserControls
             lblRem.Text = "Balance : " + RemAmount.ToString("N");
             ChangeColorSelectedButton(btnCash);
             txtAmount.Focus();
+
+            String[] lines = new string[] { "#AMT:" + lblTotal.Text, "#BAL:" + RemAmount.ToString("N") };
+            frmMain.DisplayText(lines);
         }
 
         private void txtAmount_TextChanged(object sender, EventArgs e)
@@ -49,6 +52,9 @@ namespace BestariTerrace.UserControls
                 double.TryParse(txtAmount.Text, out PaidAmount);
                 RemAmount = PaidAmount - TotalAmount;
                 lblRem.Text = "Balance : " + RemAmount.ToString("N");
+
+                String[] lines = new string[] { "AMT:"+lblTotal.Text, "#BAL:" + RemAmount.ToString("N")};
+                frmMain.DisplayText(lines);
             }
         }
 

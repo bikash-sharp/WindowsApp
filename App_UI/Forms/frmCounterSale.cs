@@ -1,4 +1,5 @@
 ﻿using App_BAL;
+using BestariTerrace.Forms;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -58,6 +59,10 @@ namespace BestariTerrace.Forms
                 cl.ProductName = txtProductName.Text.Trim();
                 cl.Price = Price;                
                 Program.cartItems.Add(cl);
+
+                String[] lines = new string[] { cl.ProductName, "#QTY:"+Qty.ToString()+" #AMT:" + cl.Price.ToString("N2") };
+                frmMain.DisplayText(lines);
+
                 this.Close();
             }
         }

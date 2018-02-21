@@ -24,6 +24,7 @@ using System.Net;
 using System.Collections;
 using System.Globalization;
 using System.Security.Cryptography;
+using System.IO.Ports;
 
 namespace BestariTerrace.Forms
 {
@@ -60,6 +61,7 @@ namespace BestariTerrace.Forms
                     double.TryParse(result.message?.Employee?.daily_cash_limit, out _limit);
                     Program.DailyLimit = _limit;
                     Program.CurrentEmployeeId = result.message?.Employee?.id;
+                    Program.OutletName = result.message?.Restaurant?.restaurant_name;
                 }
                 Program.IsGSTApplied = Program.StoreInfo.message.Restaurant.gst_status == "0" ? false : true;
 
@@ -76,6 +78,7 @@ namespace BestariTerrace.Forms
         }
         private void frmMain_Load(object sender, EventArgs e)
         {
+
             if (Program.OutletType.Contains("RESTAURANT"))
             {
                 rdbDelivery.Visible = rdbOrder.Visible = rdbTakeWay.Visible = rdbReservation.Visible = true;
@@ -100,6 +103,9 @@ namespace BestariTerrace.Forms
             GetStoreInfo();
             GetPendingOrders();
             BindProducts();
+
+            String[] DisplayLines = new string[] { "Welcome To", Program.OutletName };
+            DisplayText(DisplayLines);
         }
 
 
@@ -318,6 +324,9 @@ namespace BestariTerrace.Forms
                     cl.Quantity = 1;
                     cl.ProductName = prod.product_name;
                     Program.cartItems.Add(cl);
+
+                    String[] lines = new string[] { prod.product_name, "#QTY:1 #AMT:" +cl.Price.ToString("N2") };
+                    DisplayText(lines);
                 }
 
 
@@ -344,6 +353,8 @@ namespace BestariTerrace.Forms
 
             var TaxTotalBinding = new Binding("Text", Program.cartItems.FirstOrDefault(), "Tax", true, DataSourceUpdateMode.Never, "0.00", "N2");
             lblTax.DataBindings.Add(TaxTotalBinding);
+
+            
         }
 
         private void btnExit_Click(object sender, EventArgs e)
@@ -532,6 +543,8 @@ namespace BestariTerrace.Forms
                                 Program.PlacedCartItems.Add(item);
                             }
                             //Post Order
+                            string[] textLine = new string[] { "Your Order Placed", "Successfully" };
+                            frmMain.DisplayText(textLine);
                             var NewOrderId = PostOrder(OrderNumber);
                             lblOrderCount.DataBindings.Clear();
                             var OrderCount = new Binding("Text", Program.OrderBindings, "OrderCount", true, DataSourceUpdateMode.Never, "0", "");
@@ -547,6 +560,8 @@ namespace BestariTerrace.Forms
                                 isCash = true;
                             }
 
+                            textLine = new string[] { "....Printing....", "Successful" };
+                            frmMain.DisplayText(textLine);
                             //Printing
                             Up:
                             try
@@ -608,6 +623,8 @@ namespace BestariTerrace.Forms
                 MessageBox.Show(ex.Message, "Payment", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+            string[] DisplayLines = new string[] { "", "" };
+            frmMain.DisplayText(DisplayLines);
         }
 
 
@@ -1026,6 +1043,56 @@ namespace BestariTerrace.Forms
         {
             for (var i = 0; i < txt.Length; i += partLength)
                 yield return txt.Substring(i, Math.Min(partLength, txt.Length - i));
+        }
+
+        public static void DisplayText(string[] txt)
+        {
+            try
+            {
+                if (txt.Count() > 0)
+                {
+                    String DisplayPort = "";
+                    string filePath = Path.Combine(Environment.CurrentDirectory, "Printer.txt");
+                    FileInfo _fileinfo = new FileInfo(filePath);
+                    if (_fileinfo.Exists)
+                    {
+                        string[] lines = File.ReadAllLines(filePath);
+                        if (lines.Length > 2)
+                        {
+                            DisplayPort = lines[2].Split('$')[1];
+                        }
+                    }
+                    if (!String.IsNullOrEmpty(DisplayPort))
+                    {
+                        using (SerialPort sp = new SerialPort(DisplayPort, 9600, Parity.None, 8, StopBits.One))
+                        {
+                            var Line1 = SplitInParts(txt[0].Trim(), 20);
+                            IEnumerable<string> Line2 = new List<string>();
+                            if (txt.Count() > 1)
+                                Line2 = SplitInParts(txt[1].Trim(), 20);
+                            sp.Open();
+                            //Clear the Display
+                            sp.Write(new byte[] { 0x0C }, 0, 1);
+                            sp.Write(Line1.FirstOrDefault() + "");
+                            //Goto Bottem Line - Most Left
+                            sp.Write(new byte[] { 0x0A, 0x0D }, 0, 2);
+                            sp.Write(Line2.FirstOrDefault() + "");
+                            sp.Close();
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Set Port for Display Unit in Settings", "Information", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Display Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+
         }
 
         private void ClearList()

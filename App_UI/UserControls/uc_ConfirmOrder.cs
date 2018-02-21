@@ -242,6 +242,7 @@ namespace BestariTerrace.UserControls
                             else if (e.ColumnIndex == 4)
                             {
                                 frmManagerExit mgr = new frmManagerExit();
+                                mgr.loginFor = MgrLoginFor.OrderDelete;
                                 mgr.ShowDialog();
                                 if (mgr.IsOK)
                                 {

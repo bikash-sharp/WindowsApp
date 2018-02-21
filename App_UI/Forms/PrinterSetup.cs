@@ -56,6 +56,7 @@ namespace BestariTerrace.Forms
                     //writer.WriteLine("CashCounter$" + ValidateIP(txtCashPrinter).ToString());
                     writer.WriteLine("Kitchen$" + txtKitchen.Text);
                     writer.WriteLine("CashCounter$" + txtCashPrinter.Text);
+                    writer.WriteLine("DisplayPort$" + txtPort.Text.ToUpper());
                 }
                 MessageBox.Show("Printer Setup done successfully", "Printer Setting", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Close();
@@ -95,15 +96,16 @@ namespace BestariTerrace.Forms
                     string[] lines = File.ReadAllLines(filePath);
                     txtKitchen.Text = lines[0].Split('$')[1];
                     txtCashPrinter.Text = lines[1].Split('$')[1];
+                    txtPort.Text = lines[2].Split('$')[2];
                 }
                 else
                 {
-                    MessageBox.Show("Printer Setting Not found", "Printer Setting", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Printer/Port Setting Not found", "Setting", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch(Exception ex)
             {
-                MessageBox.Show(ex.Message, "Printer Setting", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "Setting", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

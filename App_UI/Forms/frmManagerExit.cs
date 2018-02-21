@@ -78,6 +78,10 @@ namespace BestariTerrace.Forms
         private void frmManagerExit_Load(object sender, EventArgs e)
         {
             txtUserName.Focus();
+            if (loginFor == MgrLoginFor.AppExit)
+                btnLogin.Text = "LOG OUT";
+            else if (loginFor == MgrLoginFor.OrderDelete)
+                btnLogin.Text = "DELETE";
         }
 
         private void txtPassword_TextChanged(object sender, EventArgs e)
