@@ -94,27 +94,37 @@ namespace BestariTerrace
         public static void OrderCount(EmOrderType _OrderType)
         {
             OrderBindings.OrderCount = Reservations.Where(p => p.ActionText.ToLower().Trim() != "assigned").Count();
-            var SumConfirmed = PlacedOrders.Where(p => p.OrderType == _OrderType).Sum(p => double.Parse(p.OrderTotal)); //p.IsOrderConfirmed == true &&
-            var SumUncofirmed = PlacedOrders.Where(p => p.IsOrderConfirmed == false && p.OrderType == _OrderType).Sum(p => double.Parse(p.OrderTotal));
+            double SumConfirmed = 0;
+            double SumUncofirmed = 0;
+            try
+            {
+                SumConfirmed = PlacedOrders.Where(p => p.OrderType == _OrderType).Sum(p => double.Parse(p.OrderTotal)); //p.IsOrderConfirmed == true &&
+                SumUncofirmed = PlacedOrders.Where(p => p.IsOrderConfirmed == false && p.OrderType == _OrderType).Sum(p => double.Parse(p.OrderTotal));
+            }
+            catch(Exception ex)
+            {
+
+            }
+            
             if(_OrderType == EmOrderType.Delivery)
             {
-                OrderBindings.SumDeliveryConfirmedAmountTotal = double.Parse(SumConfirmed.ToString());
-                OrderBindings.SumDeliveryUnconfirmedAmountTotal = double.Parse(SumUncofirmed.ToString());
+                OrderBindings.SumDeliveryConfirmedAmountTotal = SumConfirmed;
+                OrderBindings.SumDeliveryUnconfirmedAmountTotal = SumUncofirmed;
             }
             else if(_OrderType == EmOrderType.DineIn)
             {
-                OrderBindings.SumDineInConfirmedAmountTotal = double.Parse(SumConfirmed.ToString());
-                OrderBindings.SumDineInUnconfirmedAmountTotal = double.Parse(SumUncofirmed.ToString());
+                OrderBindings.SumDineInConfirmedAmountTotal = SumConfirmed;
+                OrderBindings.SumDineInUnconfirmedAmountTotal = SumUncofirmed;
             }
             else if(_OrderType == EmOrderType.Reservation)
             {
-                OrderBindings.SumReservationConfirmedAmountTotal = double.Parse(SumConfirmed.ToString());
-                OrderBindings.SumReservationUnconfirmedAmountTotal = double.Parse(SumUncofirmed.ToString());
+                OrderBindings.SumReservationConfirmedAmountTotal = SumConfirmed;
+                OrderBindings.SumReservationUnconfirmedAmountTotal = SumUncofirmed;
             }
             else if(_OrderType == EmOrderType.TakeOut)
             {
-                OrderBindings.SumTakeAwayConfirmedAmountTotal = double.Parse(SumConfirmed.ToString());
-                OrderBindings.SumTakeAwayUnconfirmedAmountTotal = double.Parse(SumUncofirmed.ToString());
+                OrderBindings.SumTakeAwayConfirmedAmountTotal = SumConfirmed;
+                OrderBindings.SumTakeAwayUnconfirmedAmountTotal = SumUncofirmed;
             }            
         }        
     }
