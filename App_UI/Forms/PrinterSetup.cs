@@ -46,7 +46,7 @@ namespace BestariTerrace.Forms
                 {
                     MessageBox.Show("Kitchen Printer IP is not a valid IP", "Printer Setting", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-                if(!IsCashierIPCorrect)
+                if (!IsCashierIPCorrect)
                 {
                     MessageBox.Show("Cashier Printer IP is not a valid IP", "Printer Setting", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
@@ -61,7 +61,7 @@ namespace BestariTerrace.Forms
                 MessageBox.Show("Printer Setup done successfully", "Printer Setting", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Close();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Printer Setting", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -74,7 +74,7 @@ namespace BestariTerrace.Forms
 
         private void PrinterSetup_Load(object sender, EventArgs e)
         {
-            
+
             try
             {
                 //txtKitchen.Text = "   .   .   .   ";
@@ -91,19 +91,25 @@ namespace BestariTerrace.Forms
 
 
                 FileInfo _fileinfo = new FileInfo(filePath);
-                if(_fileinfo.Exists)
+                if (_fileinfo.Exists)
                 {
                     string[] lines = File.ReadAllLines(filePath);
-                    txtKitchen.Text = lines[0].Split('$')[1];
-                    txtCashPrinter.Text = lines[1].Split('$')[1];
-                    txtPort.Text = lines[2].Split('$')[2];
+                    for (int i = 0; i < lines.Count(); i++)
+                    {
+                        if (i == 0)
+                            txtKitchen.Text = lines[i].Split('$')[1];
+                        else if (i == 1)
+                            txtCashPrinter.Text = lines[i].Split('$')[1];
+                        else if (i == 2)
+                            txtPort.Text = lines[i].Split('$')[1];
+                    }
                 }
                 else
                 {
                     MessageBox.Show("Printer/Port Setting Not found", "Setting", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Setting", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -118,17 +124,17 @@ namespace BestariTerrace.Forms
                 if (_fileinfo.Exists)
                 {
                     string[] lines = File.ReadAllLines(filePath);
-                    if(printerType == EmPrinterType.Kitchen)
+                    if (printerType == EmPrinterType.Kitchen)
                     {
                         result = lines[0].Split('$')[1];
                     }
-                    else if(printerType == EmPrinterType.CashCounter)
+                    else if (printerType == EmPrinterType.CashCounter)
                     {
                         result = lines[1].Split('$')[1];
                     }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }

@@ -139,6 +139,7 @@ namespace App_BAL
     public class CartCL : INotifyPropertyChanged
     {
         public string EmployeeID { get; set; }
+        public string SessionId { get; set; }
         private EmOrderStatus _OrderStatus { get; set; }
         public string BtnActionStatus { get; set; }
         public int SrNo { get; set; }
@@ -351,6 +352,9 @@ namespace App_BAL
 
     public class CartItemsCL : INotifyPropertyChanged
     {
+        //Used for DayOut Sales
+        public string EmployeeId { get; set; }
+        public string SessionId { get; set; }
         //Used in Case of Counter Sales
         public bool IsCounterSale { get; set; }
         public string Description { get; set;}
@@ -886,6 +890,7 @@ namespace App_BAL
         public string price { get; set; }
         public string delivery_type { get; set; }
         public string product_name { get; set; }
+        public string sessionId { get; set; }
     }
     #endregion
 

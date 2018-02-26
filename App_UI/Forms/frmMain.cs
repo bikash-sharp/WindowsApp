@@ -325,7 +325,7 @@ namespace BestariTerrace.Forms
                     cl.ProductName = prod.product_name;
                     Program.cartItems.Add(cl);
 
-                    String[] lines = new string[] { prod.product_name, "#QTY:1 #AMT:" +cl.Price.ToString("N2") };
+                    String[] lines = new string[] { prod.product_name, "#QTY:1 #AMT:" + cl.Price.ToString("N2") };
                     DisplayText(lines);
                 }
 
@@ -354,7 +354,7 @@ namespace BestariTerrace.Forms
             var TaxTotalBinding = new Binding("Text", Program.cartItems.FirstOrDefault(), "Tax", true, DataSourceUpdateMode.Never, "0.00", "N2");
             lblTax.DataBindings.Add(TaxTotalBinding);
 
-            
+
         }
 
         private void btnExit_Click(object sender, EventArgs e)
@@ -377,6 +377,33 @@ namespace BestariTerrace.Forms
                 {
                     frmManagerExit mgr = new frmManagerExit();
                     mgr.ShowDialog();
+                    try
+                    {
+                        string filePath = Path.Combine(Environment.CurrentDirectory, "Printer.txt");
+                        FileInfo _fileinfo = new FileInfo(filePath);
+                        if (_fileinfo.Exists)
+                        {
+                            string[] lines = File.ReadAllLines(filePath);
+                            if (lines.Length > 0)
+                            {
+                                string Cashier = lines[1].Split('$')[1];
+                                if (!String.IsNullOrEmpty(Cashier))
+                                {
+                                    Print(PrinterSetup.GetPrinterName(EmPrinterType.CashCounter), GetLogo("StoreLogo.bmp"));
+                                    Print(PrinterSetup.GetPrinterName(EmPrinterType.CashCounter), GetDayDocument(Program.SessionId));
+                                }
+                            }
+                            else
+                            {
+                                MessageBox.Show("No Printer installed", "Information", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            }
+                        }
+                    }
+                    catch(Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, "Information", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+
                     if (mgr.IsOK)
                     {
                         Program.ClearData();
@@ -533,6 +560,7 @@ namespace BestariTerrace.Forms
                             cart.IsCurrentOrder = true;
                             cart.TransactionID = uc.LastTransactionID;
                             cart.EmployeeID = Program.CurrentEmployeeId;
+                            cart.SessionId = Program.SessionId;
                             MessageBox.Show("Order has been placed successfully", " Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             Program.PlacedOrders.Add(cart);
                             //Program.OrderCount();
@@ -540,6 +568,8 @@ namespace BestariTerrace.Forms
                             foreach (var item in Program.cartItems)
                             {
                                 item.orderNo = OrderNumber;
+                                item.EmployeeId = Program.CurrentEmployeeId;
+                                item.SessionId = Program.SessionId;
                                 Program.PlacedCartItems.Add(item);
                             }
                             //Post Order
@@ -578,6 +608,7 @@ namespace BestariTerrace.Forms
                                         if (!String.IsNullOrEmpty(Cashier))
                                         {
                                             Print(PrinterSetup.GetPrinterName(EmPrinterType.CashCounter), GetLogo("StoreLogo.bmp"));
+
                                             Print(PrinterSetup.GetPrinterName(EmPrinterType.CashCounter), GetDocument(NewOrderId, EmPrinterType.CashCounter));
                                         }
                                         if (!string.IsNullOrEmpty(Kitchen))
@@ -707,6 +738,25 @@ namespace BestariTerrace.Forms
                 //bw.Write((byte)66);
                 //bw.Write((byte)3);
 
+                bw.Flush();
+
+                return ms.ToArray();
+            }
+        }
+
+        public static byte[] GetDayDocument(string SessionId, string EmployeeId = "0")
+        {
+            using (var ms = new MemoryStream())
+            using (var bw = new BinaryWriter(ms))
+            {
+                // Reset the printer bws (NV images are not cleared)
+                PrintEmployeeReceipt(bw, SessionId, EmployeeId);
+
+                //// Feed 3 vertical motion units and cut the paper with a 1 point cut
+                //bw.Write(AsciiControlChars.GroupSeparator);
+                //bw.Write('V');
+                //bw.Write((byte)66);
+                //bw.Write((byte)3);
                 bw.Flush();
 
                 return ms.ToArray();
@@ -908,6 +958,99 @@ namespace BestariTerrace.Forms
             //bw.Finish();
         }
 
+        public static void PrintEmployeeReceipt(BinaryWriter bw, string SessionId, string EmployeeId = "0")
+        {
+            var Orders = Program.PlacedOrders.Where(p => p.SessionId == SessionId && (EmployeeId == "0" ? true : p.EmployeeID == EmployeeId)).GroupBy(p=>p.EmployeeID).ToList();
+            if (Orders.Count > 0)
+            {
+
+                try
+                {
+                    if (Program.StoreInfo.message.Restaurant.restaurant_name != null)
+                        bw.Center(Program.StoreInfo.message.Restaurant.restaurant_name);
+                    if (Program.StoreInfo.message.Restaurant.address != null)
+                        bw.Center(Program.StoreInfo.message.Restaurant.address);
+                    if (Program.StoreInfo.message.Restaurant.contact_no != null)
+                        bw.Center(Program.StoreInfo.message.Restaurant.contact_no);
+                    if (Program.StoreInfo.message.Restaurant.gst_no != null)
+                        bw.Center("GST NO:" + Program.StoreInfo.message.Restaurant.gst_no);
+                }
+                catch
+                {
+                    bw.Center("[POS]");
+                    bw.Center("[Address]");
+                    bw.Center("[ContactNumber]");
+                    bw.Center("[GSTNumber]");
+                }
+
+                bw.LeftJustify("------------------------------------------------");
+                bw.NormalFont("Date: " + DateTime.UtcNow.ToString("dd/MM/yyyy hh:mm:ss tt", new CultureInfo("en-SG")));
+                bw.NormalFont("------------------------------------------------");
+                bw.FeedLines(1);
+                decimal TotalSum = 0;
+                foreach(var emp in Orders)
+                {
+                    var employeeId = emp.Key;
+                    bw.NormalFont("Staff : " + Program.StaffName);
+                    bw.NormalFont("------------------------------------------------");
+                    bw.NormalFont(("Description").PadRight(35) + ("Qty.").PadRight(5) + ("Amt.").PadLeft(8));
+                    bw.NormalFont("------------------------------------------------");
+                    decimal empTotal = 0;
+                    foreach (var order in emp)
+                    {
+                        var cartItems = Program.PlacedCartItems.Where(p => p.orderNo == order.OrderNo).ToList();
+                        var FormatCartItems = FormatLine(order.OrderNo, cartItems, 33, EmPrinterType.CashCounter);
+                        foreach (var item in FormatCartItems)
+                        {
+                            bw.NormalFont(item.LineText);
+                            bw.FeedLines(1);
+                        }
+                        
+                        try
+                        {
+                            if (Program.OutletType.Contains("RESTAURANT"))
+                            {
+                                var Amount = decimal.Parse(cartItems.FirstOrDefault().CartTotal.ToString("N2"));
+                                TotalSum += Amount;
+                                var GST = decimal.Parse(Program.GSTValue);
+                                var Tax = decimal.Parse(((Convert.ToDecimal(Amount) * GST) / 100).ToString("N2"));
+                                var roundOffAmt = Math.Round(Amount, 2);
+                                empTotal += Amount;
+                            }
+                            else
+                            {
+                                var Amount = decimal.Parse(cartItems.FirstOrDefault().CartTotal.ToString("N2"));
+                                TotalSum += Amount;
+                                var GST = decimal.Parse(Program.GSTValue);
+                                var Tax = decimal.Parse(((Convert.ToDecimal(Amount) * GST) / 100).ToString("N2"));
+                                Amount += Tax;
+                                var roundOffAmt = Math.Round(Amount, 2);
+                                empTotal += Amount;
+                            }
+                        }
+                        catch
+                        {
+                            var Amount = decimal.Parse(cartItems.FirstOrDefault().CartTotal.ToString("N2"));
+                            TotalSum += Amount;
+                            var GST = decimal.Parse(Program.GSTValue);
+                            var Tax = decimal.Parse(((Convert.ToDecimal(Amount) * GST) / 100).ToString("N2"));
+                            Amount += Tax;
+                            var roundOffAmt = Math.Round(Amount, 2);
+                            empTotal += Amount;
+                        }
+                    }
+                    bw.NormalFont("------------------------------------------------");
+                    bw.NormalFont("Total :  " + empTotal.ToString("N2"));
+                    bw.NormalFont("------------------------------------------------");
+                }
+                bw.FeedLines(5);
+                bw.NormalFont("------------------------------------------------");
+                bw.NormalFont("Sales Total :  " + TotalSum.ToString("N2"));
+                bw.NormalFont("------------------------------------------------");
+                bw.CutPaper();
+            }
+        }
+
         public int GetUniqueNumber()
         {
             using (RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider())
@@ -934,6 +1077,7 @@ namespace BestariTerrace.Forms
                     _order.product_name = item.ProductName.ToString();
                     _order.quantity = item.Quantity.ToString();
                     //_order.price = Convert.ToInt32(Math.Ceiling(decimal.Parse(item.Price.ToString())));
+                    _order.sessionId = Program.SessionId;
                     _order.price = item.Price.ToString();
 
                     if (item.IsCounterSale)
@@ -1082,14 +1226,14 @@ namespace BestariTerrace.Forms
                     }
                     else
                     {
-                        MessageBox.Show("Set Port for Display Unit in Settings", "Information", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        // MessageBox.Show("Set Port for Display Unit in Settings", "Information", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
 
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Display Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //MessageBox.Show(ex.Message, "Display Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
 
@@ -1608,19 +1752,52 @@ namespace BestariTerrace.Forms
             if (msgResult == DialogResult.Yes)
             {
                 ClearList();
-                string URL = Program.BaseUrl;
-                string LogoutURL = URL + "/logout?acess_token=" + Program.Token + "&session_id=" + Program.SessionId;
-                var GetStatus = DataProviderWrapper.Instance.GetData(LogoutURL, Verbs.GET, "");
 
-                JavaScriptSerializer serializer = new JavaScriptSerializer();
-                var result = serializer.Deserialize<logoutCL>(GetStatus);
-                if (!result.status || result.status)
+                try
                 {
-                    MessageBox.Show("You have been Successfully logout", "Logout Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    string filePath = Path.Combine(Environment.CurrentDirectory, "Printer.txt");
+                    FileInfo _fileinfo = new FileInfo(filePath);
+                    if (_fileinfo.Exists)
+                    {
+                        string[] lines = File.ReadAllLines(filePath);
+                        if (lines.Length > 0)
+                        {
+                            string Cashier = lines[1].Split('$')[1];
+                            if (!String.IsNullOrEmpty(Cashier))
+                            {
+                                Print(PrinterSetup.GetPrinterName(EmPrinterType.CashCounter), GetLogo("StoreLogo.bmp"));
+                                Print(PrinterSetup.GetPrinterName(EmPrinterType.CashCounter), GetDayDocument(Program.SessionId, Program.CurrentEmployeeId));
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("No Printer installed", "Information", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        }
+                    }
+
+                    string URL = Program.BaseUrl;
+                    string LogoutURL = URL + "/logout?acess_token=" + Program.Token + "&session_id=" + Program.SessionId;
+                    var GetStatus = DataProviderWrapper.Instance.GetData(LogoutURL, Verbs.GET, "");
+
+                    JavaScriptSerializer serializer = new JavaScriptSerializer();
+                    var result = serializer.Deserialize<logoutCL>(GetStatus);
+                    if (!result.status || result.status)
+                    {
+                        MessageBox.Show("You have been Successfully logout", "Logout Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    Program.IsLogined = false;
+                    this.Close();
+                    this.Hide();
+
                 }
-                Program.IsLogined = false;
-                this.Close();
-                this.Hide();
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Information", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+
+
+                
+
                 frmLogout _logout = new frmLogout();
                 _logout.ShowDialog();
                 //Up:
