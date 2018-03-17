@@ -70,6 +70,8 @@ namespace App_BAL
         private string ReservationStatusValue;
         private string TableNoValue;
         private string BtnText;
+        public string EmployeeID { get; set; }
+        public string EmployeeName { get; set; }
         public string TableId { get; set; }
         public string RestrauntId { get; set; }
         public string DinerName { get; set; }
@@ -139,6 +141,7 @@ namespace App_BAL
     public class CartCL : INotifyPropertyChanged
     {
         public string EmployeeID { get; set; }
+        public string EmployeeName { get; set; }
         public string SessionId { get; set; }
         private EmOrderStatus _OrderStatus { get; set; }
         public string BtnActionStatus { get; set; }
@@ -352,8 +355,10 @@ namespace App_BAL
 
     public class CartItemsCL : INotifyPropertyChanged
     {
+        public string remarks { get; set; }
         //Used for DayOut Sales
         public string EmployeeId { get; set; }
+        public string EmployeeName { get; set; }
         public string SessionId { get; set; }
         //Used in Case of Counter Sales
         public bool IsCounterSale { get; set; }

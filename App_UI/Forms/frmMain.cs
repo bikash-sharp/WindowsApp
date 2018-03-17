@@ -334,27 +334,26 @@ namespace BestariTerrace.Forms
                 //}
                 // BindCart(Program.cartItems);
             }
+            if(Program.cartItems.Count > 0 )
+            {
+                var source = new BindingSource(Program.cartItems, null);
+                dataGridView1.AutoGenerateColumns = false;
+                dataGridView1.DataSource = source;
+                dataGridView1.ClearSelection();
 
-            var source = new BindingSource(Program.cartItems, null);
-            dataGridView1.AutoGenerateColumns = false;
-            dataGridView1.DataSource = source;
-            dataGridView1.ClearSelection();
+                Program.TotalCart();
+                lblCartTotal.DataBindings.Clear();
+                lblGrandTotal.DataBindings.Clear();
+                lblTax.DataBindings.Clear();
+                
+                var CartTotalBinding = new Binding("Text", Program.cartItems.FirstOrDefault(), "CartTotal", true, DataSourceUpdateMode.Never, "0.00", "N2");
+                lblCartTotal.DataBindings.Add(CartTotalBinding);
+                var GrandTotalBinding = new Binding("Text", Program.cartItems.FirstOrDefault(), "GrandTotal", true, DataSourceUpdateMode.Never, "0.00", "N2");
+                lblGrandTotal.DataBindings.Add(GrandTotalBinding);
 
-            Program.TotalCart();
-            lblCartTotal.DataBindings.Clear();
-            lblGrandTotal.DataBindings.Clear();
-            lblTax.DataBindings.Clear();
-            //if(!IsConnected)
-            //{
-            var CartTotalBinding = new Binding("Text", Program.cartItems.FirstOrDefault(), "CartTotal", true, DataSourceUpdateMode.Never, "0.00", "N2");
-            lblCartTotal.DataBindings.Add(CartTotalBinding);
-            var GrandTotalBinding = new Binding("Text", Program.cartItems.FirstOrDefault(), "GrandTotal", true, DataSourceUpdateMode.Never, "0.00", "N2");
-            lblGrandTotal.DataBindings.Add(GrandTotalBinding);
-
-            var TaxTotalBinding = new Binding("Text", Program.cartItems.FirstOrDefault(), "Tax", true, DataSourceUpdateMode.Never, "0.00", "N2");
-            lblTax.DataBindings.Add(TaxTotalBinding);
-
-
+                var TaxTotalBinding = new Binding("Text", Program.cartItems.FirstOrDefault(), "Tax", true, DataSourceUpdateMode.Never, "0.00", "N2");
+                lblTax.DataBindings.Add(TaxTotalBinding);
+            }
         }
 
         private void btnExit_Click(object sender, EventArgs e)
@@ -569,6 +568,7 @@ namespace BestariTerrace.Forms
                             {
                                 item.orderNo = OrderNumber;
                                 item.EmployeeId = Program.CurrentEmployeeId;
+                                item.EmployeeName = Program.StaffName;
                                 item.SessionId = Program.SessionId;
                                 Program.PlacedCartItems.Add(item);
                             }
@@ -637,9 +637,7 @@ namespace BestariTerrace.Forms
                                     goto Up;
                                 }
                             }
-
                         }
-
                         #endregion
                     }
                 }
@@ -662,14 +660,30 @@ namespace BestariTerrace.Forms
         public static void Print(string printerName, byte[] document)
         {
 
-            TcpClient client = new TcpClient();
-            client.Connect(printerName, 9100);
-            NetworkStream stream = client.GetStream();
-            stream.Write(document, 0, document.Length);
-            System.Threading.Thread.Sleep(20);
-            //stream.Close(5000); //Wait 5 seconds to ensure that the data is sent.
-            client.Close();
+            try
+            {
+                using (TcpClient _client = new TcpClient())
+                {
+                    _client.Connect(printerName, 9100);
+                    using (NetworkStream _stream = _client.GetStream())
+                    {
+                        _stream.Write(document, 0, document.Length);
+                    }
+                    _client.Close();
+                }
+                //TcpClient client = new TcpClient();
+                //client.Connect(printerName, 9100);
+                //NetworkStream stream = client.GetStream();
+                //stream.Write(document, 0, document.Length);
+                ////System.Threading.Thread.Sleep(20);
+                ////stream.Close(5000); //Wait 5 seconds to ensure that the data is sent.
+                //client.Close();
+            }
+            catch (Exception ex)
+            {
 
+            }
+            
             //Socket clientSock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             //clientSock.NoDelay = true;
             //IPAddress ip = IPAddress.Parse(printerName);
@@ -899,11 +913,22 @@ namespace BestariTerrace.Forms
                     }
 
                     bw.NormalFont("------------------------------------------------");
+                    bw.NormalFont("Remarks", true);
+                    bw.NormalFont(Order.OrderRemarks);
                     bw.FinishLines();
                     bw.CutPaper();
                 }
                 else
                 {
+                    if(Order.OrderType == EmOrderType.TakeOut)
+                    {
+                        bw.NormalFont("Order Type : Take Away");
+                    }
+                    else if(Order.OrderType == EmOrderType.DineIn)
+                    {
+                        bw.NormalFont("Order Type : Dine In");
+                        bw.NormalFont("Table No#: " + Order.TableNo);
+                    }
                     var FormatCartItems = FormatLine(OrderNumber, cartItems, 40, printerType);
                     foreach (var item in FormatCartItems)
                     {
@@ -1175,7 +1200,7 @@ namespace BestariTerrace.Forms
                     {
                         string lineText = lineitem.LineText;
                         string remarkstr = "Remarks" + Environment.NewLine;
-                        remarkstr += Order.OrderRemarks;
+                        remarkstr += item.remarks;
                         lineitem.LineText += Environment.NewLine + remarkstr;
                     }
                     result.Add(lineitem);
@@ -1342,7 +1367,7 @@ namespace BestariTerrace.Forms
             this.flyLayout.VerticalScroll.Visible = false;
             this.flyLayout.VerticalScroll.Enabled = false;
             this.flyLayout.Refresh();
-            int Count = Program.PlacedOrders.Where(p => p.OrderType == OrderType).Count();
+            int Count = Program.PlacedOrders.Where(p => p.OrderType == OrderType && p.EmployeeID == Program.CurrentEmployeeId).Count();
             if (Count > 0)
             {
                 uc_ConfirmOrder uc = new uc_ConfirmOrder();

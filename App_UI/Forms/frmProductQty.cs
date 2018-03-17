@@ -31,6 +31,7 @@ namespace BestariTerrace.Forms
                 lblProductName.Text = SelectedProduct.ProductName;
                 txtQty.Text = SelectedProduct.Quantity.ToString();
                 txtPrice.Text = SelectedProduct.Price + "";
+                txtRemarks.Text = SelectedProduct.remarks;
                 if(SelectedProduct.IsCounterSale)
                 {
                     label2.Visible = txtPrice.Visible = true;
@@ -68,6 +69,8 @@ namespace BestariTerrace.Forms
                         SelectedProduct.Price = Price;
                     else
                         SelectedProduct.Price = Convert.ToDouble(SelectedProduct.OriginalPrice) * Quantity;
+
+                    SelectedProduct.remarks = txtRemarks.Text.Trim();
                     //Reset the SelectProductId
                     Program.SelectedProductId = 0;
                     Program.TotalCart();

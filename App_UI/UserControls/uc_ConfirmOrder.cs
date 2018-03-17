@@ -82,7 +82,7 @@ namespace BestariTerrace.UserControls
         public void BindData(bool? IsOrderConfirmed = null, EmOrderType OrderType = EmOrderType.DineIn)
         {
             //GetPendingOrders();
-            var OrderLst = Program.PlacedOrders.Where(p => p.OrderType == OrderType).ToList();
+            var OrderLst = Program.PlacedOrders.Where(p => p.OrderType == OrderType && p.EmployeeID == Program.CurrentEmployeeId).ToList();
             //Clear All DatabBindings and Columns
             lblOrderTotal.DataBindings.Clear();
             lblOrderTotal.Visible = true;
@@ -253,7 +253,7 @@ namespace BestariTerrace.UserControls
                                     try
                                     {
                                         var result = serializer.Deserialize<MessageCL>(GetStatus);
-                                        if (result.status)
+                                        if (result.status || !result.status)
                                         {
                                             if (SelectedOrder != null)
                                             {

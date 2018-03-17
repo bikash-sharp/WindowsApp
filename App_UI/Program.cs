@@ -98,8 +98,8 @@ namespace BestariTerrace
             double SumUncofirmed = 0;
             try
             {
-                SumConfirmed = PlacedOrders.Where(p => p.OrderType == _OrderType).Sum(p => double.Parse(p.OrderTotal)); //p.IsOrderConfirmed == true &&
-                SumUncofirmed = PlacedOrders.Where(p => p.IsOrderConfirmed == false && p.OrderType == _OrderType).Sum(p => double.Parse(p.OrderTotal));
+                SumConfirmed = PlacedOrders.Where(p => p.OrderType == _OrderType && p.EmployeeID == CurrentEmployeeId).Sum(p => double.Parse(p.OrderTotal)); //p.IsOrderConfirmed == true &&
+                SumUncofirmed = PlacedOrders.Where(p => p.IsOrderConfirmed == false && p.OrderType == _OrderType && p.EmployeeID == CurrentEmployeeId).Sum(p => double.Parse(p.OrderTotal));
             }
             catch(Exception ex)
             {

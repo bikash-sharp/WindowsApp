@@ -41,6 +41,8 @@
             this.rectangleShape1 = new Microsoft.VisualBasic.PowerPacks.RectangleShape();
             this.txtPrice = new CustomServerControls.TxtBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.txtRemarks = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // label1
@@ -87,7 +89,7 @@
             this.btnUpdateQty.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnUpdateQty.FlatAppearance.BorderSize = 0;
             this.btnUpdateQty.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnUpdateQty.Location = new System.Drawing.Point(34, 162);
+            this.btnUpdateQty.Location = new System.Drawing.Point(34, 243);
             this.btnUpdateQty.Name = "btnUpdateQty";
             this.btnUpdateQty.Size = new System.Drawing.Size(119, 46);
             this.btnUpdateQty.TabIndex = 4;
@@ -100,7 +102,7 @@
             this.btnRemoveProduct.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnRemoveProduct.FlatAppearance.BorderSize = 0;
             this.btnRemoveProduct.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRemoveProduct.Location = new System.Drawing.Point(199, 162);
+            this.btnRemoveProduct.Location = new System.Drawing.Point(199, 243);
             this.btnRemoveProduct.Name = "btnRemoveProduct";
             this.btnRemoveProduct.Size = new System.Drawing.Size(118, 45);
             this.btnRemoveProduct.TabIndex = 5;
@@ -113,7 +115,7 @@
             this.btnClose.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnClose.FlatAppearance.BorderSize = 0;
             this.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnClose.Location = new System.Drawing.Point(368, 161);
+            this.btnClose.Location = new System.Drawing.Point(368, 242);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(120, 47);
             this.btnClose.TabIndex = 6;
@@ -130,7 +132,7 @@
             this.rectangleShape3,
             this.rectangleShape2,
             this.rectangleShape1});
-            this.shapeContainer1.Size = new System.Drawing.Size(506, 233);
+            this.shapeContainer1.Size = new System.Drawing.Size(506, 300);
             this.shapeContainer1.TabIndex = 7;
             this.shapeContainer1.TabStop = false;
             // 
@@ -139,7 +141,7 @@
             this.rectangleShape3.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
             this.rectangleShape3.BorderStyle = System.Drawing.Drawing2D.DashStyle.Dash;
             this.rectangleShape3.BorderWidth = 2;
-            this.rectangleShape3.Location = new System.Drawing.Point(364, 158);
+            this.rectangleShape3.Location = new System.Drawing.Point(364, 239);
             this.rectangleShape3.Name = "rectangleShape3";
             this.rectangleShape3.Size = new System.Drawing.Size(127, 53);
             // 
@@ -148,7 +150,7 @@
             this.rectangleShape2.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
             this.rectangleShape2.BorderStyle = System.Drawing.Drawing2D.DashStyle.Dash;
             this.rectangleShape2.BorderWidth = 2;
-            this.rectangleShape2.Location = new System.Drawing.Point(195, 158);
+            this.rectangleShape2.Location = new System.Drawing.Point(195, 239);
             this.rectangleShape2.Name = "rectangleShape2";
             this.rectangleShape2.Size = new System.Drawing.Size(127, 53);
             // 
@@ -157,7 +159,7 @@
             this.rectangleShape1.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
             this.rectangleShape1.BorderStyle = System.Drawing.Drawing2D.DashStyle.Dash;
             this.rectangleShape1.BorderWidth = 2;
-            this.rectangleShape1.Location = new System.Drawing.Point(30, 158);
+            this.rectangleShape1.Location = new System.Drawing.Point(30, 239);
             this.rectangleShape1.Name = "rectangleShape1";
             this.rectangleShape1.Size = new System.Drawing.Size(127, 53);
             // 
@@ -181,12 +183,33 @@
             this.label2.TabIndex = 8;
             this.label2.Text = "Price                  :";
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.BackColor = System.Drawing.Color.Transparent;
+            this.label4.Location = new System.Drawing.Point(13, 129);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(120, 21);
+            this.label4.TabIndex = 10;
+            this.label4.Text = "Remarks           :";
+            // 
+            // txtRemarks
+            // 
+            this.txtRemarks.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtRemarks.Location = new System.Drawing.Point(145, 129);
+            this.txtRemarks.Multiline = true;
+            this.txtRemarks.Name = "txtRemarks";
+            this.txtRemarks.Size = new System.Drawing.Size(310, 93);
+            this.txtRemarks.TabIndex = 11;
+            // 
             // frmProductQty
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(506, 233);
+            this.ClientSize = new System.Drawing.Size(506, 300);
+            this.Controls.Add(this.txtRemarks);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.txtPrice);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.btnClose);
@@ -228,5 +251,7 @@
         private Microsoft.VisualBasic.PowerPacks.RectangleShape rectangleShape3;
         private CustomServerControls.TxtBox txtPrice;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox txtRemarks;
     }
 }
