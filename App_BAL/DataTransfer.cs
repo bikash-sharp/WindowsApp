@@ -906,6 +906,7 @@ namespace App_BAL
         public string restaurant_id { get; set; }
         public string tanent_id { get; set; }
         public string employee_name { get; set; }
+        public string name { get; set; }
         public string username { get; set; }
         public string password { get; set; }
         public string access_type { get; set; }

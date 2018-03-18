@@ -1471,61 +1471,60 @@ namespace BestariTerrace.Forms
             string URL = Program.BaseUrl;
             JavaScriptSerializer serializer = new JavaScriptSerializer();
             #region PendingOrder
-            string PendingOrdURL = URL + "/pendingorders?acess_token=" + Program.Token;
-            var GetStatus = DataProviderWrapper.Instance.GetData(PendingOrdURL, Verbs.GET, "");
-
-            var result = serializer.Deserialize<PendingOrderAPI>(GetStatus);
-            if (result != null)
-            {
-                if (result.data != null)
-                {
-                    foreach (var item in result.data)
-                    {
-                        var OrderId = "" + item.Order?.Orderdetail?.order_id;
-                        var _OrderType = EmOrderType.Delivery;
-                        var ordType = "" + item.Order?.Orderdetail?.order_type;
-                        if (ordType.ToLower() == "dine_in")
-                        {
-                            _OrderType = EmOrderType.DineIn;
-                        }
-                        else if (ordType.ToLower() == "takeout" || ordType.ToLower() == "take_away")
-                        {
-                            _OrderType = EmOrderType.TakeOut;
-                        }
-                        else
-                        {
-                            _OrderType = EmOrderType.Delivery;
-                        }
-                        var ordStatus = EmOrderStatus.Pending;
-                        var btnActionText = "Update Status";
-                        var OrderStatus = "" + item.Order?.Orderdetail?.order_status;
-                        if (OrderStatus.ToLower().Trim() == "pending")
-                        {
-                            ordStatus = EmOrderStatus.Pending;
-                            btnActionText = "Pending Status";
-                        }
-                        else if (OrderStatus.ToLower().Trim() == "in_progress")
-                        {
-                            ordStatus = EmOrderStatus.Confirmed;
-                            btnActionText = "In-Progress Status";
-                        }
-                        else if (OrderStatus.ToLower().Trim() == "completed")
-                        {
-                            ordStatus = EmOrderStatus.Delivered;
-                            btnActionText = "Delivered";
-                        }
-                        var Total = "" + item.Order?.Orderdetail?.total;
-                        if (!String.IsNullOrEmpty(OrderId) && !String.IsNullOrEmpty(OrderStatus) && _OrderType == EmOrderType.Delivery)
-                        {
-                            bool isExist = Program.PlacedOrders.Where(p => p.OrderNo == OrderId).Any();
-                            if (!isExist)
-                            {
-                                Program.PlacedOrders.Add(new CartCL { OrderNo = OrderId.Trim(), OrderStatus = ordStatus, OrderType = _OrderType, OrderTotal = Total, IsOrderConfirmed = false, BtnActionStatus = btnActionText, EmployeeID = result.employee?.id });
-                            }
-                        }
-                    }
-                }
-            }
+            //string PendingOrdURL = URL + "/pendingorders?acess_token=" + Program.Token;
+            //var GetStatus = DataProviderWrapper.Instance.GetData(PendingOrdURL, Verbs.GET, "");
+            //var result = serializer.Deserialize<PendingOrderAPI>(GetStatus);
+            //if (result != null)
+            //{
+            //    if (result.data != null)
+            //    {
+            //        foreach (var item in result.data)
+            //        {
+            //            var OrderId = "" + item.Order?.Orderdetail?.order_id;
+            //            var _OrderType = EmOrderType.Delivery;
+            //            var ordType = "" + item.Order?.Orderdetail?.order_type;
+            //            if (ordType.ToLower() == "dine_in")
+            //            {
+            //                _OrderType = EmOrderType.DineIn;
+            //            }
+            //            else if (ordType.ToLower() == "takeout" || ordType.ToLower() == "take_away")
+            //            {
+            //                _OrderType = EmOrderType.TakeOut;
+            //            }
+            //            else
+            //            {
+            //                _OrderType = EmOrderType.Delivery;
+            //            }
+            //            var ordStatus = EmOrderStatus.Pending;
+            //            var btnActionText = "Update Status";
+            //            var OrderStatus = "" + item.Order?.Orderdetail?.order_status;
+            //            if (OrderStatus.ToLower().Trim() == "pending")
+            //            {
+            //                ordStatus = EmOrderStatus.Pending;
+            //                btnActionText = "Pending Status";
+            //            }
+            //            else if (OrderStatus.ToLower().Trim() == "in_progress")
+            //            {
+            //                ordStatus = EmOrderStatus.Confirmed;
+            //                btnActionText = "In-Progress Status";
+            //            }
+            //            else if (OrderStatus.ToLower().Trim() == "completed")
+            //            {
+            //                ordStatus = EmOrderStatus.Delivered;
+            //                btnActionText = "Delivered";
+            //            }
+            //            var Total = "" + item.Order?.Orderdetail?.total;
+            //            if (!String.IsNullOrEmpty(OrderId) && !String.IsNullOrEmpty(OrderStatus) && _OrderType == EmOrderType.Delivery)
+            //            {
+            //                bool isExist = Program.PlacedOrders.Where(p => p.OrderNo == OrderId).Any();
+            //                if (!isExist)
+            //                {
+            //                    Program.PlacedOrders.Add(new CartCL { OrderNo = OrderId.Trim(), OrderStatus = ordStatus, OrderType = _OrderType, OrderTotal = Total, IsOrderConfirmed = false, BtnActionStatus = btnActionText, EmployeeID = result.employee?.id });
+            //                }
+            //            }
+            //        }
+            //    }
+            //}
 
             #endregion
 
@@ -1539,7 +1538,7 @@ namespace BestariTerrace.Forms
             {
                 if (rOrders.data.Count > 0)
                 {
-                    var dataLst = result.data;
+                    var dataLst = rOrders.data;
                     foreach (var item in dataLst)
                     {
                         if (item.Tableorder != null)
@@ -1599,7 +1598,11 @@ namespace BestariTerrace.Forms
                         {
                             OrdType = EmOrderType.DineIn;
                         }
-                        else
+                        else if(_OrderType == "counter_sale")
+                        {
+                            OrdType = EmOrderType.CounterSale;
+                        }
+                        else 
                         {
                             OrdType = EmOrderType.TakeOut;
                         }
@@ -1609,6 +1612,7 @@ namespace BestariTerrace.Forms
                         newOrder.OrderType = OrdType;
                         newOrder.OrderTotal = item.Orderdetail.total;
                         newOrder.EmployeeID = dineResult.employee?.id;
+                        newOrder.EmployeeName = dineResult.employee?.name;
 
                         var orderCart = item.Orderdetail?.cart ?? new List<Cart>();
                         if (orderCart.Count > 0)
@@ -1623,6 +1627,9 @@ namespace BestariTerrace.Forms
                                     newCartItem.ProductName = cItem.Product.product_name;
                                     newCartItem.OriginalPrice = double.Parse((String.IsNullOrEmpty(cItem.Product.product_price) == true) ? "0" : cItem.Product.product_price);//cItem.cart.product_price 
                                     newCartItem.GrandTotal = double.Parse(String.IsNullOrEmpty(cItem.cart.total_price) ? "0" : cItem.cart.total_price);
+                                    if (newCartItem.OriginalPrice == 0)
+                                        newCartItem.OriginalPrice = newCartItem.GrandTotal;
+
                                     newCartItem.Quantity = int.Parse(String.IsNullOrEmpty(cItem.cart.quantity) ? "0" : cItem.cart.quantity);
                                     CartItemList.Add(newCartItem);
                                 }
