@@ -823,7 +823,7 @@ namespace BestariTerrace.Forms
         public static void PrintReceipt(BinaryWriter bw, string OrderNumber, EmPrinterType printerType)
         {
             var Order = Program.PlacedOrders.FirstOrDefault(p => p.OrderNo == OrderNumber);
-            var cartItems = Program.PlacedCartItems.Where(p => p.orderNo == OrderNumber && p.IsCounterSale == false).ToList();
+            var cartItems = Program.PlacedCartItems.Where(p => p.orderNo == OrderNumber).ToList(); //&& p.IsCounterSale == false
             if (cartItems.Count > 0)
             {
                 if (printerType == EmPrinterType.CashCounter)
@@ -920,18 +920,18 @@ namespace BestariTerrace.Forms
                 }
                 else
                 {
-                    if(Order.OrderType == EmOrderType.TakeOut)
-                    {
-                        bw.NormalFont("Order Type : Take Away");
-                    }
-                    else if(Order.OrderType == EmOrderType.DineIn)
-                    {
-                        bw.NormalFont("Order Type : Dine In");
-                        bw.NormalFont("Table No#: " + Order.TableNo);
-                    }
                     var FormatCartItems = FormatLine(OrderNumber, cartItems, 40, printerType);
                     foreach (var item in FormatCartItems)
                     {
+                        if (Order.OrderType == EmOrderType.TakeOut)
+                        {
+                            bw.NormalFont("Order Type : Take Away / ORD" + OrderNumber.Substring(OrderNumber.Length - 3));
+                        }
+                        else if (Order.OrderType == EmOrderType.DineIn)
+                        {
+                            bw.NormalFont("Order Type : Dine In / ORD" + OrderNumber.Substring(OrderNumber.Length - 3));
+                            bw.NormalFont("Table No#: " + Order.TableNo);
+                        }
                         bw.NormalFont(("Description").PadRight(43) + ("Qty.").PadRight(5));
                         bw.NormalFont("------------------------------------------------");
                         bw.NormalFont(item.LineText);
@@ -1471,60 +1471,60 @@ namespace BestariTerrace.Forms
             string URL = Program.BaseUrl;
             JavaScriptSerializer serializer = new JavaScriptSerializer();
             #region PendingOrder
-            //string PendingOrdURL = URL + "/pendingorders?acess_token=" + Program.Token;
-            //var GetStatus = DataProviderWrapper.Instance.GetData(PendingOrdURL, Verbs.GET, "");
-            //var result = serializer.Deserialize<PendingOrderAPI>(GetStatus);
-            //if (result != null)
-            //{
-            //    if (result.data != null)
-            //    {
-            //        foreach (var item in result.data)
-            //        {
-            //            var OrderId = "" + item.Order?.Orderdetail?.order_id;
-            //            var _OrderType = EmOrderType.Delivery;
-            //            var ordType = "" + item.Order?.Orderdetail?.order_type;
-            //            if (ordType.ToLower() == "dine_in")
-            //            {
-            //                _OrderType = EmOrderType.DineIn;
-            //            }
-            //            else if (ordType.ToLower() == "takeout" || ordType.ToLower() == "take_away")
-            //            {
-            //                _OrderType = EmOrderType.TakeOut;
-            //            }
-            //            else
-            //            {
-            //                _OrderType = EmOrderType.Delivery;
-            //            }
-            //            var ordStatus = EmOrderStatus.Pending;
-            //            var btnActionText = "Update Status";
-            //            var OrderStatus = "" + item.Order?.Orderdetail?.order_status;
-            //            if (OrderStatus.ToLower().Trim() == "pending")
-            //            {
-            //                ordStatus = EmOrderStatus.Pending;
-            //                btnActionText = "Pending Status";
-            //            }
-            //            else if (OrderStatus.ToLower().Trim() == "in_progress")
-            //            {
-            //                ordStatus = EmOrderStatus.Confirmed;
-            //                btnActionText = "In-Progress Status";
-            //            }
-            //            else if (OrderStatus.ToLower().Trim() == "completed")
-            //            {
-            //                ordStatus = EmOrderStatus.Delivered;
-            //                btnActionText = "Delivered";
-            //            }
-            //            var Total = "" + item.Order?.Orderdetail?.total;
-            //            if (!String.IsNullOrEmpty(OrderId) && !String.IsNullOrEmpty(OrderStatus) && _OrderType == EmOrderType.Delivery)
-            //            {
-            //                bool isExist = Program.PlacedOrders.Where(p => p.OrderNo == OrderId).Any();
-            //                if (!isExist)
-            //                {
-            //                    Program.PlacedOrders.Add(new CartCL { OrderNo = OrderId.Trim(), OrderStatus = ordStatus, OrderType = _OrderType, OrderTotal = Total, IsOrderConfirmed = false, BtnActionStatus = btnActionText, EmployeeID = result.employee?.id });
-            //                }
-            //            }
-            //        }
-            //    }
-            //}
+            string PendingOrdURL = URL + "/pendingorders?acess_token=" + Program.Token;
+            var GetStatus = DataProviderWrapper.Instance.GetData(PendingOrdURL, Verbs.GET, "");
+            var result = serializer.Deserialize<PendingOrderAPI>(GetStatus);
+            if (result != null)
+            {
+                if (result.data != null)
+                {
+                    foreach (var item in result.data)
+                    {
+                        var OrderId = "" + item.Order?.Orderdetail?.order_id;
+                        var _OrderType = EmOrderType.Delivery;
+                        var ordType = "" + item.Order?.Orderdetail?.order_type;
+                        if (ordType.ToLower() == "dine_in")
+                        {
+                            _OrderType = EmOrderType.DineIn;
+                        }
+                        else if (ordType.ToLower() == "takeout" || ordType.ToLower() == "take_away")
+                        {
+                            _OrderType = EmOrderType.TakeOut;
+                        }
+                        else
+                        {
+                            _OrderType = EmOrderType.Delivery;
+                        }
+                        var ordStatus = EmOrderStatus.Pending;
+                        var btnActionText = "Update Status";
+                        var OrderStatus = "" + item.Order?.Orderdetail?.order_status;
+                        if (OrderStatus.ToLower().Trim() == "pending")
+                        {
+                            ordStatus = EmOrderStatus.Pending;
+                            btnActionText = "Pending Status";
+                        }
+                        else if (OrderStatus.ToLower().Trim() == "in_progress")
+                        {
+                            ordStatus = EmOrderStatus.Confirmed;
+                            btnActionText = "In-Progress Status";
+                        }
+                        else if (OrderStatus.ToLower().Trim() == "completed")
+                        {
+                            ordStatus = EmOrderStatus.Delivered;
+                            btnActionText = "Delivered";
+                        }
+                        var Total = "" + item.Order?.Orderdetail?.total;
+                        if (!String.IsNullOrEmpty(OrderId) && !String.IsNullOrEmpty(OrderStatus) && _OrderType == EmOrderType.Delivery)
+                        {
+                            bool isExist = Program.PlacedOrders.Where(p => p.OrderNo == OrderId).Any();
+                            if (!isExist)
+                            {
+                                Program.PlacedOrders.Add(new CartCL { OrderNo = OrderId.Trim(), OrderStatus = ordStatus, OrderType = _OrderType, OrderTotal = Total, IsOrderConfirmed = false, BtnActionStatus = btnActionText, EmployeeID = result.employee?.id });
+                            }
+                        }
+                    }
+                }
+            }
 
             #endregion
 
