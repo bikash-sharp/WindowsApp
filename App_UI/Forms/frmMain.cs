@@ -25,6 +25,7 @@ using System.Collections;
 using System.Globalization;
 using System.Security.Cryptography;
 using System.IO.Ports;
+using System.Threading;
 
 namespace BestariTerrace.Forms
 {
@@ -334,7 +335,7 @@ namespace BestariTerrace.Forms
                 //}
                 // BindCart(Program.cartItems);
             }
-            if(Program.cartItems.Count > 0 )
+            if (Program.cartItems.Count > 0)
             {
                 var source = new BindingSource(Program.cartItems, null);
                 dataGridView1.AutoGenerateColumns = false;
@@ -345,7 +346,7 @@ namespace BestariTerrace.Forms
                 lblCartTotal.DataBindings.Clear();
                 lblGrandTotal.DataBindings.Clear();
                 lblTax.DataBindings.Clear();
-                
+
                 var CartTotalBinding = new Binding("Text", Program.cartItems.FirstOrDefault(), "CartTotal", true, DataSourceUpdateMode.Never, "0.00", "N2");
                 lblCartTotal.DataBindings.Add(CartTotalBinding);
                 var GrandTotalBinding = new Binding("Text", Program.cartItems.FirstOrDefault(), "GrandTotal", true, DataSourceUpdateMode.Never, "0.00", "N2");
@@ -358,8 +359,10 @@ namespace BestariTerrace.Forms
 
         private void btnExit_Click(object sender, EventArgs e)
         {
+            DisplayText(new string[] { "" });
             bool IsAllow = false;
-
+            //Clear the Cart and Total Field
+            ClearList();
             var Count = Program.PlacedOrders.Where(p => p.OrderType == EmOrderType.Delivery && p.OrderStatus != EmOrderStatus.Delivered).Count();
             if (Count == 0)
             {
@@ -371,6 +374,7 @@ namespace BestariTerrace.Forms
             }
             if (IsAllow)
             {
+
                 DialogResult msgResult = MessageBox.Show("Do you want to Exit Application ?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                 if (msgResult == DialogResult.Yes)
                 {
@@ -398,7 +402,7 @@ namespace BestariTerrace.Forms
                             }
                         }
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         MessageBox.Show(ex.Message, "Information", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
@@ -406,6 +410,7 @@ namespace BestariTerrace.Forms
                     if (mgr.IsOK)
                     {
                         Program.ClearData();
+                        Thread.Sleep(2000);
                         Application.ExitThread();
                     }
                 }
@@ -611,7 +616,7 @@ namespace BestariTerrace.Forms
 
                                             Print(PrinterSetup.GetPrinterName(EmPrinterType.CashCounter), GetDocument(NewOrderId, EmPrinterType.CashCounter));
                                         }
-                                        if (!string.IsNullOrEmpty(Kitchen))
+                                        if (!string.IsNullOrEmpty(Kitchen) && Program.OutletType.Contains("RESTAURANT"))
                                         {
                                             if (!isCash)
                                                 Print(PrinterSetup.GetPrinterName(EmPrinterType.Kitchen), GetDocument(NewOrderId, EmPrinterType.Kitchen));
@@ -683,7 +688,7 @@ namespace BestariTerrace.Forms
             {
 
             }
-            
+
             //Socket clientSock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             //clientSock.NoDelay = true;
             //IPAddress ip = IPAddress.Parse(printerName);
@@ -985,7 +990,7 @@ namespace BestariTerrace.Forms
 
         public static void PrintEmployeeReceipt(BinaryWriter bw, string SessionId, string EmployeeId = "0")
         {
-            var Orders = Program.PlacedOrders.Where(p => p.SessionId == SessionId && (EmployeeId == "0" ? true : p.EmployeeID == EmployeeId)).GroupBy(p=>p.EmployeeID).ToList();
+            var Orders = Program.PlacedOrders.Where(p => p.SessionId == SessionId && (EmployeeId == "0" ? true : p.EmployeeID == EmployeeId)).GroupBy(p => p.EmployeeID).ToList();
             if (Orders.Count > 0)
             {
 
@@ -1013,7 +1018,7 @@ namespace BestariTerrace.Forms
                 bw.NormalFont("------------------------------------------------");
                 bw.FeedLines(1);
                 decimal TotalSum = 0;
-                foreach(var emp in Orders)
+                foreach (var emp in Orders)
                 {
                     var employeeId = emp.Key;
                     bw.NormalFont("Staff : " + Program.StaffName);
@@ -1030,7 +1035,7 @@ namespace BestariTerrace.Forms
                             bw.NormalFont(item.LineText);
                             bw.FeedLines(1);
                         }
-                        
+
                         try
                         {
                             if (Program.OutletType.Contains("RESTAURANT"))
@@ -1235,8 +1240,13 @@ namespace BestariTerrace.Forms
                     {
                         using (SerialPort sp = new SerialPort(DisplayPort, 9600, Parity.None, 8, StopBits.One))
                         {
-                            var Line1 = SplitInParts(txt[0].Trim(), 20);
+                            IEnumerable<string> Line1 = new List<string>();
                             IEnumerable<string> Line2 = new List<string>();
+                            if (String.IsNullOrEmpty(txt[0]))
+                                Line1 = new List<String>() { "" };
+                            else
+                                Line1 = SplitInParts(txt[0].Trim(), 20);
+
                             if (txt.Count() > 1)
                                 Line2 = SplitInParts(txt[1].Trim(), 20);
                             sp.Open();
@@ -1598,11 +1608,11 @@ namespace BestariTerrace.Forms
                         {
                             OrdType = EmOrderType.DineIn;
                         }
-                        else if(_OrderType == "counter_sale")
+                        else if (_OrderType == "counter_sale")
                         {
                             OrdType = EmOrderType.CounterSale;
                         }
-                        else 
+                        else
                         {
                             OrdType = EmOrderType.TakeOut;
                         }
@@ -1828,7 +1838,7 @@ namespace BestariTerrace.Forms
                 }
 
 
-                
+
 
                 frmLogout _logout = new frmLogout();
                 _logout.ShowDialog();
